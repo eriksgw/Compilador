@@ -1,0 +1,175 @@
+\documentclass{exam}
+\usepackage{graphicx}
+\graphicspath{ {images/} }
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage[export]{adjustbox}
+\printanswers
+\renewcommand{\solutiontitle}{\noindent\textbf{Resposta:}\par\noindent}
+\begin{document}
+\begin{center}
+\fbox{\fbox{\parbox{5.5in}{\centering
+Universidade Federal de Santa Catarina \\ [1ex]
+Departamento de Informática e Estatística \\ [1ex]
+INE 5405 - Probabilidade e Estatística \\ [1ex]
+Teste 03 \\ [1ex] 
+
+}}}
+\end{center}
+
+\begin{flushleft}
+\vspace{5mm}
+\makebox[0.51\textwidth]{Nome: Erik Kazuo Sugawara (18100528)}
+
+\vspace{5mm}
+\makebox[0.7\textwidth]{Professor: Jose Francisco Danilo de Guadalupe Corrêa Fletes}
+\end{flushleft}
+
+% ------  Questions ------
+\vspace{5mm}
+\begin{questions}
+%    680,677,649,681,652,717,704,683,662,681,669,669,675,679,720,727,652,723,644,715,
+%    719,700,701,691,660,653,664,710,683,665,699,660,676,683,695,638,702,680,695,670,
+%    678,690,683,705,655,661,665,684,674,675,670,681,735,742,693,680,688,674,671,688
+% Max:  742
+% Min:  638
+% Question 01
+\question (Vale 2,0): Apresente os dados em ramo-e-folhas (Exemplo à figura 3.11)
+ e comente importantes características que Você observa (quanto ao padrão de
+ comportamento dos dados). 
+\begin{parts}
+    \part Ramo-e-folhas
+        \begin{solution}
+            Em minha observação, considerando o padrão de comportamento dos dados,
+            a velocidade (em MHz) dos dispositivos se concentram na faixa de [660, 699] MHz.
+            Além disso, podemos notar casos atípicos de velocidades como 638 MHz e 742 MHz, que fogem do padrão.
+            Não faria sentido, portanto, utilizar esses casos extremos para determinar o preço do produto.
+            Sendo assim, o fabricante deve levar em consideração os dispositivos que estão entre [660, 699]
+            para determinar o seu preço. 
+            \vspace{5mm}
+            \begin{center}
+                \begin{tabular}{|p{1cm}|p{3.5cm}|p{2cm}|}
+                \hline  
+                Ramo & Folha(s) & Frequência \\ [1ex] 
+                \hline
+                63 & 8 & 1 \\ [1ex] 
+                \hline
+                64 & 4,9 & 2 \\ [1ex] 
+                \hline
+                65 & 2,2,3,5 & 4 \\ [1ex] 
+                \hline
+                66 & 0,0,1,2,4,5,5,9,9 & 9 \\ [1ex] 
+                \hline
+                67 & 0,0,1,4,4,5,5,6,7,8,9 & 11 \\ [1ex] 
+                \hline
+                68 & 0,0,0,1,1,1,3,3,3,3,4,8,8 & 13 \\ [1ex]
+                \hline
+                69 & 0,1,3,5,5,9 & 6 \\ [1ex]
+                \hline
+                70 & 0,1,2,4,5 & 5 \\ [1ex]
+                \hline
+                71 & 0,5,7,9 & 4 \\ [1ex]
+                \hline
+                72 & 0,3,7 & 3 \\ [1ex]
+                \hline
+                73 & 5 & 1 \\ [1ex]
+                \hline
+                74 & 2 & 1 \\ [1ex]
+                \hline
+
+            \end{tabular}  
+            \end{center}
+        \end{solution} 
+    \vspace{5mm}
+    \part Qual a percentagem dos dispositivos que tem velocidade que excede 700 MHz?
+        \begin{solution}
+            A percentagem de dispositivos que excedem 700 Mhz é de 21,66\%.
+        \end{solution} 
+\end{parts}
+
+% Question 02
+\question (Vale 5,0): Construa para os dados dos 60 dispositivos a
+ Tabela/Distribuição de Frequências (Três primeiras colunas da tabela abaixo): 
+        \begin{solution}
+              \begin{center}
+                \begin{tabular}{|p{2cm}|p{2.5cm}|p{2cm}|p{1cm}|p{1cm}|p{2.5cm}|}
+                \hline
+                Classes & Contagem & Frequência \\ [1ex] 
+                \hline
+                638 $\vdash$ 653 & $|||||$ & 5 \\ 
+                \hline
+                653 $\vdash$ 668 & $|||||$ $||||$ & 9  \\ 
+                \hline
+                668 $\vdash$ 683 & $|||||$ $|||||$ $|||||$ $||||$ & 19 \\ 
+                \hline
+                683 $\vdash$ 698 & $|||||$ $|||||$ $||$ & 12 \\
+                \hline
+                698 $\vdash$ 713 & $|||||$ $||$ & 7 \\
+                \hline
+                713 $\vdash$ 728 & $|||||$ $|$ & 6 \\
+                \hline
+                728 $\vdash$ 743 & $|||||$ & 2 \\
+                \hline
+
+            \end{tabular}  
+            \end{center}
+        \end{solution} 
+
+\vspace{5mm}
+
+\question (Vale 1,0): Preencha a tabela anterior com os valores dos Pontos Médios 
+de Classe, assim como com as frequências relativas - fi (ou percentual de 
+observações - \%) e as frequências relativas acumuladas (ou percentual acumulado - Fj)).
+Aplique as expressões à página 62: (3.1) e (3.2).
+        \begin{solution}
+            \begin{center}
+                \begin{tabular}{|p{2cm}|p{2.5cm}|p{2cm}|p{1cm}|p{1.2cm}|p{2.5cm}|}
+                \hline
+                Classes & Contagem & Frequência & Ponto Médio & \% & \% Acumulada \\ [1ex] 
+                \hline
+                638 $\vdash$ 653 & $|||||$ & 5 & 645,5 & 8,33 \% & 8,33 \% \\ 
+                \hline
+                653 $\vdash$ 668 & $|||||$ $||||$ & 9 & 660,5 & 15 \% & 23,33 \% \\ 
+                \hline
+                668 $\vdash$ 683 & $|||||$ $|||||$ $|||||$ $||||$ & 19 & 675,5 & 31,66 \% & 55 \% \\ 
+                \hline
+                683 $\vdash$ 698 & $|||||$ $|||||$ $||$ & 12 & 690,5 & 20 \% & 75 \% \\
+                \hline
+                698 $\vdash$ 713 & $|||||$ $||$ & 7 & 705,5 & 11,66 \% & 86,65 \% \\
+                \hline
+                713 $\vdash$ 728 & $|||||$ $|$ & 6 & 720,5 & 10 \% & 96,65 \% \\
+                \hline
+                728 $\vdash$ 743 & $|||||$ & 2 & 735,5 & 3,33 \% & 100 \% \\
+                \hline
+
+            \end{tabular}  
+            \end{center}
+        \end{solution} 
+\vspace{10cm}
+\question (Vale 2,0): Construa a Distribuição de Frequências Acumuladas 
+(exemplo figura 3.8).
+        \begin{center}
+        \includegraphics[width=17cm,height=20cm, keepaspectratio]{dist_freq4.png}
+        \end{center}
+        \begin{parts}
+            \part Com base na expressão (3.3) da página 62, obtenha os valores aproximados da  variável em análise ( X ), considerando o gráfico obtido da F(x), de forma que:
+            \begin{solution}
+            \begin{equation}
+                f(x) = P(X \leq Q_1) = 0.25 (25\%) \Longrightarrow \textrm{Valor de X} = Q_1 \approx 655
+            \end{equation}
+
+            \begin{equation}
+                f(x) = P(X \leq Q_2) = 0.50 (50\%) \Longrightarrow \textrm{Valor de X} = Q_2 \approx 665
+            \end{equation}
+
+            \begin{equation}
+                f(x) = P(X \leq Q_3) = 0.75 (75\%) \Longrightarrow \textrm{Valor de X} = Q_3 \approx 680
+            \end{equation}
+                
+            \end{solution} 
+        \end{parts}
+
+ 
+\end{questions}
+\end{document}
