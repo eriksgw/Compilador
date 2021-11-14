@@ -1,0 +1,12 @@
+def hello_world() {
+    print "hello world";
+}
+
+int x;
+x = 10;
+
+if (x > 30) {
+    hello_world();
+} else {
+    print "erro";
+}

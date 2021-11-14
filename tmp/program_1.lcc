@@ -117,7 +117,7 @@ def partition(int low, int high, int pivot) {
     int j;
     j = high;
     int c;
-    for (c = 0; c >= 0; c = c + 1):
+    for (c = 0; c >= 0; c = c + 1) {
         for (i = i; list[i] < pivot; i = i) {
             i = i + 1;
         }
@@ -133,11 +133,13 @@ def partition(int low, int high, int pivot) {
         list[i] = list[j];
         list[j] = temp;
         i = i + 1
+    }
 }
 def intro_sort(int start, int end, int size_threshold, int max_depth) {
     for (end = end; end - start > size_threshold; end = p) {
-        if (max_depth == 0):
+        if (max_depth == 0) {
             return heap_sort();
+        }
         max_depth = max_depth - 1;
         int temp1;
         temp1 = end - start;

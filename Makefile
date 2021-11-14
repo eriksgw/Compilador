@@ -1,19 +1,18 @@
 SHELL := /bin/bash
 
+# PYTHON v3.8.10 
 install: 
-   ( \
-	   python3 -m venv venv; \
-       source venv/bin/activate; \
-       pip install ply; \
-    )
+	( \
+      sudo apt-get -y install python3-pip; \
+      pip3 install ply; \
+   )
 
 clean:
-    ( \
-       rm -rf venv; \
-    )
+	( \
+      pip3 uninstall ply; \
+   )
 
 run: 
-     ( \
-       source venv/bin/activate; \
-       python main.py $(file); \
-    )
+	( \
+      python3 main.py $(file); \
+   )

@@ -1,12 +1,12 @@
+'''
+Authors:
+    Bruno Duarte Barreto Borges
+    Erik Kazuo Sugawara
+    Fábio Oliveira de Abreu
+'''
+
 import ply.lex as lex
 import ply.yacc as yacc
-
-''' TOKENS '''
-# TODO: Verificar se skip esta correto.
-# TODO: Verificar se faltam tokens.
-# TODO: Verificar se tokens estao corretos.
-# TODO: Verificar a gramatica disponibilizada no AL.pdf
-# TODO: Criar as expressoes regulares de cada token.
 
 # RESERVED WORDS
 reserved = [
@@ -134,6 +134,7 @@ t_LE = r'\<='
 t_GE = r'\>='
 t_NEQ = r'\!='
 t_PLUS = r'\+'
+t_MINUS = r'\-'
 t_MULTIPLY = r'\*'
 t_DIVIDE = r'\/'
 t_REM = r'\%'
@@ -185,8 +186,8 @@ def t_error(t):
     t.lexer.skip(1)
 
 def print_table(lexer):
-    pattern = "{:^25} | {:^20} | {:^5} | {:^5}"
-    print("\033[4m" + pattern.format("TOKEN", "VALUE", "L", "C") + "\033[0m")
+    pattern = "{:^25} | {:^60} | {:^7} | {:^7}"
+    print("\033[4m" + pattern.format("TOKEN", "VALUE", "LINE", "COLUMN") + "\033[0m")
     while True:
         tok = lexer.token()
         if not tok:

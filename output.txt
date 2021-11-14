@@ -1,0 +1,40 @@
+( \
+      python3 main.py tmp/lil_example.lcc; \
+   )
+      TOKEN      |        VALUE        |  LINE   | COLUMN
+       DEF       |         def         |    1    |    1   
+      IDENT      |     hello_world     |    1    |    5   
+     LPAREN      |          (          |    1    |   16   
+     RPAREN      |          )          |    1    |   17   
+     LBRACE      |          {          |    1    |   19   
+      PRINT      |        print        |    2    |    5   
+ string_constant |    "hello world"    |    2    |   11   
+    SEMICOLON    |          ;          |    2    |   24   
+     RBRACE      |          }          |    3    |    1   
+       INT       |         int         |    5    |    1   
+      IDENT      |          x          |    5    |    5   
+    SEMICOLON    |          ;          |    5    |    6   
+      IDENT      |          x          |    6    |    1   
+     ASSIGN      |          =          |    6    |    3   
+  int_constant   |          10         |    6    |    5   
+    SEMICOLON    |          ;          |    6    |    7   
+       IF        |          if         |    8    |    1   
+     LPAREN      |          (          |    8    |    4   
+      IDENT      |          x          |    8    |    5   
+       GT        |          >          |    8    |    7   
+  int_constant   |          30         |    8    |    9   
+     RPAREN      |          )          |    8    |   11   
+     LBRACE      |           {         |    8    |   13   
+      IDENT      |          {          |    8    |   13   
+      IDENT      |     hello_world     |    9    |    5   
+     LPAREN      |          (          |    9    |   16   
+     RPAREN      |          )          |    9    |   17   
+    SEMICOLON    |          ;          |    9    |   18   
+     RBRACE      |          }          |   10    |    1   
+      ELSE       |         else        |   10    |    3   
+     LBRACE      |          {          |   10    |    8   
+      PRINT      |        print        |   11    |    5   
+ string_constant |        "erro"       |   11    |   11   
+    SEMICOLON    |          ;          |   11    |   17   
+     RBRACE      |          }          |   12    |    1   
+     

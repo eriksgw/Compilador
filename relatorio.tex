@@ -6,6 +6,7 @@
 \usepackage{tabularx}
 \usepackage[export]{adjustbox}
 \usepackage{pythonhighlight}
+\usepackage{listings}
 \printanswers
 \renewcommand{\solutiontitle}{\noindent\textbf{Resposta:}\par\noindent}
 \begin{document}
@@ -56,8 +57,12 @@ t_REM = r'\%'
     \question Produção das definições regulares para cada token.
         \begin{solution}
 
-            Para produção das definições regulares, foram utilizadas expressões regulares.
-            Segue um exemplo, da definição regular do token "FLOAT" utilizando a ferramenta PLY.
+            Para produção das definições regulares, foram utilizadas expressões regulares. 
+            Como mostrado anteriormente, para definições simples, como os sinais e operadores, 
+            foi possível usar a definição em formato de variável. Porém, para definições mais 
+            complexas e que necessitavam de tratamento extra, foi necessário usar o formato de função, 
+            que também permite o tratamento dos tokens lidos. Segue um exemplo, da definição regular
+            do token "FLOAT" utilizando a ferramenta PLY.
             \begin{python}
 def t_float_constant(t):
     r'[+-]?\d+\.\d+'
@@ -66,14 +71,29 @@ def t_float_constant(t):
             \end{python}    
         \end{solution}
 
-    \question Construção dos diagramas de transição para cada token
+    \question Construção dos diagramas de transição para cada token.
         \begin{solution}
-            Os diagramas de transição dos tokens foram feitos em uma tabela xls, que se localiza na pasta xxxx.
+            Os diagramas de transição dos tokens foram feitos em uma tabela que se localiza no arquivo TOKENS.xlsx.
+            Abaixo, há um exemplo de tabela de transição para um dos tokens identificados (sendo 'digit' a declaração para números de 0 a 9).
+            \begin{center}
+                \begin{tabular}{|c|c|c|c|}
+                \hline
+                int\_constant & + & - & digit \\
+                \hline
+                $\rightarrow$ q0 & q1 & q1 & q2 \\
+                \hline
+                q1 & - & - & q2  \\ 
+                \hline
+                *q2 & - & - & q2 \\
+                \hline
+            \end{tabular}
+            \end{center}
+
         \end{solution}
 
     \question Descrição de uma tabela de símbolos (como foi implementada),
     quais são os símbolos armazenados na tabela e quais são os atributos dos
-    símbolos escolhidos para armazenar na tabela
+    símbolos escolhidos para armazenar na tabela.
         \begin{solution}
             A descrição da tabela de símbolos foi feita através dos tokens que eram retornados pelo analisador léxico,
             onde, dado uma entrada, a ferramenta identificava seu respectivo token. Com todos tokens identificados, é
@@ -108,9 +128,22 @@ def print_table(lexer):
             uma implementação das ferramentas lex e yacc para python. Nela, podemos
             criar uma lista de tokens a serem identificados pelo analisador, onde devem
             ser armazenados em uma lista chamada "tokens". As váriaveis
-            e funções que se iniciam pelos caracteres "\_t" são identificadas como um token
+            e funções que se iniciam pelos caracteres "t\_" são identificadas como um token
             pelo interpretador, onde podemos definir suas respectivas expressões regulares.
-        \end{solution}
+            Executando o PLY em uma string passada, no caso do nosso analisador, obtida de um 
+            arquivo cujo caminho é passado como parâmetro 'file' no make, é possível usar o
+            método 'token()' para obter o próximo lexema identificado pelo analisador. O método
+            retorna um objeto com o token, a string identificada, a linha e a posição léxica 
+            (que pode ser usada para calcular a coluna). Com isso podemos construir a tabela
+            de símbolos referente ao arquivo passado.
 
+        \end{solution}
+       
+            \begin{center}
+            \begin{lstlisting}[language=bash]
+             $ make run file='tmp/lil_example.lcc'
+            \end{lstlisting}
+            \includegraphics[height=17cm,width=16cm,keepaspectratio]{example.png}
+            \end{center}
 \end{questions}
 \end{document}
