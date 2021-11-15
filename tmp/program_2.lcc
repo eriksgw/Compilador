@@ -1,0 +1,112 @@
+    print "Enter the number of tuples to define a bezier curve"
+    length;
+    read length;
+
+    print "Enter the weight of control point, must be between 0 and 1";
+    control_point;
+    read control_point;
+
+    if (length <= 1) {
+        print "Please, insert a number greater than 1"
+        length;
+        read length;
+    }
+
+    int i;
+    float tuples_x[100];
+    float tuples_y[100];
+    tuples_x = new float[100];
+    tuples_y = new float[100];
+
+    for (i = 0; i < length; i = i + 1) {
+        print "Tuple:" + i + " Insert the number of x -> (x,_)";
+        read tuples_x[i];
+        print "Tuple:" + i + " Insert the number of y -> (_,y)";
+        read tuples_y[i];
+    }
+
+    def comb(int n, int r) {
+        int f1;
+        int f2;
+        int f3;
+        int i;
+        int result;
+
+        f1 = 1;
+        f2 = 1;
+        f3 = 1;
+
+        for (i = 1 ; i < n; i = i + 1) {
+            f1 = (f1 * i);  
+        }
+        for (i = 1; i < r; i = i + 1) {
+            f2 = (f2 * i);
+        }
+        for (i + 1 ; i < n - r; i = i + 1) {
+            f3 = (f3 * i);
+        }
+
+        result = f1 / f2 * f3;
+        return result;
+    }
+
+    def basis_function(float t) {
+        int degree;
+        degree = length - 1;
+        int i;
+        int k;
+        int y;
+        float temp;
+        float temp_2;
+        float result;
+        result = 0.0;
+
+        for (i = 0; i < length; i++) {
+            temp = 0.0;
+            temp_2 = 0.0;
+
+            for (k = 0; degree - i; k++){
+                temp = temp + (1 - t) * (1 - t));
+            } 
+            temp_2 = temp_2 + t * t;
+            result = result + comb(degree, i) * (temp * temp_2);
+        }
+
+        return result;
+    }
+
+    def bezier_curve_function(float t) {
+
+        int i;
+        float x;
+        float y;
+
+        x = 0.0;
+        y = 0.0;
+
+        float tuple[1];
+        tuple = new float[1];
+
+        for (i = 0; i < length; i++) {
+            x = x + (basis_function(t) * tuple_x[i]);
+            y = y + (basis_function(t) * tuple_y[i]);
+        }
+
+        tuple[0] = x;
+        tuple[1] = y;
+
+        return tuple;
+    }
+
+    def print_curve(){
+
+        float step_size;
+        step_size = 0.01;
+        float i;
+        float result[1];
+
+        for (i = 0.0 ; i < 1 ; i = i + step_size) {
+            result = bezier_curve_function(i);
+            print "Bezier points:(" + result[0] + "," + result[1] +")"
+        }
+    }
