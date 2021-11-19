@@ -153,7 +153,7 @@ def t_null_constant(t):
     return t
 # For complex tokens, we can use the form below.
 def t_float_constant(t):
-    r'[+-]?\d+\.\d+'
+    r'[+-]?\d+\.\d+([eE][+-}?\d+)?'
     t.value = float(t.value)
     return t
 
