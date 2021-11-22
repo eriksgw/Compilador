@@ -237,7 +237,7 @@ de Compiladores, ministrada pelo Prof. Dr. Alvaro Junio Pereira Franco.}
 Um compilador é um programa de sistema que traduz uma linguagem de alto nível
 para um programa equivalente em código de máquina para um processador. Sendo assim,
 um compilador não produz diretamente o código de máquina, mas sim um programa
-semanticamente equivalente na linguagem simbólica(assembly), que é traduzido para o programa em linguagem de máquina através de montadores\footnote{\url{https://www.dca.fee.unicamp.br/cursos/EA876/apostila/HTML/node37.html}}.
+semanticamente equivalente na linguagem simbólica (assembly), que é traduzido para o programa em linguagem de máquina através de montadores\footnote{\url{https://www.dca.fee.unicamp.br/cursos/EA876/apostila/HTML/node37.html}}.
 
 Este trabalho, em sua primeira fase, tem como objetivo criar um compilador através de um
 analisador léxico e sintático para uma linguagem (AL). Para facilitar os estudos na criação do compilador,
@@ -270,14 +270,14 @@ na Universidade de Chicago, para dar suporte à disciplina Introdução a Compil
 A sua versão mais recente é o PLY-4.0, que requer o Python na versão 3.6 ou mais nova. 
 
 Ele consiste em dois módulos separados: o lex.py e o yacc.py. O módulo lex.py é utilizado
-para separar a entrada em texto do código em uma coleção de tokens baseadas em suas respectivas 
+para separar as entradas em texto do código em uma coleção de tokens baseadas em suas respectivas 
 expressões regulares. O yacc.py é utilizado para reconhecer a sintaxe de uma linguagem 
 baseada em uma gramática livre de contexto. Além disso, possui utilidades como verificação
 de erros, validação de gramática, suporte para produções vazias, tokens de erros e regras de
-precedencia para resolver ambiguidades.
+precedência para resolver ambiguidades.
 
 \section{Lex}
-O Lex é utilizado para ara realizar a atribuição dos tokens com as entradas (\emph{strings}).
+O Lex é utilizado para realizar a atribuição dos tokens com as entradas (\emph{strings}).
 Os nomes dos tokens podem ser declarados de forma simples através de uma lista. Um token
 que é identificado se torna um objeto da classe LexToken.
 \begin{python}
@@ -301,10 +301,10 @@ reserved = [
 ]
 \end{python}
 
-	Dada uma lista de tokens, podemos definir suas expressões regulares. Eles podem
-ser definidos de forma simples ou complexas. Note que por definição da ferramenta,
+	Dada uma lista de tokens, podemos definir suas expressões regulares, que podem
+ser de forma simples ou complexa. Note que por definição da ferramenta,
 as expressões regulares são declaradas como uma variável que se inicia com ``t\_'',
-seguido pelo nome do token definido na lista. Segue um exemplo das expressões
+seguida pelo nome do token definido na lista. Segue um exemplo das expressões
 regulares para tokens simples, como: \emph{Assign, Greater Than, Less Than, Equals, Less Equal,
 Greater Equal, Not Equal, Plus, Minus, Multiply, Divide e Rem}.
 \\
@@ -325,7 +325,7 @@ t_REM = r'\%'
 
 Para tokens que requerem maior complexidade para serem identificados, podemos declará-los através de funções
 que também se iniciam pelos caracteres ``t\_'' seguidos pelo nome do token
-definido. Note que também podemos realizar tratamento dos valores obtidos acessando
+definido. Note que também podemos realizar o tratamento dos valores obtidos acessando
 o atributo \emph{value} do objeto LexToken.
 \\
 \begin{python}
@@ -416,10 +416,10 @@ while True:
 % ---
 \section{Extração dos tokens}
 % ---
-	Para obter os tokens, utilizamos a gramática``CC-2021-2'' como base
+	Para obter os tokens, utilizamos a gramática ``CC-2021-2'' como base
     e dividimos cada um deles em um dos seguintes grupos: palavras reservadas,
 	operadores, símbolos especiais, constantes e identificadores. Além disso,
-	alteramos a gramática de modo que token ``return'' seja possível retornar valores com ele.
+	alteramos a gramática de modo que seja possível retornar valores com o token ``\emph{return}''.
 
 \begin{python}
 # RESERVED WORDS
@@ -493,7 +493,7 @@ identifiers = [
 tokens = reserved + operators + special + constant + identifiers
 \end{python}
 \section{Expressões Regulares}
-Após a identificação dos tokens, criamos a expressão regular para cada um deles.
+Após a identificação dos tokens, criamos a expressão regular de cada um deles.
 \begin{python}
 t_ignore = r' ' # Ignore spaces between char.
 
