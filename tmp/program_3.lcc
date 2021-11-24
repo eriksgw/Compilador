@@ -1,0 +1,104 @@
+def calc_delta(float a, float b, float c) {
+    float delta;
+    
+    delta = (b * b) - (4 * a * c);
+    
+    if (delta > 0) {
+        print "this equation has two real roots";
+    }
+
+    if (delta == 0) {
+        print "this equation has one real root";
+    }
+
+    
+    if (delta < 0) {
+        print "this equation has no real roots";
+    }
+    
+    return delta;
+}
+
+def pow(int n, int e) {
+    int p;
+    p = 1;
+    int i;
+    for (i = 0; i < e; i = i + 1) {
+        p = p * n;
+    }
+
+    print p;
+    print "\n";
+
+    return p;
+}
+
+def calc_bhaskara(float a, float b, float c) {
+    float x1;
+    float x2;
+    
+    if (a == 0) {
+        print "a should be different from zero";
+        return;
+    }
+    
+    float delta;
+    
+    delta = calc_delta(a, b, c);
+    
+    if (delta > 0) {
+        float sqrt;
+        sqrt = pow(delta, 1/2);
+
+        x1 = (-b + sqrt) / (2 * a);
+        x2 = (-b - sqrt) / (2 * a);
+        print "found 2 solutions for this equation";
+        print "x1 = ";
+        print x1;
+        print "\n x2 = ";
+        print x2;
+        return;
+    }
+
+    if (delta < 0) {
+        print "This equation has no real solution";
+        return;
+    }
+
+    if (delta == 0) {
+        x1 = (-b) / (2 * a);
+        print "Found one solution for this equation";
+        print "x = ";
+        print x1;
+        return;
+    }
+
+    return;
+}
+
+def main() {
+    
+    print "Enter a b c for bhaskara calculation";
+
+    int a;
+    int b;
+    int c;
+
+    float result;
+    float delta;
+
+    read a;
+    read b;
+    read c;
+
+    print "a=" + a + " b=" + b + " c=" + c;
+    print "Full equation: ";
+    print a + "x² " + b + "x " + c;
+
+    delta = calc_delta(a, b, c);
+    result = calc_bhaskaraa, b, c);
+
+    print "Delta: " + delta + ".";
+    print "Result: " + result + ".";
+
+}
