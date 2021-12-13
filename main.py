@@ -13,6 +13,7 @@ reserved = [
     'DEF',          # def
     'BREAK',       # break
     'FOR',         # for
+    'WHILE',
     'IF',          # if
     'ELSE',        # else
     'INT',         # int
@@ -35,7 +36,7 @@ operators = [
     'NEQ',         # !=
     'PLUS',        # +
     'MINUS',       # -
-    'MULTIPLY',     # *
+    'MULTIPLY',    # *
     'DIVIDE',      # / 
     'REM'          # %
 ]
@@ -90,6 +91,10 @@ def t_FOR(t):
     r'for'
     return t
 
+def t_WHILE(t):
+    r'while'
+    return t
+    
 def t_IF(t):
     r'if'
     return t
