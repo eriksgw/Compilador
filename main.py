@@ -190,14 +190,18 @@ def t_error(t):
 
     t.lexer.skip(1)
 
-def print_table(lexer):
-    pattern = "{:^25} | {:^60} | {:^7} | {:^7}"
-    print("\033[4m" + pattern.format("TOKEN", "VALUE", "LINE", "COLUMN") + "\033[0m")
-    while True:
-        tok = lexer.token()
-        if not tok:
-            break
-        print(pattern.format(tok.type, tok.value, tok.lineno, find_column(tok))) 
+def print_table(st):
+    max_length = max(map(len, st.keys())) + 4
+    pattern = "{:^" + str(max_length) + "} | {:<100}"
+    print("\033[4m" + pattern.format("IDENT", "(LINE,COLUMN)") + "\033[0m")
+    for k, v in st.items():
+        if (len(v) > 10):
+            print(pattern.format(k, str(v[:10])))
+            for i in range(10, len(v), 10):
+                items = v[i:i+10]
+                print(pattern.format('', str(items)))
+        else:
+            print(pattern.format(k, str(v))) 
 
     for e in errors:
         print(e)
@@ -207,10 +211,9 @@ if __name__ == '__main__':
     import sys
 
     if len(sys.argv) != 2:
-        print("This command should receive only 1 parameter")
-        exit(1)
-    
-    file = open(sys.argv[1], 'r')
+        file = open('./tmp/program_1.lcc', 'r')        
+    else:
+        file = open(sys.argv[1], 'r')
 
     lexer = lex.lex()
     input_value = file.read()
@@ -225,4 +228,17 @@ if __name__ == '__main__':
         return column
 
     lexer.input(input_value)
-    print_table(lexer)
+
+    symbol_table = {}
+    while True:
+        tok = lexer.token()
+        if not tok:
+            break
+
+        if tok.type == 'IDENT':
+            if tok.value in symbol_table:
+                symbol_table[tok.value].append((tok.lineno, find_column(tok)))
+            else:
+                symbol_table[tok.value] = [(tok.lineno, find_column(tok))]
+
+    print_table(symbol_table)
