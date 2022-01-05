@@ -59,6 +59,8 @@
 \usepackage{microtype} 			% para melhorias de justificação
 \usepackage{pythonhighlight}
 \usepackage{listings}
+\usepackage{xcolor}
+\usepackage{bm}
 % ---
 		
 % ---
@@ -404,7 +406,7 @@ while True:
 % ----------------------------------------------------------
 % PARTE
 % ----------------------------------------------------------
-\part{Desenvolvimento}
+\part{Analisador Léxico}
 % ----------------------------------------------------------
 
 % ---
@@ -650,7 +652,6 @@ a sua tabela de símbolos formatada através da função ``print\_table''.
 % ----------------------------------------------------------
 % PARTE
 % ----------------------------------------------------------
-\part{Diagramas de Transição}
 % ----------------------------------------------------------
 
 % ---
@@ -683,7 +684,562 @@ a sua tabela de símbolos formatada através da função ``print\_table''.
 % e adiciona espaço de parte no Sumário
 % ----------------------------------------------------------
 \phantompart
+\part{Analisador Sintático}
+\chapter{Ferramenta}
+\section{Yacc}
+O Yacc é uma abreviação do termo em inglês "\emph{Yet Another Compiler-Compiler}",
+semelhante a ferramenta de mesmo nome para Unix. Ele é o componente do PLY que realiza
+a análise da gramática.
 
+Cada regra gramatical pode ser definida atravé de uma função Python, onde cada docstring possui
+a especificação apropriada da gramática livre de contexto. Segue um exemplo, da regra para
+a expressão plus.
+
+\begin{python}
+def p_expression_plus(p):
+    'expression : expression PLUS term'
+    #   ^            ^        ^    ^
+    #  p[0]         p[1]     p[2] p[3]
+
+    p[0] = p[1] + p[3]
+\end{python}
+\chapter{Gramática}
+\section{Gramática Original}
+
+\begin{lstlisting}[escapechar=\#]
+PROGRAM #$\rightarrow$# (STATEMENT | FUNCLIST)?
+
+FUNCLIST #$\rightarrow$# FUNCDEF FUNCLIST | FUNCDEF  
+
+FUNCDEF #$\rightarrow$# def ident(PARAMLIST){STATELIST}  
+
+PARAMLIST #$\rightarrow$# ((int | float | string) ident, PARAMLIST |
+             (int | float | string) ident)?  
+
+STATEMENT #$\rightarrow$# (VARDECL; | ATRIBSTAT; | PRINTSTAT; |
+             READSTAT; | RETURNSTAT; | IFSTAT | FORSTAT | {STATELIST} |
+             break; | ;) 
+
+VARDECL #$\rightarrow$# (int | float | string) ident ([int constant])#$^{*}$#
+
+ATRIBSTAT #$\rightarrow$# LVALUE = (EXPRESSION | ALLOCEXPRESSION | FUNCCALL)
+
+FUNCCALL #$\rightarrow$# ident(PARAMLISTCALL)  
+
+PARAMLISTCALL #$\rightarrow$# (ident, PARAMLISTCALL | ident)?  
+
+PRINTSTAT #$\rightarrow$# print EXPRESSION  
+
+READSTAT #$\rightarrow$# read LVALUE  
+
+RETURNSTAT #$\rightarrow$# return  
+
+IFSTAT #$\rightarrow$# if(EXPRESSION ) STATEMENT (else STATEMENT)?  
+
+FORSTAT #$\rightarrow$# for(ATRIBSTAT; EXPRESSION; ATRIBSTAT) STATEMENT  
+
+STATELIST #$\rightarrow$# STATEMENT (STATELIST)?  
+
+ALLOCEXPRESSION #$\rightarrow$# new (int | float | string) ([ NUMEXPRESSION ]) + 
+
+EXPRESSION #$\rightarrow$# NUMEXPRESSION(( < | > | <= | >= | == | ! =) NUMEXPRESSION)? 
+
+NUMEXPRESSION #$\rightarrow$# TERM ((+ | -) TERM)#$^{*}$#  
+
+TERM #$\rightarrow$# UNARYEXPR(( * | / | %) UNARYEXPR)#$^{*}$#
+
+UNARYEXPR #$\rightarrow$# ((+ | -))? FACTOR  
+
+FACTOR #$\rightarrow$# (int_constant | float_constant | string_constant |
+          null | LVALUE |(NUMEXPRESSION))  
+
+LVALUE #$\rightarrow$# ident([NUMEXPRESSION])#$^{*}$# 
+\end{lstlisting}
+
+\section{Modificações na Gramática}
+\begin{lstlisting}[escapechar=\#]
+PROGRAM #$\rightarrow$# (STATEMENT | FUNCLIST)?  
+
+FUNCLIST #$\rightarrow$# FUNCDEF FUNCLIST | FUNCDEF  
+
+FUNCDEF #$\rightarrow$# def ident(PARAMLIST){STATELIST}  
+
+PARAMLIST #$\rightarrow$# ((int | float | string)#$\textbf{\textcolor{red}{([])}}$##$^{*}$# ident, PARAMLIST |
+             (int | float | string)#$\textbf{\textcolor{red}{([])}}$##$^{*}$# ident)?  
+
+STATEMENT #$\rightarrow$# (VARDECL; | ATRIBSTAT; | PRINTSTAT; |
+             READSTAT; | #$\textbf{\textcolor{red}{FUNCCALL;}}$#| RETURNSTAT; | IFSTAT | FORSTAT | #$\textbf{\textcolor{red}{WHILESTAT}}$# |
+             {STATELIST} | break; | ;) 
+
+VARDECL #$\rightarrow$# (int | float | string) ident ([int constant])#$^{*}$#  
+
+ATRIBSTAT #$\rightarrow$# LVALUE#$\textbf{\textcolor{red}{([NUMEXPRESSION])?}}$# = (EXPRESSION |
+             ALLOCEXPRESSION | FUNCCALL)  
+
+FUNCCALL #$\rightarrow$# ident(PARAMLISTCALL)  
+
+PARAMLISTCALL #$\rightarrow$# (ident#$\textbf{\textcolor{red}{([NUMEXPRESSION])}}$##$^{*}$#, PARAMLISTCALL | ident)?  
+
+PRINTSTAT #$\rightarrow$# print EXPRESSION  
+
+READSTAT #$\rightarrow$# read LVALUE  
+
+RETURNSTAT #$\rightarrow$# return (#$\textbf{\textcolor{red}{ident | EXPRESSION)? }}$#
+
+IFSTAT #$\rightarrow$# if(EXPRESSION ) STATEMENT (else STATEMENT)?  
+
+FORSTAT #$\rightarrow$# for(ATRIBSTAT?; EXPRESSION?; ATRIBSTAT?) STATEMENT  
+
+#$\textbf{\textcolor{red}{WHILESTAT}}$# #$\rightarrow$#  #$\textbf{\textcolor{red}{while(EXPRESSION) STATEMENT}}$#  
+
+STATELIST #$\rightarrow$# STATEMENT (STATELIST)?  
+
+ALLOCEXPRESSION #$\rightarrow$# new (int | float | string) ([NUMEXPRESSION]) +  
+
+EXPRESSION #$\rightarrow$# NUMEXPRESSION(( < | > | <= | >= | == | ! =) NUMEXPRESSION)?  
+
+NUMEXPRESSION #$\rightarrow$# TERM ((+ | -) TERM)#$^{*}$#  
+
+TERM #$\rightarrow$# UNARYEXPR(( * | / | %) UNARYEXPR)#$^{*}$#  
+
+UNARYEXPR #$\rightarrow$# ((+ | -))? FACTOR  
+
+FACTOR #$\rightarrow$# (int_constant | float_constant | string_constant | null |
+          LVALUE | (NUMEXPRESSION))  
+
+LVALUE #$\rightarrow$# ident([NUMEXP RESSION])#$^{*}$# 
+\end{lstlisting}
+
+\section{Forma Convencional}
+\subsection{Transformação para definição de gramática convencional}
+\begin{lstlisting}[escapechar=\#]
+
+PROGRAM #$\rightarrow$# STATEMENT | FUNCLIST | #$\bm{\varepsilon}$# 
+
+FUNCLIST #$\rightarrow$# FUNCDEF FUNCLIST | FUNCDEF  
+
+FUNCDEF #$\rightarrow$# def ident ( PARAMLIST ) { STATELIST }  
+
+TYPES #$\rightarrow$#  int | float | string 
+
+PARAMLIST #$\rightarrow$# TYPES LISTDCL_ident , PARAMLIST | TYPES LISTDCL ident | #$\bm{\varepsilon}$#  
+
+LISTDCL #$\rightarrow$# []LISTDCL| #$\bm{\varepsilon}$# 
+
+STATEMENT #$\rightarrow$# VARDECL ; |  ATRIBSTAT ; |  PRINTSTAT ; |
+             READSTAT ;|  RETURNSTAT ; |  IFSTAT |  FORSTAT |  
+             WHILESTAT |  { STATELIST } |  break; | ; 
+
+VARDECL #$\rightarrow$# TYPES ident VARDECL' 
+
+VARDECL' #$\rightarrow$#  [ int_constant ] VARDECL' | #$\bm{\varepsilon}$#  
+
+ATRIBSTAT #$\rightarrow$# LVALUE ATRIBSTAT' = ATRIBSTAT'' 
+
+ATRIBSTAT' #$\rightarrow$#  [ NUMEXPRESSION ] | #$\bm{\varepsilon}$#  
+
+ATRIBSTAT'' #$\rightarrow$#  EXPRESSION | ALLOCEXPRESSION | FUNCCALL 
+
+FUNCCALL #$\rightarrow$# ident ( PARAMLISTCALL )  
+
+PARAMLISTCALL #$\rightarrow$# ident PARAMLISTCALL', PARAMLISTCALL | ident | #$\bm{\varepsilon}$#  
+
+PARAMLISTCALL' #$\rightarrow$# [NUMEXPRESSION] | #$\bm{\varepsilon}$# 
+
+PRINTSTAT #$\rightarrow$# print EXPRESSION  
+
+READSTAT #$\rightarrow$# read LVALUE  
+
+RETURNSTAT #$\rightarrow$# return RETURNSTAT' 
+
+RETURNSTAT' #$\rightarrow$# ident | EXPRESSION | #$\bm{\varepsilon}$#  
+
+IFSTAT #$\rightarrow$# if ( EXPRESSION ) STATEMENT IFSTAT'  
+
+IFSTAT' #$\rightarrow$# else STATEMENT | #$\bm{\varepsilon}$#  
+
+FORSTAT #$\rightarrow$# for ( FORSTAT' ; FORSTAT'' ; FORSTAT' ) STATEMENT  
+
+FORSTAT' #$\rightarrow$# ATRIBSTAT | #$\bm{\varepsilon}$#  
+
+FORSTAT'' #$\rightarrow$# EXPRESSION | #$\bm{\varepsilon}$#  
+
+WHILESTAT #$\rightarrow$#  while ( EXPRESSION ) STATEMENT 
+
+STATELIST #$\rightarrow$# STATEMENT STATELIST'  
+
+STATELIST' #$\rightarrow$# STATELIST | #$\bm{\varepsilon}$#  
+
+ALLOCEXPRESSION #$\rightarrow$# new TYPES [ NUMEXPRESSION ] ALLOCEXPRESSION' 
+
+ALLOCEXPRESSION' #$\rightarrow$# [ NUMEXPRESSION ] ALLOCEXPRESSION' | #$\bm{\varepsilon}$#  
+
+EXPRESSION #$\rightarrow$# NUMEXPRESSION EXPRESSION'  
+
+EXPRESSION' #$\rightarrow$# COMPOPERATOR NUMEXPRESSION | #$\bm{\varepsilon}$#  
+
+COMPOPERATOR #$\rightarrow$# < | > | < = | > = | = = | ! = 
+
+NUMEXPRESSION #$\rightarrow$# TERM NUMEXPRESSION' 
+
+NUMEXPRESSION' #$\rightarrow$# ADDSUB TERM | #$\bm{\varepsilon}$#  
+
+ADDSUB #$\rightarrow$# + | - 
+
+TERM #$\rightarrow$# UNARYEXPR TERM' 
+
+TERM' #$\rightarrow$# MULTDIV UNARYEXPR TERM' | #$\bm{\varepsilon}$#   
+
+MULTDIV #$\rightarrow$# * | / | %  
+
+UNARYEXPR #$\rightarrow$# UNARYEXPR' FACTOR  
+
+UNARYEXPR' #$\rightarrow$# ADDSUB | #$\bm{\varepsilon}$#  
+
+FACTOR #$\rightarrow$# int_constant | float_constant | string_constant | null |
+          LVALUE | ( NUMEXPRESSION ) 
+
+LVALUE #$\rightarrow$# ident LVALUE' 
+
+LVALUE' #$\rightarrow$# [ NUM_EXPRESSION ] LVALUE' | #$\bm{\varepsilon}$#  
+\end{lstlisting}
+
+\subsection{Remoção de recursão à esquerda}
+\begin{lstlisting}[escapechar=\#]
+PROGRAM #$\rightarrow$# STATEMENT | FUNCLIST | #$\bm{\varepsilon}$# 
+
+FUNCLIST #$\rightarrow$# FUNCDEF FUNCLIST | FUNCDEF 
+
+FUNCDEF #$\rightarrow$# def ident ( PARAMLIST ) { STATELIST } 
+
+TYPES #$\rightarrow$# int | float | string 
+
+PARAMLIST #$\rightarrow$# int LISTDCL ident , PARAMLIST 
+             | float LISTDC ident , PARAMLIST 
+             | string LISTDC ident , PARAMLIST 
+             | int LISTDC ident  
+             | float LISTDC ident 
+             | string LISTDC ident 
+             | #$\bm{\varepsilon}$# 
+
+LISTDC #$\rightarrow$# []LISTDC | #$\bm{\varepsilon}$# 
+
+STATEMENT #$\rightarrow$# VARDECL ; 
+             | ATRIBSTAT ; 
+             | PRINTSTAT ; 
+             | READSTAT ; 
+             | RETURNSTAT ; 
+             | IFSTAT 
+             | FORSTAT 
+             | WHILESTAT 
+             | { STATELIST } 
+             | break ; 
+             | ; 
+
+VARDECL #$\rightarrow$# int ident VARDECL' 
+           | float ident VARDECL' 
+           | string ident VARDECL' 
+
+VARDECL' #$\rightarrow$# [ int_constant ] VARDECL' 
+            | #$\bm{\varepsilon}$# 
+
+ATRIBSTAT #$\rightarrow$# LVALUE ATRIBSTAT' = ATRIBSTAT'' 
+
+ATRIBSTAT' #$\rightarrow$# [ NUMEXPRESSION ] 
+              | #$\bm{\varepsilon}$# 
+
+ATRIBSTAT'' #$\rightarrow$# EXPRESSION 
+               | ALLOCEXPRESSION 
+               | FUNCCALL 
+
+FUNCCALL #$\rightarrow$# ident ( PARAMLISTCALL ) 
+
+PARAMLISTCALL #$\rightarrow$# ident PARAMLISTCALL', PARAMLISTCALL 
+                 | ident PARAMLISTCALL'
+                 | #$\bm{\varepsilon}$# 
+
+PARAMLISTCALL' #$\rightarrow$# [NUMEXPRESSION] | #$\bm{\varepsilon}$#
+PRINTSTAT #$\rightarrow$# print EXPRESSION 
+
+READSTAT #$\rightarrow$# read LVALUE 
+
+RETURNSTAT #$\rightarrow$# return RETURNSTAT' 
+
+RETURNSTAT' #$\rightarrow$# ident 
+               | EXPRESSION 
+               | #$\bm{\varepsilon}$# 
+
+IFSTAT #$\rightarrow$# if ( EXPRESSION ) STATEMENT IFSTAT' 
+
+IFSTAT' #$\rightarrow$# else STATEMENT 
+           | #$\bm{\varepsilon}$# 
+
+FORSTAT #$\rightarrow$# for ( FORSTAT' ; FORSTAT'' ; FORSTAT' ) STATEMENT 
+
+FORSTAT' #$\rightarrow$# LVALUE ATRIBSTAT' = ATRIBSTAT'' 
+            | #$\bm{\varepsilon}$# 
+
+FORSTAT'' #$\rightarrow$# EXPRESSION 
+             | #$\bm{\varepsilon}$# 
+
+WHILESTAT #$\rightarrow$# while ( EXPRESSION ) STATEMENT 
+
+STATELIST #$\rightarrow$# int ident VARDECL' ; STATELIST' 
+            | float ident VARDECL' ; STATELIST' 
+            | string ident VARDECL' ; STATELIST' 
+            | LVALUE ATRIBSTAT' = ATRIBSTAT'' ; STATELIST' 
+            | print EXPRESSION ; STATELIST' 
+            | read LVALUE ; STATELIST' 
+            | return RETURNSTAT' ; STATELIST' 
+            | if ( EXPRESSION ) STATEMENT IFSTAT' STATELIST' 
+            | for ( FORSTAT' ; FORSTAT'' ; FORSTAT' ) STATEMENT STATELIST' 
+            | while ( EXPRESSION ) STATEMENT STATELIST' 
+            | { STATELIST } STATELIST' 
+            | break ; STATELIST' 
+            | ; STATELIST' 
+
+STATELIST' #$\rightarrow$# int ident VARDECL' ; STATELIST' 
+            | float ident VARDECL' ; STATELIST' 
+            | string ident VARDECL' ; STATELIST' 
+            | LVALUE ATRIBSTAT' = ATRIBSTAT'' ; STATELIST' 
+            | print EXPRESSION ; STATELIST' 
+            | read LVALUE ; STATELIST' 
+            | return RETURNSTAT' ; STATELIST' 
+            | if ( EXPRESSION ) STATEMENT IFSTAT' STATELIST' 
+            | for ( FORSTAT' ; FORSTAT'' ; FORSTAT' ) STATEMENT STATELIST' 
+            | while ( EXPRESSION ) STATEMENT STATELIST' 
+            | { STATELIST } STATELIST' 
+            | break ; STATELIST' 
+            | ; STATELIST' 
+            | #$\bm{\varepsilon}$# 
+
+ALLOCEXPRESSION #$\rightarrow$# new TYPES [ NUMEXPRESSION ] ALLOCEXPRESSION' 
+
+ALLOCEXPRESSION' #$\rightarrow$# [ NUMEXPRESSION ] ALLOCEXPRESSION' 
+                    | #$\bm{\varepsilon}$# 
+
+EXPRESSION #$\rightarrow$# NUMEXPRESSION EXPRESSION' 
+
+EXPRESSION' #$\rightarrow$# COMPOPERATOR NUMEXPRESSION 
+               | #$\bm{\varepsilon}$# 
+
+COMPOPERATOR #$\rightarrow$# < 
+              | > 
+              | <= 
+              | >= 
+              | == 
+              | !=  
+NUMEXPRESSION #$\rightarrow$# TERM NUMEXPRESSION' 
+
+NUMEXPRESSION' #$\rightarrow$# ADDSUB TERM 
+                  | #$\bm{\varepsilon}$# 
+
+ADDSUB #$\rightarrow$# + 
+          | - 
+
+TERM #$\rightarrow$# UNARYEXPR TERM' 
+
+TERM' #$\rightarrow$# MULTDIV UNARYEXPR TERM' 
+         | #$\bm{\varepsilon}$# 
+
+MULTDIV #$\rightarrow$# * 
+           | / 
+           | % 
+
+UNARYEXPR #$\rightarrow$# UNARYEXPR' FACTOR 
+
+UNARYEXPR' #$\rightarrow$# + 
+              | - 
+              | #$\bm{\varepsilon}$# 
+
+FACTOR #$\rightarrow$# int_constant 
+          | float_constant 
+          | string_constant 
+          | null 
+          | LVALUE 
+          | ( NUMEXPRESSION ) 
+
+LVALUE #$\rightarrow$# ident LVALUE' 
+
+LVALUE' #$\rightarrow$# [ NUM_EXPRESSION ] LVALUE' 
+           | #$\bm{\varepsilon}$# 
+\end{lstlisting}
+
+\subsection{Fatoração da Gramática}
+\begin{lstlisting}[escapechar=\#]
+PROGRAM #$\rightarrow$#  STATEMENT 
+           | FUNCLIST 
+           | #$\bm{\varepsilon}$# 
+
+FUNCLIST #$\rightarrow$#  FUNCDEF FUNCLIST' 
+
+FUNCLIST' #$\rightarrow$#  FUNCLIST 
+             | #$\bm{\varepsilon}$# 
+
+FUNCDEF #$\rightarrow$#  def ident ( PARAMLIST ) { STATELIST } 
+
+TYPES #$\rightarrow$#  int 
+         | float 
+         | string 
+
+PARAMLIST #$\rightarrow$#  string LISTDCL ident PARAMLIST' 
+             | float LISTDCL ident PARAMLIST' 
+             | int LISTDCL ident PARAMLIST' 
+             | #$\bm{\varepsilon}$# 
+
+PARAMLIST' #$\rightarrow$# , PARAMLIST 
+              | #$\bm{\varepsilon}$# 
+
+LISTDCL #$\rightarrow$# []LISTDCL | #$\bm{\varepsilon}$# 
+
+STATEMENT #$\rightarrow$#  VARDECL ; 
+             | ATRIBSTAT ; 
+             | PRINTSTAT ; 
+             | READSTAT ; 
+             | FUNCCALL ; 
+             | RETURNSTAT ; 
+             | IFSTAT 
+             | FORSTAT 
+             | WHILESTAT 
+             | { STATELIST } 
+             | break ; 
+             | ; 
+
+VARDECL #$\rightarrow$#  int ident VARDECL' 
+           | float ident VARDECL' 
+           | string ident VARDECL' 
+
+VARDECL' #$\rightarrow$#  [ int_constant ] VARDECL' 
+            | #$\bm{\varepsilon}$# 
+
+ATRIBSTAT #$\rightarrow$#  LVALUE ATRIBSTAT' = ATRIBSTAT'' 
+
+ATRIBSTAT' #$\rightarrow$#  [ NUMEXPRESSION ] 
+              | #$\bm{\varepsilon}$# 
+
+ATRIBSTAT'' #$\rightarrow$#  EXPRESSION 
+               | ALLOCEXPRESSION 
+               | FUNCCALL 
+
+FUNCCALL #$\rightarrow$# ident ( PARAMLISTCALL ) 
+
+PARAMLISTCALL #$\rightarrow$# ident PARAMLISTCALL' PARAMLISTCALL''
+                 | #$\bm{\varepsilon}$# 
+
+PARAMLISTCALL' #$\rightarrow$# [NUMEXPRESSION] | #$\bm{\varepsilon}$#                  
+
+PARAMLISTCALL'' #$\rightarrow$#  , PARAMLISTCALL 
+                  | #$\bm{\varepsilon}$# 
+
+PRINTSTAT #$\rightarrow$#  print EXPRESSION 
+
+READSTAT #$\rightarrow$#  read LVALUE 
+
+RETURNSTAT #$\rightarrow$#  return RETURNSTAT' 
+
+RETURNSTAT' #$\rightarrow$#  ident 
+               | EXPRESSION 
+               | #$\bm{\varepsilon}$# 
+
+IFSTAT #$\rightarrow$#  if ( EXPRESSION ) STATEMENT IFSTAT' 
+
+IFSTAT' #$\rightarrow$#  else STATEMENT 
+           | #$\bm{\varepsilon}$# 
+
+FORSTAT #$\rightarrow$#  for ( FORSTAT' ; FORSTAT'' ; FORSTAT' ) STATEMENT 
+
+FORSTAT' #$\rightarrow$#  LVALUE ATRIBSTAT' = ATRIBSTAT'' 
+            | #$\bm{\varepsilon}$# 
+
+FORSTAT'' #$\rightarrow$#  EXPRESSION 
+             | #$\bm{\varepsilon}$# 
+
+WHILESTAT #$\rightarrow$#  while ( EXPRESSION ) STATEMENT 
+
+STATELIST #$\rightarrow$#  int ident VARDECL' ; STATELIST' 
+             | float ident VARDECL' ; STATELIST' 
+             | string ident VARDECL' ; STATELIST' 
+             | LVALUE ATRIBSTAT' = ATRIBSTAT'' ; STATELIST' 
+             | print EXPRESSION ; STATELIST' 
+             | read LVALUE ; STATELIST' 
+             | ident ( PARAMLISTCALL ) ; STATELIST' 
+             | return RETURNSTAT' ; STATELIST' 
+             | if ( EXPRESSION ) STATEMENT IFSTAT' STATELIST' 
+             | for ( FORSTAT' ; FORSTAT'' ; FORSTAT' ) STATEMENT STATELIST' 
+             | while ( EXPRESSION ) STATEMENT STATELIST' 
+             | { STATELIST } STATELIST' 
+             | break ; STATELIST' 
+             | ; STATELIST'
+
+STATELIST' #$\rightarrow$#  int ident VARDECL' ; STATELIST' 
+            | float ident VARDECL' ; STATELIST' 
+            | string ident VARDECL' ; STATELIST' 
+            | LVALUE ATRIBSTAT' = ATRIBSTAT'' ; STATELIST' 
+            | print EXPRESSION ; STATELIST' 
+            | read LVALUE ; STATELIST' 
+            | ident ( PARAMLISTCALL ) ; STATELIST' 
+            | return RETURNSTAT' ; STATELIST' 
+            | if ( EXPRESSION ) STATEMENT IFSTAT' STATELIST' 
+            | for ( FORSTAT' ; FORSTAT'' ; FORSTAT' ) STATEMENT STATELIST' 
+            | while ( EXPRESSION ) STATEMENT STATELIST' 
+            | { STATELIST } STATELIST' 
+            | break ; STATELIST' 
+            | ; STATELIST' 
+            | #$\bm{\varepsilon}$# 
+
+ALLOCEXPRESSION #$\rightarrow$#  new TYPES [ NUMEXPRESSION ] ALLOCEXPRESSION' 
+
+ALLOCEXPRESSION' #$\rightarrow$#  [ NUMEXPRESSION ] ALLOCEXPRESSION' 
+                  | #$\bm{\varepsilon}$# 
+
+EXPRESSION #$\rightarrow$#  NUMEXPRESSION EXPRESSION' 
+
+EXPRESSION' #$\rightarrow$#  COMPOPERATOR NUMEXPRESSION 
+               | #$\bm{\varepsilon}$# 
+
+COMPOPERATOR #$\rightarrow$#  < 
+                | > 
+                | <= 
+                | >= 
+                | == 
+                | != 
+
+NUMEXPRESSION #$\rightarrow$#  TERM NUMEXPRESSION' 
+
+NUMEXPRESSION' #$\rightarrow$#  ADDSUB TERM 
+                  | #$\bm{\varepsilon}$# 
+
+ADDSUB #$\rightarrow$#  + 
+          | - 
+
+TERM #$\rightarrow$#  UNARYEXPR TERM' 
+
+TERM' #$\rightarrow$#  MULTDIV UNARYEXPR TERM' 
+         | #$\bm{\varepsilon}$# 
+
+MULTDIV #$\rightarrow$#  * 
+           | / 
+           | % 
+
+UNARYEXPR #$\rightarrow$#  UNARYEXPR' FACTOR 
+
+UNARYEXPR' #$\rightarrow$#  + 
+              | - 
+              | #$\bm{\varepsilon}$# 
+
+FACTOR #$\rightarrow$#  int_constant 
+          | float_constant 
+          | string_constant 
+          | null 
+          | LVALUE 
+          | ( NUMEXPRESSION ) 
+
+LVALUE #$\rightarrow$#  ident LVALUE' 
+
+LVALUE' #$\rightarrow$#  [ NUM_EXPRESSION ] LVALUE' 
+           | #$\bm{\varepsilon}$#    
+           
+\end{lstlisting}
 % ---
 % Conclusão (outro exemplo de capítulo sem numeração e presente no sumário)
 % ---
