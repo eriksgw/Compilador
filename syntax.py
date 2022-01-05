@@ -637,28 +637,6 @@ def p_error(p):
         print("End of File!")
         return
 
-    # if p.type == 'LBRACE':
-    #     # Read ahead looking for a closing '}'
-    #     while True:
-    #         tok = parser.token()             # Get the next token
-    #         if not tok or tok.type == 'RBRACE':
-    #             break
-    #     parser.restart()
-    # elif p.type == 'LPAREN':
-    #     # Read ahead looking for a closing ')'
-    #     while True:
-    #         tok = parser.token()             # Get the next token
-    #         if not tok or tok.type == 'RPAREN':
-    #             break
-    #     parser.restart()
-    # elif p.type == 'LBRACKET':
-    #     # Read ahead looking for a closing ']'
-    #     while True:
-    #         tok = parser.token()             # Get the next token
-    #         if not tok or tok.type == 'RBRACKET':
-    #             break
-    #     parser.restart()
-    # else:
     print("Erro:", p)
     print(text[p.lexpos - 40:p.lexpos + 40])
 
