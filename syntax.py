@@ -258,11 +258,6 @@ def p_returnstat(p):
     returnstat : RETURN returnstat1
     '''
 
-def p_returnstat1_1(p):
-    '''
-    returnstat1 : IDENT
-    '''
-
 def p_returnstat1_2(p):
     '''
     returnstat1 : expression
@@ -535,11 +530,6 @@ def p_numexpression1_1(p):
 
 def p_numexpression1_2(p):
     '''
-    numexpression1 : term
-    '''
-
-def p_numexpression1_3(p):
-    '''
     numexpression1 : empty
     '''
 
@@ -672,7 +662,11 @@ def p_error(p):
     print("Erro:", p)
     print(text[p.lexpos - 40:p.lexpos + 40])
 
-
+precedence = (
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'MULTIPLY', 'DIVIDE'),
+    ('nonassoc', 'LBRACKET', 'RBRACKET'),
+)
 
 import logging
 logging.basicConfig(

@@ -19,7 +19,7 @@ run:
 
 debugger:
 	( \
-      rm ./debug/parser.out; \
-      rm ./debug/parsetab.py; \
+      rm -rf ./debug; \
+      mkdir debug; \
       python3 main.py $(file); \
    )
