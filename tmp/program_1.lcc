@@ -1,12 +1,14 @@
-print "Enter the number of items to be sorted";
-length;
-int i;
-int list[100];
-list = new int[100];
-read length;
-for (i = 0; i < length; i = i + 1) {
-    print "Enter number no" + i;
-    read list[i];
+def main() {
+    print "Enter the number of items to be sorted";
+    int length;
+    read length;
+    int i;
+    int list[length];
+    list = new int[length];
+    for (i = 0; i < length; i = i + 1) {
+        print "Enter number no" + i;
+        read list[i];
+    }
 }
 def log(int value) {
     if (value > 1) {
@@ -21,7 +23,7 @@ def log(int value) {
         return 0;
     }
 }
-def insertion_sort(int start, int end) {
+def insertion_sort(int[] list, int length, int start, int end) {
     if (end == 0) {
         end = length;
     }
@@ -40,7 +42,7 @@ def insertion_sort(int start, int end) {
     }
     return list;
 }
-def sort() {
+def sort(int[] list, int length) {
     if (length == 0) {
         return list;
     }
@@ -50,9 +52,11 @@ def sort() {
     max_depth = 2 * log_result;
     int size_threshold;
     size_threshold = 16;
-    return intro_sort(0, length, size_threshold, max_depth);
+    int[] result;
+    result = intro_sort(list, 0, length, size_threshold, max_depth);
+    return result;
 }
-def heapify(int index, int heap_size) {
+def heapify(int[] list, int index, int heap_size) {
     int largest;
     largest = index;
     int left_index;
@@ -77,7 +81,7 @@ def heapify(int index, int heap_size) {
         heapify(largest, heap_size);
     }
 }
-def heap_sort() {
+def heap_sort(int[] list, int length) {
     int n;
     n = length;
     int i;
@@ -93,7 +97,7 @@ def heap_sort() {
     }
     return list;
 }
-def median_of_3(int first_index, int middle_index, int last_index) {
+def median_of_3(int[] list, int first_index, int middle_index, int last_index) {
     int bool1;
     bool1 = list[first_index] > list[middle_index];
     int bool2;
@@ -111,7 +115,7 @@ def median_of_3(int first_index, int middle_index, int last_index) {
         return list[last_index];
     }
 }
-def partition(int low, int high, int pivot) {
+def partition(int[] list, int low, int high, int pivot) {
     int i;
     i = low;
     int j;
@@ -132,13 +136,15 @@ def partition(int low, int high, int pivot) {
         temp = list[i];
         list[i] = list[j];
         list[j] = temp;
-        i = i + 1
+        i = i + 1;
     }
 }
-def intro_sort(int start, int end, int size_threshold, int max_depth) {
+def intro_sort(int[] list, int start, int end, int size_threshold, int max_depth) {
     for (end = end; end - start > size_threshold; end = p) {
         if (max_depth == 0) {
-            return heap_sort();
+            int[] result;
+            result = heap_sort(list, length);
+            return result;
         }
         max_depth = max_depth - 1;
         int temp1;
@@ -146,14 +152,17 @@ def intro_sort(int start, int end, int size_threshold, int max_depth) {
         int temp2;
         temp2 = temp1 / 2;
         int param2;
-        param2 = start + temp2 + 1
+        param2 = start + temp2;
+        param2 = param2 + 1;
         int param3;
         param3 = end - 1;
         int pivot;
-        pivot = median_of_3(start, param2, param3);
+        pivot = median_of_3(list, start, param2, param3);
         int p;
-        p = partition(start, end, pivot);
-        intro_sort(p, end, size_threshold, max_depth);
+        p = partition(list, start, end, pivot);
+        intro_sort(list, p, end, size_threshold, max_depth);
     }
-    return insertion_sort(start, end);
+    int[] result;
+    result = insertion_sort(list, start, end);
+    return result;
 }

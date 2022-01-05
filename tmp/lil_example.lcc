@@ -1,12 +1,3 @@
-def hello_world() {
-    print "hello world";
-}
-
-int x;
-x = 10;
-
-if (x > 30) {
-    hello_world();
-} else {
-    print "erro";
+for(i = 0; i < 10; i = i + 1){
+    print i;
 }

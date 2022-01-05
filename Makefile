@@ -16,3 +16,10 @@ run:
 	( \
       python3 main.py $(file); \
    )
+
+debugger:
+	( \
+      rm ./debug/parser.out; \
+      rm ./debug/parsetab.py; \
+      python3 main.py $(file); \
+   )
