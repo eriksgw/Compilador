@@ -48,7 +48,7 @@ def calc_bhaskara(float a, float b, float c) {
     
     if (delta > 0) {
         float sqrt;
-        sqrt = pow(delta, 1/2);
+        sqrt = pow(delta, 0.5);
 
         x1 = (-b + sqrt) / (2 * a);
         x2 = (-b - sqrt) / (2 * a);
@@ -91,14 +91,32 @@ def main() {
     read b;
     read c;
 
-    print "a=" + a + " b=" + b + " c=" + c;
+    string print1;
+    print1 = "a=" + a;
+    print1 = print1 + " b=";
+    print1 = print1 + b;
+    print1 = print1 + " c=";
+    print1 = print1 + c;
+    print print1;
     print "Full equation: ";
-    print a + "x² " + b + "x " + c;
+
+    string print2;
+    print2 = a + "x² ";
+    print2 = print2 + "x² ";
+    print2 = print2 + b;
+    print2 = print2 + "x ";
+    print2 = print2 + c;
+    print print2;
 
     delta = calc_delta(a, b, c);
-    result = calc_bhaskaraa, b, c);
+    result = calc_bhaskara(a, b, c);
 
-    print "Delta: " + delta + ".";
-    print "Result: " + result + ".";
+    string output1;
+    output1 = "Delta: " + delta;
+    print  output1;
+
+    string output2;
+    output2 = "Result: " + result;
+    print output2;
 
 }

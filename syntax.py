@@ -1,7 +1,6 @@
 from lex import tokens
 import ply.yacc as yacc
 
-# TODO: Create Grammar
 
 def p_program_1(p):
     '''
@@ -15,8 +14,9 @@ def p_program_2(p):
 
 def p_program_3(p):
     '''
-    program : empty
+    program : 
     '''
+    p[0]=None
 
 def p_funclist(p):
     '''
@@ -30,8 +30,9 @@ def p_funclist1_1(p):
 
 def p_funclist1_2(p):
     '''
-    funclist1 : empty
+    funclist1 : 
     '''
+    p[0]=None
 
 def p_funcdef(p):
     '''
@@ -70,8 +71,9 @@ def p_paramlist_3(p):
 
 def p_paramlist_4(p):
     '''
-    paramlist : empty
+    paramlist : 
     '''
+    p[0]=None
 
 def p_paramlist1_1(p):
     '''
@@ -80,8 +82,9 @@ def p_paramlist1_1(p):
 
 def p_paramlist1_2(p):
     '''
-    paramlist1 : empty
+    paramlist1 : 
     '''
+    p[0]=None
 
 def p_listdcl_1(p):
     '''
@@ -90,17 +93,33 @@ def p_listdcl_1(p):
 
 def p_listdcl_2(p):
     '''
-    listdcl : empty
+    listdcl : 
+    '''
+    p[0]=None
+
+# def p_statement_1(p):
+#     '''
+#     statement : vardecl SEMICOLON
+#     '''
+
+def p_statement_1_1(p):
+    '''
+    statement : INT IDENT statement2
     '''
 
-def p_statement_1(p):
+def p_statement_1_2(p):
     '''
-    statement : vardecl SEMICOLON
+    statement : FLOAT IDENT statement2
+    '''
+
+def p_statement_1_3(p):
+    '''
+    statement : STRING IDENT statement2
     '''
 
 def p_statement_2(p):
     '''
-    statement : atribstat SEMICOLON
+    statement : IDENT statement1
     '''
 
 def p_statement_3(p):
@@ -148,64 +167,44 @@ def p_statement_11(p):
     statement : SEMICOLON
     '''
 
-def p_statement_12(p):
+def p_statement1_1(p):
     '''
-    statement : funccall SEMICOLON
-    '''
-
-def p_vardecl_1(p):
-    '''
-    vardecl : INT IDENT vardecl1
+    statement1 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 SEMICOLON
     '''
 
-def p_vardecl_2(p):
+def p_statement1_2(p):
     '''
-    vardecl : FLOAT IDENT vardecl1
-    '''
-
-def p_vardecl_3(p):
-    '''
-    vardecl : STRING IDENT vardecl1
-    '''
-   
-def p_vardecl1_1(p):
-    '''
-    vardecl1 : LBRACKET numexpression RBRACKET vardecl1
+    statement1 : ASSIGN atribstat1 SEMICOLON
     '''
 
-def p_vardecl1_2(p):
+def p_statement1_3(p):
     '''
-    vardecl1 : empty
+    statement1 : LPAREN paramlistcall RPAREN SEMICOLON
     '''
 
-def p_atribstat(p):
+def p_statement2_1(p):
     '''
-    atribstat : IDENT lvalue1 atribstat1 ASSIGN atribstat2
+    statement2 : LBRACKET numexpression RBRACKET lvalue1 SEMICOLON
+    '''
+
+def p_statement2_2(p):
+    '''
+    statement2 : SEMICOLON
     '''
 
 def p_atribstat1_1(p):
     '''
-    atribstat1 : LBRACKET numexpression RBRACKET atribstat1
+    atribstat1 : expression
     '''
 
 def p_atribstat1_2(p):
     '''
-    atribstat1 : empty
+    atribstat1 : allocexpression
     '''
 
-def p_atribstat2_1(p):
+def p_atribstat1_3(p):
     '''
-    atribstat2 : expression
-    '''
-
-def p_atribstat2_2(p):
-    '''
-    atribstat2 : allocexpression
-    '''
-
-def p_atribstat2_3(p):
-    '''
-    atribstat2 : funccall
+    atribstat1 : funccall
     '''
 
 def p_funccall(p):
@@ -215,33 +214,36 @@ def p_funccall(p):
 
 def p_paramlistcall_1(p):
     '''
-    paramlistcall : factor paramlistcall1 paramlistcall2
+    paramlistcall : factor paramlistcall2
     '''
 
 def p_paramlistcall_2(p):
     '''
-    paramlistcall : empty
+    paramlistcall : 
     '''
+    p[0]=None
 
 def p_paramlistcall1_1(p):
     '''
-    paramlistcall1 : LBRACKET numexpression RBRACKET paramlistcall1
+    paramlistcall1 : COMMA paramlistcall
     '''
 
 def p_paramlistcall1_2(p):
     '''
-    paramlistcall1 : empty
+    paramlistcall1 : 
     '''
+    p[0]=None
 
 def p_paramlistcall2_1(p):
     '''
-    paramlistcall2 : COMMA paramlistcall
+    paramlistcall2 : LBRACKET numexpression RBRACKET lvalue1 paramlistcall1
     '''
 
 def p_paramlistcall2_2(p):
     '''
-    paramlistcall2 : empty
+    paramlistcall2 : paramlistcall1
     '''
+
 
 def p_printstat(p):
     '''
@@ -265,8 +267,9 @@ def p_returnstat1_2(p):
 
 def p_returnstat1_3(p):
     '''
-    returnstat1 : empty
+    returnstat1 : 
     '''
+    p[0]=None
 
 def p_ifstat(p):
     '''
@@ -280,8 +283,9 @@ def p_ifstat1_1(p):
 
 def p_ifstat1_2(p):
     '''
-    ifstat1 : empty
+    ifstat1 : %prec IF
     '''
+    p[0]=None
 
 def p_forstat(p):
     '''
@@ -290,13 +294,14 @@ def p_forstat(p):
 
 def p_forstat1_1(p):
     '''
-    forstat1 : IDENT lvalue1 atribstat1 ASSIGN atribstat2
+    forstat1 : IDENT forstat3
     '''
 
 def p_forstat1_2(p):
     '''
-    forstat1 : empty
+    forstat1 : 
     '''
+    p[0]=None
 
 def p_forstat2_1(p):
     '''
@@ -305,7 +310,18 @@ def p_forstat2_1(p):
 
 def p_forstat2_2(p):
     '''
-    forstat2 : empty
+    forstat2 : 
+    '''
+    p[0]=None
+
+def p_forstat3_1(p):
+    '''
+    forstat3 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1
+    '''
+
+def p_forstat3_2(p):
+    '''
+    forstat3 : ASSIGN atribstat1
     '''
 
 def p_whilestat(p):
@@ -315,22 +331,22 @@ def p_whilestat(p):
 
 def p_statelist_1(p):
     '''
-    statelist : INT listdcl IDENT vardecl1 SEMICOLON statelist1
+    statelist : INT listdcl IDENT statelist2
     '''
 
 def p_statelist_2(p):
     '''
-    statelist : FLOAT listdcl IDENT vardecl1 SEMICOLON statelist1
+    statelist : FLOAT listdcl IDENT statelist2
     '''
 
 def p_statelist_3(p):
     '''
-    statelist : STRING listdcl IDENT vardecl1 SEMICOLON statelist1
+    statelist : STRING listdcl IDENT statelist2
     '''
 
 def p_statelist_4(p):
     '''
-    statelist : IDENT lvalue1 atribstat1 ASSIGN atribstat2 SEMICOLON statelist1
+    statelist : IDENT statelist3
     '''
 
 def p_statelist_5(p):
@@ -340,7 +356,7 @@ def p_statelist_5(p):
 
 def p_statelist_6(p):
     '''
-    statelist : READ IDENT lvalue1 SEMICOLON statelist1
+    statelist : READ IDENT statelist2
     '''
 
 def p_statelist_7(p):
@@ -385,22 +401,22 @@ def p_statelist_14(p):
 
 def p_statelist1_1(p):
     '''
-    statelist1 : INT listdcl IDENT vardecl1 SEMICOLON statelist1
+    statelist1 : INT listdcl IDENT statelist2
     '''
 
 def p_statelist1_2(p):
     '''
-    statelist1 : FLOAT listdcl IDENT vardecl1 SEMICOLON statelist1
+    statelist1 : FLOAT listdcl IDENT statelist2
     '''
 
 def p_statelist1_3(p):
     '''
-    statelist1 : STRING listdcl IDENT vardecl1 SEMICOLON statelist1
+    statelist1 : STRING listdcl IDENT statelist2
     '''
 
 def p_statelist1_4(p):
     '''
-    statelist1 : IDENT lvalue1 atribstat1 ASSIGN atribstat2 SEMICOLON statelist1
+    statelist1 : IDENT statelist3
     '''
 
 def p_statelist1_5(p):
@@ -410,7 +426,7 @@ def p_statelist1_5(p):
 
 def p_statelist1_6(p):
     '''
-    statelist1 : READ IDENT lvalue1 SEMICOLON statelist1
+    statelist1 : READ IDENT statelist2
     '''
 
 def p_statelist1_7(p):
@@ -455,22 +471,33 @@ def p_statelist1_14(p):
 
 def p_statelist1_15(p):
     '''
-    statelist1 : empty
+    statelist1 : 
+    '''
+    p[0]=None
+
+def p_statelist2_1(p):
+    '''
+    statelist2 : LBRACKET numexpression RBRACKET lvalue1 SEMICOLON statelist1
+    '''
+
+def p_statelist2_2(p):
+    '''
+    statelist2 : SEMICOLON statelist1
+    '''
+
+def p_statelist3_1(p):
+    '''
+    statelist3 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 SEMICOLON statelist1
+    '''
+
+def p_statelist3_2(p):
+    '''
+    statelist3 : ASSIGN atribstat1 SEMICOLON statelist1
     '''
 
 def p_allocexpression(p):
     '''
-    allocexpression : NEW types LBRACKET numexpression RBRACKET allocexpression1
-    '''
-
-def p_allocexpression1_1(p):
-    '''
-    allocexpression1 : LBRACKET numexpression RBRACKET allocexpression1
-    '''
-
-def p_allocexpression1_2(p):
-    '''
-    allocexpression1 : empty
+    allocexpression : NEW types LBRACKET numexpression RBRACKET lvalue1
     '''
 
 def p_expression(p):
@@ -485,8 +512,9 @@ def p_expression1_1(p):
 
 def p_expression1_2(p):
     '''
-    expression1 : empty
+    expression1 : 
     '''
+    p[0]=None
 
 def p_compoperator_1(p):
     '''
@@ -530,8 +558,9 @@ def p_numexpression1_1(p):
 
 def p_numexpression1_2(p):
     '''
-    numexpression1 : empty
+    numexpression1 : 
     '''
+    p[0]=None
 
 def p_addsub_1(p):
     '''
@@ -555,8 +584,9 @@ def p_term1_1(p):
 
 def p_term1_2(p):
     '''
-    term1 : empty
+    term1 : 
     '''
+    p[0]=None
 
 def p_multdiv_1(p):
     '''
@@ -621,14 +651,8 @@ def p_lvalue1_1(p):
 
 def p_lvalue1_2(p):
     '''
-    lvalue1 : empty
+    lvalue1 : 
     '''
-
-def p_empty(p):
-    '''
-    empty : 
-    '''
-    p[0]=None
 
 text = ""
 
@@ -640,12 +664,6 @@ def p_error(p):
     print("Erro:", p)
     print(text[p.lexpos - 40:p.lexpos + 40])
 
-precedence = (
-    ('left', 'PLUS', 'MINUS'),
-    ('left', 'MULTIPLY', 'DIVIDE'),
-    ('nonassoc', 'LBRACKET', 'RBRACKET'),
-)
-
 import logging
 logging.basicConfig(
     level = logging.DEBUG,
@@ -655,6 +673,11 @@ logging.basicConfig(
 )
 log = logging.getLogger()
 
+precedence = (
+    ('nonassoc', 'IF'), 
+    ('left', 'ELSE'),
+    ('left', 'LBRACKET')
+)
 parser = yacc.yacc(start='program', outputdir='./debug')  #build the parser
 
 def analyze(input_value):

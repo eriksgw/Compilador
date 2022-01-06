@@ -692,17 +692,57 @@ semelhante a ferramenta de mesmo nome para Unix. Ele é o componente do PLY que 
 a análise da gramática.
 
 Cada regra gramatical pode ser definida atravé de uma função Python, onde cada docstring possui
-a especificação apropriada da gramática livre de contexto. Segue um exemplo, da regra para
-a expressão plus.
+a especificação apropriada da gramática livre de contexto. Cada função aceita um
+único argumento 'p', que é a sequência contendo os valores de cada símbolo da gramática
+da respectiva regra. Segue um exemplo, de como especificamos a regra para a expressão \textbf{FUNCDEF}.
 
 \begin{python}
-def p_expression_plus(p):
-    'expression : expression PLUS term'
-    #   ^            ^        ^    ^
-    #  p[0]         p[1]     p[2] p[3]
-
-    p[0] = p[1] + p[3]
+def p_funcdef(p):
+    '''
+    funcdef : DEF IDENT LPAREN paramlist RPAREN LBRACE statelist RBRACE
+    '''
 \end{python}
+
+Normalmente, a primeira regra especificada no yacc determina o começo da gramática.
+Entretanto, podemos escolher qual regra da gramática o analisador deve iniciar
+passando o parâmetro 'start=rule\_expression' para o yacc. No nosso trabalho,
+ela pode ser representada pelas funções \emph{p\_program\_1}, \emph{p\_func\_list} ou
+produções vazias e começa pela expressão \emph{program}. 
+
+\begin{python}
+def p_program_1(p):
+    '''
+    program : statement
+    '''
+
+def p_funclist(p):
+    '''
+    funclist : funcdef funclist1
+    '''
+    .
+    .
+    .
+parser = yacc.yacc(start='program')  #build the parser
+\end{python}
+
+Para verificar problemas que ocorrem durante a análise sintática, podemos criar
+uma regra para detectar erros sintáticos que são encontradas durante a análise. Além disso,
+se algum erro é encontrado na especificação da gramática, o yacc irá produzir mensagems de 
+diagnósticos ou exceções. Os problemas que podem ser encontrados são: funções com nomes duplicados,
+conflitos gerados por gramáticas ambíguas, regras de gramáticas que são mal especificadas, recursões infinitas,
+regras e tokens que não são utilizados ou definidos.
+
+\begin{python}
+def p_error(p):
+    if not p:
+        print("End of File!")
+        return
+
+    print("Erro:", p)
+    print(text[p.lexpos - 40:p.lexpos + 40])   
+\end{python} 
+
+
 \chapter{Gramática}
 \section{Gramática Original}
 
@@ -1073,7 +1113,7 @@ PROGRAM #$\rightarrow$#  STATEMENT
 
 FUNCLIST #$\rightarrow$#  FUNCDEF FUNCLIST' 
 
-FUNCLIST' #$\rightarrow$#  FUNCLIST 
+FUNCLIST' #$\rightarrow$#  def ident ( PARAMLIST ) { STATELIST } FUNCLIST'
              | #$\bm{\varepsilon}$# 
 
 FUNCDEF #$\rightarrow$#  def ident ( PARAMLIST ) { STATELIST } 

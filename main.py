@@ -10,7 +10,7 @@ if __name__ == '__main__':
     from lex import analyze as la
 
     if len(sys.argv) != 2:
-        file = open('./tmp/lil_example.lcc', 'r')        
+        file = open('./tmp/lil_example.ccc', 'r')        
     else:
         file = open(sys.argv[1], 'r')
 

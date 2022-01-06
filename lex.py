@@ -126,7 +126,7 @@ errors = []
 def t_error(t):
     # print(pattern.format("*ILLEGAL CHAR*", t.value[0], t.lexer.lineno, t.lexpos))
 
-    errors.append("Illegal char %s in line %d" % (t.value[0], t.lexer.lineno))
+    errors.append("Illegal char %s in line %d, column %d" % (t.value[0], t.lexer.lineno, find_column(t)))
 
     t.lexer.skip(1)
 
@@ -146,17 +146,22 @@ def print_table(st):
     for e in errors:
         print(e)
 
+text = ""
+
+def find_column(token):
+        last_cr = text.rfind('\n',0,token.lexpos)
+        if last_cr < 0:
+            last_cr = 0
+        column = (token.lexpos - last_cr) + 1
+        if token.lineno > 1:
+            column -= 1
+        return column
+
 def analyze(input_value):
+    global text
     lexer = lex.lex()
 
-    # def find_column(token):
-    #     last_cr = input_value.rfind('\n',0,token.lexpos)
-    #     if last_cr < 0:
-    #         last_cr = 0
-    #     column = (token.lexpos - last_cr) + 1
-    #     if token.lineno > 1:
-    #         column -= 1
-    #     return column
+    text = input_value
 
     lexer.input(input_value)
 
@@ -168,9 +173,9 @@ def analyze(input_value):
 
         if tok.type == 'IDENT':
             if tok.value in symbol_table:
-                symbol_table[tok.value].append(tok.lineno)
+                symbol_table[tok.value].append((tok.lineno, find_column(tok)))
             else:
-                symbol_table[tok.value] = [tok.lineno]
+                symbol_table[tok.value] = [(tok.lineno, find_column(tok))]
 
     print_table(symbol_table)
     return lexer
