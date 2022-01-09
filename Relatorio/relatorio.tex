@@ -709,8 +709,8 @@ def p_funcdef(p):
 Normalmente, a primeira regra especificada no yacc determina o começo da gramática.
 Entretanto, podemos escolher qual regra da gramática o analisador deve ser iniciado
 passando o parâmetro `start=rule\_expression' para o yacc. No nosso trabalho,
-ela pode começar pelas funções \emph{p\_program\_1}, \emph{p\_func\_list} ou
-produções vazias. Note que optamos por utilizar a regra inicial \emph{program}. 
+ela pode começar pelas funções `p\_program\_1', `p\_func\_list' ou
+produção vazia. Note que optamos por utilizar a regra inicial \textbf{`program'}. 
 
 \begin{python}
 def p_program_1(p):
@@ -901,7 +901,7 @@ PARAMLIST #$\rightarrow$# int ident , PARAMLIST
 
 Entretanto, a gramática que utilizamos não é LL(1), porque a regra
 \textbf{IFSTAT} consiste de uma produção que pode ser anulável. E o \textbf{ELSE}
-está presente tanto no First quanto no Follow. Sendo assim, a nossa gramática está em
+está presente tanto no \emph{First} quanto no \emph{Follow}. Sendo assim, a nossa gramática está em
 LR(1), porém, através da precedência de tokens, conseguimos adequar nossa gramática ao
 compilador.
 
