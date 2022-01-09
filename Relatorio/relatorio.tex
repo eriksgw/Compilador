@@ -1100,8 +1100,8 @@ FUNCLIST #$\rightarrow$# FUNCDEF FUNCLIST | FUNCDEF
 
 FUNCDEF #$\rightarrow$# def ident(PARAMLIST){STATELIST}  
 
-PARAMLIST #$\rightarrow$# ((int | float | string)#$\textbf{\textcolor{red}{([])}}$##$^{*}$# ident, PARAMLIST |
-             (int | float | string)#$\textbf{\textcolor{red}{([])}}$##$^{*}$# ident)?  
+PARAMLIST #$\rightarrow$# ((int | float | string) ident, PARAMLIST |
+             (int | float | string) ident)?  
 
 STATEMENT #$\rightarrow$# (VARDECL; | ATRIBSTAT; | PRINTSTAT; |
              READSTAT; | #$\textbf{\textcolor{red}{FUNCCALL;}}$#| RETURNSTAT; | IFSTAT | FORSTAT | #$\textbf{\textcolor{red}{WHILESTAT}}$# |
