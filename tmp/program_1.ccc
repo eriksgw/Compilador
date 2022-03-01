@@ -1,0 +1,168 @@
+def main() {
+    print "Enter the number of items to be sorted";
+    int length;
+    read length;
+    int i;
+    int list[length];
+    list = new int[length];
+    for (i = 0; i < length; i = i + 1) {
+        print "Enter number no" + i;
+        read list[i];
+    }
+}
+def log(int value) {
+    if (value > 1) {
+        int i;
+        int check_value;
+        check_value = 2;
+        for (i = 0; check_value >= value; i = i + 1) {
+            check_value = check_value * 2;
+        }
+        return i + 1;
+    } else {
+        return 0;
+    }
+}
+def insertion_sort(int[] list, int length, int start, int end) {
+    if (end == 0) {
+        end = length;
+    }
+    int i;
+    int temp_index;
+    int temp_index_value;
+    for (i = start; i < end; i = i + 1) {
+        temp_index_value = list[i];
+        for (temp_index = i;temp_index != start;temp_index = temp_index - 1) {
+            if (temp_index_value < list[temp_index - 1]) {
+                break;
+            }
+            list[temp_index] = list[temp_index - 1];
+        }
+        list[temp_index] = temp_index_value;
+    }
+    return list;
+}
+def sort(int[] list, int length) {
+    if (length == 0) {
+        return list;
+    }
+    int log_result;
+    log_result = log(length);
+    int max_depth;
+    max_depth = 2 * log_result;
+    int size_threshold;
+    size_threshold = 16;
+    int[] result;
+    result = intro_sort(list, 0, length, size_threshold, max_depth);
+    return result;
+}
+def heapify(int[] list, int index, int heap_size) {
+    int largest;
+    largest = index;
+    int left_index;
+    left_index = 2 * index + 1;
+    int right_index;
+    right_index = 2 * index + 2;
+    if (left_index < heap_size) {
+        if (list[largest] < list[left_index]) {
+            largest = left_index;
+        }
+    }
+    if (right_index < heap_size) {
+        if (list[largest] < list[right_index]) {
+            largest = right_index;
+        }
+    }
+    if (largest != index) {
+        int temp;
+        temp = list[index];
+        list[index] = list[largest];
+        list[largest] = temp;
+        heapify(largest, heap_size);
+    }
+}
+def heap_sort(int[] list, int length) {
+    int n;
+    n = length;
+    int i;
+    for (i = n / 2; i > -1; i = i - 1) {
+        heapify(i, n);
+    }
+    for (i = n - 1; i > 0; i = i - 1) {
+        int temp;
+        temp = list[i];
+        list[i] = list[0];
+        list[0] = temp;
+        heapify(0, i);
+    }
+    return list;
+}
+def median_of_3(int[] list, int first_index, int middle_index, int last_index) {
+    int bool1;
+    bool1 = list[first_index] > list[middle_index];
+    int bool2;
+    bool2 = list[first_index] > list[last_index];
+    int bool3;
+    bool3 = list[middle_index] > list[first_index];
+    int bool4;
+    bool4 = list[middle_index] > list[last_index];
+    if (bool1 != bool2) {
+        return list[first_index];
+    } else if (bool3 != bool4) {
+        return list[middle_index];
+    }
+    else {
+        return list[last_index];
+    }
+}
+def partition(int[] list, int low, int high, int pivot) {
+    int i;
+    i = low;
+    int j;
+    j = high;
+    int c;
+    for (c = 0; c >= 0; c = c + 1) {
+        for (i = i; list[i] < pivot; i = i) {
+            i = i + 1;
+        }
+        j = j - 1;
+        for (j = j; pivot < list[j]; j = j) {
+            j = j - 1;
+        }
+        if (i >= j) {
+            return i;
+        }
+        int temp;
+        temp = list[i];
+        list[i] = list[j];
+        list[j] = temp;
+        i = i + 1;
+    }
+}
+def intro_sort(int[] list, int start, int end, int size_threshold, int max_depth) {
+    for (end = end; end - start > size_threshold; end = p) {
+        if (max_depth == 0) {
+            int[] result;
+            result = heap_sort(list, length);
+            return result;
+        }
+        max_depth = max_depth - 1;
+        int temp1;
+        temp1 = end - start;
+        int temp2;
+        temp2 = temp1 / 2;
+        int param2;
+        param2 = start + temp2;
+        param2 = param2 + 1;
+        int param3;
+        param3 = end - 1;
+        int pivot;
+        pivot = median_of_3(list, start, param2, param3);
+        int p;
+        p = partition(list, start, end, pivot);
+        intro_sort(list, p, end, size_threshold, max_depth);
+    }
+    int[] result;
+    result = insertion_sort(list, start, end);
+    return result;
+}
