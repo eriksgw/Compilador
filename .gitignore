@@ -127,3 +127,16 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+# Latex File
+relatorio.aux
+relatorio.fdb_latexmk
+relatorio.fls
+relatorio.idx
+relatorio.ind
+relatorio.log
+relatorio.synctex.gz
+relatorio.toc
+relatorio.ilg
+abntex2-modelo-include-comandos.aux
