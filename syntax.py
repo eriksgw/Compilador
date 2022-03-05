@@ -1,8 +1,8 @@
 from classes.simbolo import Type
-from classes.escopo import Escopo
+from classes.escopo import Escopo, Node
 from classes.simbolo import EntradaTabela
 from lex import tokens
-from classes.exception import (VariableAlreadyDeclaredError, ScopeNotExistError, BreakOutLoopError, IdentifierNotFunction, ParamCountError)
+from classes.exception import *
 import ply.yacc as yacc
 
 scope_stack = []
@@ -22,10 +22,39 @@ def search_var(ident, line_no):
 
     raise ScopeNotExistError()
 
+def check_type(left, right, operation, lineno):
+    valids = {
+        ('string', '+', 'string'): 'string',
+        ('int', '+', 'int'): 'int',
+        ('int', '-', 'int'): 'int',
+        ('int', '*', 'int'): 'int',
+        ('int', '%', 'int'): 'int',
+        ('int', '/', 'int'): 'float',
+        ('float', '+', 'float'): 'float',
+        ('float', '-', 'float'): 'float',
+        ('float', '*', 'float'): 'float',
+        ('float', '/', 'float'): 'float',
+        ('float', '+', 'int'): 'float',
+        ('float', '-', 'int'): 'float',
+        ('float', '*', 'int'): 'float',
+        ('float', '/', 'int'): 'float',
+        ('int', '+', 'float'): 'float',
+        ('int', '-', 'float'): 'float',
+        ('int', '*', 'float'): 'float',
+        ('int', '/', 'float'): 'float',
+    }
+
+    result = valids.get((left.result_type, operation, right.result_type), None)
+
+    if result is None:
+        raise InvalidTypeOperationError(f'Error on operation {operation}: {left.result_type},{right.result_type},{lineno}')
+
+    return result
+
 def add_scope(loop):
     parent_scope = scope_stack[-1] if scope_stack else None
     if parent_scope:
-        new_scope = Escopo(parent_scope.scopecontador.inc(), parent_scope, loop)
+        new_scope = Escopo(len(parent_scope.escopos_internos)+1, parent_scope, loop)
         parent_scope.add_inner_scope(new_scope)
     else:
         new_scope = Escopo('global', None, loop)
@@ -41,7 +70,7 @@ def num_expressions_as_json():
         output.append({
             'ID': str(exp),
             'lineno': line,
-            'tree': exp.json()
+            'tree': exp.as_json()
         })
 
     return output
@@ -64,7 +93,7 @@ def p_program_1(p):
     '''
     global_scope = scope_stack.pop()
     p[0] = {
-        'scopes': global_scope.json(),
+        'scopes': global_scope.as_json(),
         'num_expressions': num_expressions_as_json()
     }
 
@@ -75,7 +104,7 @@ def p_program_2(p):
     '''
     global_scope = scope_stack.pop()
     p[0] = {
-        'scopes': global_scope.json(),
+        'scopes': global_scope.as_json(),
         'num_expressions': num_expressions_as_json()
     }
 
@@ -93,6 +122,8 @@ def p_funclist1_1(p):
     '''
     funclist1 : DEF IDENT LPAREN paramlist RPAREN LBRACE statelist RBRACE funclist1
     '''
+    search_var(p[2], p.lineno(2))
+
 
 def p_funclist1_2(p):
     '''
@@ -107,7 +138,7 @@ def p_funcdef(p):
     scope_stack.pop()
 
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[2], 'function', p[5].dim, [], p.lineno(2))
+    entry = EntradaTabela(p[2], 'function', p[5]['dim'], [], p.lineno(2))
 
     scope.new_entry(entry)
 
@@ -136,7 +167,7 @@ def p_paramlist_1(p):
     p[0].dim = p[4].dim + 1
 
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[3], str(Type.STRING), p[2], [-1] * p[2], p.lineno(3))
+    entry = EntradaTabela(p[3], str('string'), p[2], [-1] * p[2], p.lineno(3))
     scope.new_entry(entry)
 
 def p_paramlist_2(p):
@@ -146,7 +177,7 @@ def p_paramlist_2(p):
     p[0].dim = p[4].dim + 1
 
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[3], str(Type.FLOAT), p[2], [-1] * p[2],p.lineno(3))
+    entry = EntradaTabela(p[3], str('float'), p[2], [-1] * p[2],p.lineno(3))
     scope.new_entry(entry)
 
 def p_paramlist_3(p):
@@ -156,26 +187,26 @@ def p_paramlist_3(p):
     p[0].dim = p[4].dim + 1
 
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[3], str(Type.INT), p[2], [-1] * p[2], p.lineno(3))
+    entry = EntradaTabela(p[3], str('int'), p[2], [-1] * p[2], p.lineno(3))
     scope.new_entry(entry)
 
 def p_paramlist_4(p):
     '''
     paramlist : 
     '''
-    p[0].dim = 0
+    p[0] = { 'dim': 0 }
 
 def p_paramlist1_1(p):
     '''
     paramlist1 : COMMA paramlist
     '''
-    p[0].dim = p[2].dim + 1
+    p[0] = { 'dim': p[2].dim + 1 }
 
 def p_paramlist1_2(p):
     '''
     paramlist1 : 
     '''
-    p[0].dim = 0
+    p[0]= { 'dim': 0 }
 
 def p_listdcl_1(p):
     '''
@@ -198,7 +229,7 @@ def p_statement_1_1(p):
     '''
     statement : INT IDENT statement2
     '''
-    entry = EntradaTabela(p[2], str(Type.INT), p[3].dim, p[3].sizes, p.lineno(2))
+    entry = EntradaTabela(p[2], str('int'), p[3]['dim'], p[3]['sizes'], p.lineno(2))
     scope = scope_stack[-1]
     scope.new_entry(entry)
 
@@ -206,7 +237,7 @@ def p_statement_1_2(p):
     '''
     statement : FLOAT IDENT statement2
     '''
-    entry = EntradaTabela(p[2], str(Type.FLOAT), p[3].dim, p[3].sizes, p.lineno(2))
+    entry = EntradaTabela(p[2], str('float'), p[3]['dim'], p[3]['sizes'], p.lineno(2))
     scope = scope_stack[-1]
     scope.new_entry(entry)
 
@@ -214,7 +245,7 @@ def p_statement_1_3(p):
     '''
     statement : STRING IDENT statement2
     '''
-    entry = EntradaTabela(p[2], str(Type.STRING), p[3].dim, p[3].sizes, p.lineno(2))
+    entry = EntradaTabela(p[2], str('string'), p[3]['dim'], p[3]['sizes'], p.lineno(2))
     scope = scope_stack[-1]
     scope.new_entry(entry)
 
@@ -222,8 +253,8 @@ def p_statement_2(p):
     '''
     statement : IDENT statement1
     '''
+    var = search_var(p[1], p.lineno(2))
     if p[2]['type'] == 'function':
-        var = search_var(p[1], p.lineno(2))
 
         if var.type != 'function':
             raise IdentifierNotFunction(f'{p.lineno(2)}')
@@ -273,7 +304,7 @@ def p_statement_10(p):
     '''
     scope = scope_stack[-1]
     while scope:
-        if scope.is_loop:
+        if scope.loop:
             break
 
         scope = scope.escopo_pai
@@ -290,34 +321,31 @@ def p_statement1_1(p):
     '''
     statement1 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 SEMICOLON
     '''
-    p[0]['type'] = 'attribution'
+    p[0] = { 'type': 'attribution' }
 
 def p_statement1_2(p):
     '''
     statement1 : ASSIGN atribstat1 SEMICOLON
     '''
-    p[0]['type'] = 'attribution'
+    p[0] = { 'type': 'attribution' }
 
 def p_statement1_3(p):
     '''
     statement1 : LPAREN paramlistcall RPAREN SEMICOLON
     '''
-    p[0]['type'] = 'function'
-    p[0]['params'] = p[2]
+    p[0] = { 'type': 'function', 'params': p[2] }
 
 def p_statement2_1(p):
     '''
     statement2 : LBRACKET numexpression RBRACKET lvalue1 SEMICOLON
     '''
-    p[0].dim = p[2].dim + 1
-    p[0].sizes = [str(p[1]), *p[2].sizes]
+    p[0] = { 'dim': p[4]['dim'] + 1, 'sizes': [str(p[2]['node']), *p[4]['sizes']] }
 
 def p_statement2_2(p):
     '''
     statement2 : SEMICOLON
     '''
-    p[0].dim = 0
-    p[0].sizes = [str(p[1]), *p[2].sizes]
+    p[0] = { 'dim': 0, 'sizes': [] }
 
 def p_atribstat1_1(p):
     '''
@@ -346,7 +374,6 @@ def p_funccall(p):
     if var.dim != len(p[3]['params']):
         raise ParamCountError(f"Função possui {len(p[3]['params'])} parâmetros, esperado: {var.dim}")
     
-
 def p_paramlistcall_1(p):
     '''
     paramlistcall : factor paramlistcall2
@@ -380,7 +407,6 @@ def p_paramlistcall1_2(p):
     '''
     p[0].params = []
 
-
 def p_paramlistcall2_1(p):
     '''
     paramlistcall2 : LBRACKET numexpression RBRACKET lvalue1 paramlistcall1
@@ -395,7 +421,6 @@ def p_paramlistcall2_2(p):
     paramlistcall2 : paramlistcall1
     '''
     p[0].array = False
-
 
 def p_printstat(p):
     '''
@@ -427,7 +452,6 @@ def p_ifstat(p):
     ifstat : IF LPAREN expression RPAREN statement ifstat1
     '''
 
-
 def p_ifstat1_1(p):
     '''
     ifstat1 : ELSE statement
@@ -440,7 +464,7 @@ def p_ifstat1_2(p):
 
 def p_forstat(p):
     '''
-    forstat : FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_loop_scope statement
+    forstat : FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
     '''
     scope_stack.pop()
 
@@ -448,6 +472,7 @@ def p_forstat1_1(p):
     '''
     forstat1 : IDENT forstat3
     '''
+    search_var(p[1], p.lineno(1))
 
 def p_forstat1_2(p):
     '''
@@ -476,172 +501,23 @@ def p_forstat3_2(p):
 
 def p_whilestat(p):
     '''
-    whilestat : WHILE LPAREN expression RPAREN new_loop_scope statement
+    whilestat : WHILE LPAREN expression RPAREN new_scope_loop statement
     '''
+    scope_stack.pop()
 
-def p_statelist_1(p):
+def p_statelist(p):
     '''
-    statelist : INT listdcl IDENT statelist2
-    '''
-
-def p_statelist_2(p):
-    '''
-    statelist : FLOAT listdcl IDENT statelist2
-    '''
-
-def p_statelist_3(p):
-    '''
-    statelist : STRING listdcl IDENT statelist2
-    '''
-
-def p_statelist_4(p):
-    '''
-    statelist : IDENT statelist3
-    '''
-
-def p_statelist_5(p):
-    '''
-    statelist : PRINT expression SEMICOLON statelist1
-    '''
-
-def p_statelist_6(p):
-    '''
-    statelist : READ IDENT statelist2
-    '''
-
-def p_statelist_7(p):
-    '''
-    statelist : RETURN returnstat1 SEMICOLON statelist1
-    '''
-
-def p_statelist_8(p):
-    '''
-    statelist : IF LPAREN expression RPAREN statement ifstat1 statelist1
-    '''
-
-def p_statelist_9(p):
-    '''
-    statelist : FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN statement statelist1
-    '''
-
-def p_statelist_10(p):
-    '''
-    statelist : WHILE LPAREN expression RPAREN statement statelist1
-    '''
-
-def p_statelist_11(p):
-    '''
-    statelist : LBRACE statelist RBRACE statelist1
-    '''
-
-def p_statelist_12(p):
-    '''
-    statelist : BREAK SEMICOLON statelist1
-    '''
-
-def p_statelist_13(p):
-    '''
-    statelist : SEMICOLON statelist1
-    '''
-
-def p_statelist_14(p):
-    '''
-    statelist : IDENT LPAREN paramlistcall RPAREN SEMICOLON statelist1
+    statelist : statement statelist1
     '''
 
 def p_statelist1_1(p):
     '''
-    statelist1 : INT listdcl IDENT statelist2
+    statelist1 : statelist
     '''
 
 def p_statelist1_2(p):
     '''
-    statelist1 : FLOAT listdcl IDENT statelist2
-    '''
-
-def p_statelist1_3(p):
-    '''
-    statelist1 : STRING listdcl IDENT statelist2
-    '''
-
-def p_statelist1_4(p):
-    '''
-    statelist1 : IDENT statelist3
-    '''
-
-def p_statelist1_5(p):
-    '''
-    statelist1 : PRINT expression SEMICOLON statelist1
-    '''
-
-def p_statelist1_6(p):
-    '''
-    statelist1 : READ IDENT statelist2
-    '''
-
-def p_statelist1_7(p):
-    '''
-    statelist1 : RETURN returnstat1 SEMICOLON statelist1
-    '''
-
-def p_statelist1_8(p):
-    '''
-    statelist1 : IF LPAREN expression RPAREN statement ifstat1 statelist1
-    '''
-
-def p_statelist1_9(p):
-    '''
-    statelist1 : FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN statement statelist1
-    '''
-
-def p_statelist1_10(p):
-    '''
-    statelist1 : WHILE LPAREN expression RPAREN statement statelist1
-    '''
-
-def p_statelist1_11(p):
-    '''
-    statelist1 : LBRACE statelist RBRACE statelist1
-    '''
-
-def p_statelist1_12(p):
-    '''
-    statelist1 : BREAK SEMICOLON statelist1
-    '''
-
-def p_statelist1_13(p):
-    '''
-    statelist1 : SEMICOLON statelist1
-    '''
-
-def p_statelist1_14(p):
-    '''
-    statelist1 : IDENT LPAREN paramlistcall RPAREN SEMICOLON statelist1
-    '''
-
-def p_statelist1_15(p):
-    '''
-    statelist1 : 
-    '''
-
-def p_statelist2_1(p):
-    '''
-    statelist2 : LBRACKET numexpression RBRACKET lvalue1 SEMICOLON statelist1
-    '''
-
-def p_statelist2_2(p):
-    '''
-    statelist2 : SEMICOLON statelist1
-    '''
-
-def p_statelist3_1(p):
-    '''
-    statelist3 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 SEMICOLON statelist1
-    '''
-
-def p_statelist3_2(p):
-    '''
-    statelist3 : ASSIGN atribstat1 SEMICOLON statelist1
+    statelist1 :
     '''
 
 def p_allocexpression(p):
@@ -653,160 +529,217 @@ def p_expression(p):
     '''
     expression : numexpression expression1
     '''
+    if p[2]:
+        p[0] = { 'node': Node(p[2]['operator'], p[1]['node'], p[2]['node'], 'bool') }
+    else:
+        p[0] = p[1]
+
+    num_expressions.append((p[0]['node'], p.lineno(1)))
 
 def p_expression1_1(p):
     '''
     expression1 : compoperator numexpression
     '''
+    p[0] = { 'operator': p[1], 'node': p[2]['node'] }
 
 def p_expression1_2(p):
     '''
     expression1 : 
     '''
+    p[0] = None
 
 def p_compoperator_1(p):
     '''
     compoperator : GT
     '''
+    p[0] = '>'
 
 def p_compoperator_2(p):
     '''
     compoperator : LT
     '''
+    p[0] = '<'
 
 def p_compoperator_3(p):
     '''
     compoperator : GE
     '''
+    p[0] = '>='
 
 def p_compoperator_4(p):
     '''
     compoperator : LE
     '''
+    p[0] = '<='
 
 def p_compoperator_5(p):
     '''
     compoperator : EQ
     '''
+    p[0] = '=='
 
 def p_compoperator_6(p):
     '''
     compoperator : NEQ
     '''
+    p[0] = '!='
 
 def p_numexpression(p):
     '''
     numexpression : term numexpression1
     '''
+    if p[2]:
+        rtype = check_type(p[1]['node'], p[2]['node'], p[2]['operator'], p.lineno(1))
+        p[0] = { 'node': Node(p[2]['operator'], p[1]['node'], p[2]['node'], rtype)}
+    else:
+        p[0] = p[1]
 
 def p_numexpression1_1(p):
     '''
     numexpression1 : addsub term
     '''
+    p[0] = { 'node': p[2]['node'], 'operator': p[1] }
 
 def p_numexpression1_2(p):
     '''
     numexpression1 : 
     '''
-    p[0]=None
+    p[0] = None
 
 def p_addsub_1(p):
     '''
     addsub : PLUS
     '''
+    p[0] = '+'
 
 def p_addsub_2(p):
     '''
     addsub : MINUS
     '''
+    p[0] = '-'
 
 def p_term(p):
     '''
     term : unaryexpr term1
     '''
 
+    if p[2]:
+        rtype = check_type(p[1]['node'], p[2]['node'], p[2]['operator'], p.lineno(1))
+        p[0] = { 'node': Node(p[2]['operator'], p[1]['node'], p[2]['node'], rtype) } 
+    else:
+        p[0] = p[1]
+
 def p_term1_1(p):
     '''
     term1 : multdiv unaryexpr term1
     '''
+    if p[3]:
+        rtype = check_type(p[2]['node'], p[3]['node'], p[3]['operator'], p.lineno(1))
+        p[0] = { 'node': Node(p[3]['operator'], p[2]['node'], p[3]['node'], rtype), 'operator': p[1] }
+    else:
+        p[0] = { 'node': p[2]['node'], 'operator': p[1] }
 
 def p_term1_2(p):
     '''
     term1 : 
     '''
+    p[0] = None
 
 def p_multdiv_1(p):
     '''
     multdiv : MULTIPLY
     '''
+    p[0] = '*'
 
 def p_multdiv_2(p):
     '''
     multdiv : DIVIDE
     '''
+    p[0] = '/'
 
 def p_multdiv_3(p):
     '''
     multdiv : REM
     '''
+    p[0] = '%'
 
 def p_unaryexpr_1(p):
     '''
     unaryexpr : addsub factor
     '''
+    if (p[1] == '-'):
+        p[2]['node'].value *= -1
+
+    p[0] = p[2]
 
 def p_unaryexpr_2(p):
     '''
     unaryexpr : factor
     '''
+    p[0] = p[1]
 
 def p_factor_1(p):
     '''
     factor : int_constant
     '''
+    p[0] = { 'node': Node(p[1], None, None, 'int') }
 
 def p_factor_2(p):
     '''
     factor : float_constant
     '''
+    p[0] = { 'node': Node(p[1], None, None, 'float') }
 
 def p_factor_3(p):
     '''
     factor : string_constant
     '''
+    p[0] = { 'node': Node(p[1], None, None, 'string') }
 
 def p_factor_4(p):
     '''
     factor : null_constant
     '''
+    p[0] = { 'node': Node('null', None, None, 'null')}
 
 def p_factor_5(p):
     '''
     factor : IDENT lvalue1
     '''
+    var = search_var(p[1], p.lineno(1))
+    p[0] = {'node': Node(p[1] + p[2]['expression'], None, None, var.type)}
 
 def p_factor_6(p):
     '''
     factor : LPAREN numexpression RPAREN
     '''
+    p[0] = p[2]
 
+    num_expressions.append((p[2]['node'], p.lineno(1)))
 
 def p_lvalue1_1(p):
     '''
     lvalue1 : LBRACKET numexpression RBRACKET lvalue1
     '''
-    p[0].dim = p[4].dim + 1
-    p[0].sizes = [str(p[2]), *p[4].sizes]
+    p[0] = {
+        'dim': p[4]['dim'] + 1,
+        'sizes': [str(p[2]['node']), *p[4]['sizes']],
+        'expression':  f'[{str(p[2])}]{p[4]}'
+    }
+
+    num_expressions.append((p[2]['node'], p.lineno(1)))
 
 def p_lvalue1_2(p):
     '''
     lvalue1 : 
     '''
-    p[0].dim = 0
-    p[0].sizes = []
+    p[0] = { 
+        'dim':  0,
+        'sizes': [],
+        'expression': ''
+    }
 
 text = ""
-
 def p_error(p):
     if not p:
         print("End of File!")
@@ -836,3 +769,5 @@ def analyze(input_value):
     text = input_value
     result = parser.parse(input=input_value, debug=log)
     print(result)
+
+    print(num_expressions)

@@ -2,23 +2,18 @@
 Módulo para definição da classe de escopo
 '''
 
-from contador import Contador
-from exception import (VariableAlreadyDeclaredError)
+from dataclasses import dataclass
+from classes.simbolo import Type
+from .exception import (VariableAlreadyDeclaredError)
 class Escopo:
     ''' Classe de Escopo '''
 
-    table = []
-    escopos_internos = []
-
-
     def __init__(self, label='global', escopo_pai=None, loop=False):
         self.label = label
-        self.scopecontador = Contador(label)
-        self.funccontador = Contador(label)
-        self.varcontador = Contador(label)
-
         self.escopo_pai = escopo_pai
         self.loop = loop
+        self.table = []
+        self.escopos_internos = []
 
     def new_entry(self, entry):
         '''Adiciona entrada na tabela de símbolos'''
@@ -29,41 +24,50 @@ class Escopo:
         if len(var) > 0:
             raise VariableAlreadyDeclaredError('Variável já declarada')
 
-        self.table.append(var)
+        self.table.append(entry)
     
     def add_inner_scope(self, scope):
         ''' Adiciona escopo interno '''
         self.escopos_internos.append(scope)
 
     def as_json(self):
+        print(self.table)
         return {
+            'label': self.label,
             'table': [
-                entry.json() for entry in self.table
+                entry.as_json() for entry in self.table
             ],
-            'escopos_internos': [scope.json() for scope in self.escopos_internos]
+            'escopos_internos': [scope.as_json() for scope in self.escopos_internos]
         }
 
     def __str__(self):
         return '\n'.join([str(entry) for entry in self.table]) + '\n'
 
+@dataclass
 class Node:
 
-    def __init__(self, value, left, right):
-        self.value = value
-        self.left = left
-        self.right = right
+    value: str
+    left: ...
+    right: ...
+    result_type: str
 
-    def json(self):
+    def as_json(self):
         left = None
         if self.left is not None:
-            left = self.left.json()
+            left = self.left.as_json()
 
         right = None
         if self.right is not None:
-            right = self.right.json()
+            right = self.right.as_json()
 
         return {
             'value': self.value,
             'left': left,
             'right': right
         }
+
+    def __str__(self):
+        if self.left is not None or self.right is not None:
+            return f'({self.left}{self.value}{self.right})'
+
+        return str(self.value)

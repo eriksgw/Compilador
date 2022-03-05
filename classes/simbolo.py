@@ -9,9 +9,11 @@ from typing import List
 
 class Type(Enum):
     ''' Enum dos tipos suportados pelo compilador '''
+    NULL = 0
     INT = 1
     FLOAT = 2
     STRING = 3
+    BOOL = 4
 
 @dataclass
 class Simbolo:
@@ -34,10 +36,12 @@ class EntradaTabela:
     sizes: list
     line: int
 
-    def json(self):
+    def as_json(self):
         ''' Returns instance as json object '''
         return {
             'ident': self.ident,
             'type': self.type,
-            'line': self.line,
+            'dimension': self.dimension,
+            'sizes': self.sizes,
+            'line': self.line
         }
