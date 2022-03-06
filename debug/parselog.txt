@@ -1,1014 +1,1149 @@
    yacc.py: 362:PLY: PARSE DEBUG START
    yacc.py: 410:
    yacc.py: 411:State  : 0
-   yacc.py: 434:Stack  : . LexToken(DEF,'def',16,0)
+   yacc.py: 434:Stack  : . LexToken(DEF,'def',15,0)
    yacc.py: 473:Action : Reduce rule [new_scope -> <empty>] with [] and goto state 2
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 548:Result : <NoneType @ 0x7ffe9b5c98d0> (None)
    yacc.py: 410:
    yacc.py: 411:State  : 2
-   yacc.py: 434:Stack  : new_scope . LexToken(DEF,'def',16,0)
-   yacc.py: 445:Action : Shift and goto state 25
+   yacc.py: 434:Stack  : new_scope . LexToken(DEF,'def',15,0)
+   yacc.py: 445:Action : Shift and goto state 24
    yacc.py: 410:
-   yacc.py: 411:State  : 25
-   yacc.py: 434:Stack  : new_scope DEF . LexToken(IDENT,'main',16,4)
-   yacc.py: 445:Action : Shift and goto state 60
+   yacc.py: 411:State  : 24
+   yacc.py: 434:Stack  : new_scope DEF . LexToken(IDENT,'main',15,4)
+   yacc.py: 445:Action : Shift and goto state 59
    yacc.py: 410:
-   yacc.py: 411:State  : 60
-   yacc.py: 430:Defaulted state 60: Reduce using 1
+   yacc.py: 411:State  : 59
+   yacc.py: 430:Defaulted state 59: Reduce using 2
    yacc.py: 434:Stack  : new_scope DEF IDENT . None
-   yacc.py: 473:Action : Reduce rule [new_scope -> <empty>] with [] and goto state 101
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 101
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope . LexToken(LPAREN,'(',16,8)
-   yacc.py: 445:Action : Shift and goto state 130
-   yacc.py: 410:
-   yacc.py: 411:State  : 130
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN . LexToken(RPAREN,')',16,9)
-   yacc.py: 473:Action : Reduce rule [paramlist -> <empty>] with [] and goto state 150
-   yacc.py: 548:Result : <dict @ 0x22f986efa80> ({'dim': 0})
-   yacc.py: 410:
-   yacc.py: 411:State  : 150
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist . LexToken(RPAREN,')',16,9)
-   yacc.py: 445:Action : Shift and goto state 167
-   yacc.py: 410:
-   yacc.py: 411:State  : 167
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN . LexToken(LBRACE,'{',16,11)
-   yacc.py: 445:Action : Shift and goto state 180
-   yacc.py: 410:
-   yacc.py: 411:State  : 180
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE . LexToken(INT,'int',17,17)
-   yacc.py: 445:Action : Shift and goto state 6
-   yacc.py: 410:
-   yacc.py: 411:State  : 6
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE INT . LexToken(IDENT,'i',17,21)
-   yacc.py: 445:Action : Shift and goto state 27
-   yacc.py: 410:
-   yacc.py: 411:State  : 27
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE INT IDENT . LexToken(SEMICOLON,';',17,22)
-   yacc.py: 445:Action : Shift and goto state 65
-   yacc.py: 410:
-   yacc.py: 411:State  : 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE INT IDENT SEMICOLON . LexToken(INT,'int',18,28)
-   yacc.py: 469:Action : Reduce rule [statement2 -> SEMICOLON] with [';'] and goto state 63
-   yacc.py: 506:Result : <dict @ 0x22f986efd80> ({'dim': 0, 'sizes': []})
-   yacc.py: 410:
-   yacc.py: 411:State  : 63
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE INT IDENT statement2 . LexToken(INT,'int',18,28)
-   yacc.py: 469:Action : Reduce rule [statement -> INT IDENT statement2] with ['int','i',<dict @ 0x22f986efd80>] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement . LexToken(INT,'int',18,28)
-   yacc.py: 445:Action : Shift and goto state 6
-   yacc.py: 410:
-   yacc.py: 411:State  : 6
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT . LexToken(IDENT,'a',18,32)
-   yacc.py: 445:Action : Shift and goto state 27
-   yacc.py: 410:
-   yacc.py: 411:State  : 27
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT . LexToken(LBRACKET,'[',18,33)
-   yacc.py: 445:Action : Shift and goto state 64
-   yacc.py: 410:
-   yacc.py: 411:State  : 64
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET . LexToken(int_constant,'3',18,34)
-   yacc.py: 445:Action : Shift and goto state 48
-   yacc.py: 410:
-   yacc.py: 411:State  : 48
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET int_constant . LexToken(RBRACKET,']',18,35)
-   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['3'] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986ef400> ({'node': Node(value='3', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET factor . LexToken(RBRACKET,']',18,35)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986ef400>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986ef400> ({'node': Node(value='3', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET unaryexpr . LexToken(RBRACKET,']',18,35)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET unaryexpr term1 . LexToken(RBRACKET,']',18,35)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986ef400>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986ef400> ({'node': Node(value='3', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET term . LexToken(RBRACKET,']',18,35)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET term numexpression1 . LexToken(RBRACKET,']',18,35)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986ef400>,None] and goto state 105
-   yacc.py: 506:Result : <dict @ 0x22f986ef400> ({'node': Node(value='3', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 105
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression . LexToken(RBRACKET,']',18,35)
-   yacc.py: 445:Action : Shift and goto state 131
-   yacc.py: 410:
-   yacc.py: 411:State  : 131
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET . LexToken(SEMICOLON,';',18,36)
-   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 151
-   yacc.py: 548:Result : <dict @ 0x22f986eb380> ({'dim': 0, 'sizes': [], 'expression': '' ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 151
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET lvalue1 . LexToken(SEMICOLON,';',18,36)
-   yacc.py: 445:Action : Shift and goto state 168
-   yacc.py: 410:
-   yacc.py: 411:State  : 168
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET lvalue1 SEMICOLON . LexToken(INT,'int',19,42)
-   yacc.py: 469:Action : Reduce rule [statement2 -> LBRACKET numexpression RBRACKET lvalue1 SEMICOLON] with ['[',<dict @ 0x22f986ef400>,']',<dict @ 0x22f986eb380>,';'] and goto state 63
-   yacc.py: 506:Result : <dict @ 0x22f986eb540> ({'dim': 1, 'sizes': ['3']})
-   yacc.py: 410:
-   yacc.py: 411:State  : 63
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT statement2 . LexToken(INT,'int',19,42)
-   yacc.py: 469:Action : Reduce rule [statement -> INT IDENT statement2] with ['int','a',<dict @ 0x22f986eb540>] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement . LexToken(INT,'int',19,42)
-   yacc.py: 445:Action : Shift and goto state 6
-   yacc.py: 410:
-   yacc.py: 411:State  : 6
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement INT . LexToken(IDENT,'b',19,46)
-   yacc.py: 445:Action : Shift and goto state 27
-   yacc.py: 410:
-   yacc.py: 411:State  : 27
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement INT IDENT . LexToken(SEMICOLON,';',19,47)
-   yacc.py: 445:Action : Shift and goto state 65
-   yacc.py: 410:
-   yacc.py: 411:State  : 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement INT IDENT SEMICOLON . LexToken(FOR,'for',20,53)
-   yacc.py: 469:Action : Reduce rule [statement2 -> SEMICOLON] with [';'] and goto state 63
-   yacc.py: 506:Result : <dict @ 0x22f986ef0c0> ({'dim': 0, 'sizes': []})
-   yacc.py: 410:
-   yacc.py: 411:State  : 63
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement INT IDENT statement2 . LexToken(FOR,'for',20,53)
-   yacc.py: 469:Action : Reduce rule [statement -> INT IDENT statement2] with ['int','b',<dict @ 0x22f986ef0c0>] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement . LexToken(FOR,'for',20,53)
-   yacc.py: 445:Action : Shift and goto state 23
-   yacc.py: 410:
-   yacc.py: 411:State  : 23
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR . LexToken(LPAREN,'(',20,56)
-   yacc.py: 445:Action : Shift and goto state 58
-   yacc.py: 410:
-   yacc.py: 411:State  : 58
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN . LexToken(IDENT,'i',20,57)
-   yacc.py: 445:Action : Shift and goto state 99
-   yacc.py: 410:
-   yacc.py: 411:State  : 99
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT . LexToken(ASSIGN,'=',20,59)
-   yacc.py: 445:Action : Shift and goto state 128
-   yacc.py: 410:
-   yacc.py: 411:State  : 128
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN . LexToken(int_constant,'0',20,61)
-   yacc.py: 445:Action : Shift and goto state 48
-   yacc.py: 410:
-   yacc.py: 411:State  : 48
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN int_constant . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['0'] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986ef6c0> ({'node': Node(value='0', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN factor . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986ef6c0>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986ef6c0> ({'node': Node(value='0', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN unaryexpr . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN unaryexpr term1 . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986ef6c0>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986ef6c0> ({'node': Node(value='0', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN term . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN term numexpression1 . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986ef6c0>,None] and goto state 41
-   yacc.py: 506:Result : <dict @ 0x22f986ef6c0> ({'node': Node(value='0', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 41
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN numexpression . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 78
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 78
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN numexpression expression1 . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x22f986ef6c0>,None] and goto state 68
-   yacc.py: 506:Result : <dict @ 0x22f986ef6c0> ({'node': Node(value='0', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 68
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN expression . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 469:Action : Reduce rule [atribstat1 -> expression] with [<dict @ 0x22f986ef6c0>] and goto state 148
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 148
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT ASSIGN atribstat1 . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 469:Action : Reduce rule [forstat3 -> ASSIGN atribstat1] with ['=',None] and goto state 126
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 126
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN IDENT forstat3 . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 469:Action : Reduce rule [forstat1 -> IDENT forstat3] with ['i',None] and goto state 98
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 473:Action : Reduce rule [new_scope -> <empty>] with [] and goto state 98
+   yacc.py: 548:Result : <NoneType @ 0x7ffe9b5c98d0> (None)
    yacc.py: 410:
    yacc.py: 411:State  : 98
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 . LexToken(SEMICOLON,';',20,62)
-   yacc.py: 445:Action : Shift and goto state 125
-   yacc.py: 410:
-   yacc.py: 411:State  : 125
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON . LexToken(IDENT,'i',20,64)
-   yacc.py: 445:Action : Shift and goto state 52
-   yacc.py: 410:
-   yacc.py: 411:State  : 52
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON IDENT . LexToken(LT,'<',20,66)
-   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 94
-   yacc.py: 548:Result : <dict @ 0x22f986eb540> ({'dim': 0, 'sizes': [], 'expression': '' ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 94
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON IDENT lvalue1 . LexToken(LT,'<',20,66)
-   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['i',<dict @ 0x22f986eb540>] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986eb900> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON factor . LexToken(LT,'<',20,66)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986eb900>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986eb900> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON unaryexpr . LexToken(LT,'<',20,66)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON unaryexpr term1 . LexToken(LT,'<',20,66)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986eb900>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986eb900> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON term . LexToken(LT,'<',20,66)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON term numexpression1 . LexToken(LT,'<',20,66)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986eb900>,None] and goto state 41
-   yacc.py: 506:Result : <dict @ 0x22f986eb900> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 41
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression . LexToken(LT,'<',20,66)
-   yacc.py: 445:Action : Shift and goto state 81
-   yacc.py: 410:
-   yacc.py: 411:State  : 81
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression LT . LexToken(int_constant,'10',20,68)
-   yacc.py: 469:Action : Reduce rule [compoperator -> LT] with ['<'] and goto state 79
-   yacc.py: 506:Result : <str @ 0x22f963c76f0> ('<')
-   yacc.py: 410:
-   yacc.py: 411:State  : 79
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression compoperator . LexToken(int_constant,'10',20,68)
-   yacc.py: 445:Action : Shift and goto state 48
-   yacc.py: 410:
-   yacc.py: 411:State  : 48
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression compoperator int_constant . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['10'] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986eb980> ({'node': Node(value='10', left=None, rig ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression compoperator factor . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986eb980>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986eb980> ({'node': Node(value='10', left=None, rig ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression compoperator unaryexpr . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression compoperator unaryexpr term1 . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986eb980>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986eb980> ({'node': Node(value='10', left=None, rig ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression compoperator term . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression compoperator term numexpression1 . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986eb980>,None] and goto state 119
-   yacc.py: 506:Result : <dict @ 0x22f986eb980> ({'node': Node(value='10', left=None, rig ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 119
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression compoperator numexpression . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 469:Action : Reduce rule [expression1 -> compoperator numexpression] with ['<',<dict @ 0x22f986eb980>] and goto state 78
-   yacc.py: 506:Result : <dict @ 0x22f986eb800> ({'operator': '<', 'node': Node(value='10 ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 78
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON numexpression expression1 . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x22f986eb900>,<dict @ 0x22f986eb800>] and goto state 146
-   yacc.py: 506:Result : <dict @ 0x22f986ebd40> ({'node': Node(value='<', left=Node(value ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 146
-   yacc.py: 430:Defaulted state 146: Reduce using 60
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON expression . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 469:Action : Reduce rule [forstat2 -> expression] with [<dict @ 0x22f986ebd40>] and goto state 145
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 145
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 . LexToken(SEMICOLON,';',20,70)
-   yacc.py: 445:Action : Shift and goto state 164
-   yacc.py: 410:
-   yacc.py: 411:State  : 164
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON . LexToken(IDENT,'i',20,72)
-   yacc.py: 445:Action : Shift and goto state 99
-   yacc.py: 410:
-   yacc.py: 411:State  : 99
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT . LexToken(ASSIGN,'=',20,74)
-   yacc.py: 445:Action : Shift and goto state 128
-   yacc.py: 410:
-   yacc.py: 411:State  : 128
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN . LexToken(IDENT,'i',20,76)
-   yacc.py: 445:Action : Shift and goto state 72
-   yacc.py: 410:
-   yacc.py: 411:State  : 72
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN IDENT . LexToken(PLUS,'+',20,78)
-   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 94
-   yacc.py: 548:Result : <dict @ 0x22f986ef0c0> ({'dim': 0, 'sizes': [], 'expression': '' ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 94
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN IDENT lvalue1 . LexToken(PLUS,'+',20,78)
-   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['i',<dict @ 0x22f986ef0c0>] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986ebdc0> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN factor . LexToken(PLUS,'+',20,78)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986ebdc0>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986ebdc0> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN unaryexpr . LexToken(PLUS,'+',20,78)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN unaryexpr term1 . LexToken(PLUS,'+',20,78)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986ebdc0>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986ebdc0> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term . LexToken(PLUS,'+',20,78)
-   yacc.py: 445:Action : Shift and goto state 46
-   yacc.py: 410:
-   yacc.py: 411:State  : 46
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term PLUS . LexToken(int_constant,'1',20,80)
-   yacc.py: 469:Action : Reduce rule [addsub -> PLUS] with ['+'] and goto state 87
-   yacc.py: 506:Result : <str @ 0x22f963c7670> ('+')
-   yacc.py: 410:
-   yacc.py: 411:State  : 87
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub . LexToken(int_constant,'1',20,80)
-   yacc.py: 445:Action : Shift and goto state 48
-   yacc.py: 410:
-   yacc.py: 411:State  : 48
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub int_constant . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['1'] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986ee5c0> ({'node': Node(value='1', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub factor . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986ee5c0>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986ee5c0> ({'node': Node(value='1', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub unaryexpr . LexToken(RPAREN,')',20,81)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub unaryexpr term1 . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986ee5c0>,None] and goto state 120
-   yacc.py: 506:Result : <dict @ 0x22f986ee5c0> ({'node': Node(value='1', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 120
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub term . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [numexpression1 -> addsub term] with ['+',<dict @ 0x22f986ee5c0>] and goto state 86
-   yacc.py: 506:Result : <dict @ 0x22f986ef0c0> ({'node': Node(value='1', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term numexpression1 . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986ebdc0>,<dict @ 0x22f986ef0c0>] and goto state 41
-   yacc.py: 506:Result : <dict @ 0x22f986eee00> ({'node': Node(value='+', left=Node(value ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 41
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN numexpression . LexToken(RPAREN,')',20,81)
-   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 78
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 78
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN numexpression expression1 . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x22f986eee00>,None] and goto state 68
-   yacc.py: 506:Result : <dict @ 0x22f986eee00> ({'node': Node(value='+', left=Node(value ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 68
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN expression . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [atribstat1 -> expression] with [<dict @ 0x22f986eee00>] and goto state 148
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 148
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN atribstat1 . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [forstat3 -> ASSIGN atribstat1] with ['=',None] and goto state 126
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 126
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT forstat3 . LexToken(RPAREN,')',20,81)
-   yacc.py: 469:Action : Reduce rule [forstat1 -> IDENT forstat3] with ['i',None] and goto state 178
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 178
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 . LexToken(RPAREN,')',20,81)
-   yacc.py: 445:Action : Shift and goto state 190
-   yacc.py: 410:
-   yacc.py: 411:State  : 190
-   yacc.py: 430:Defaulted state 190: Reduce using 2
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN . None
-   yacc.py: 473:Action : Reduce rule [new_scope_loop -> <empty>] with [] and goto state 195
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 195
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop . LexToken(LBRACE,'{',20,83)
-   yacc.py: 445:Action : Shift and goto state 199
-   yacc.py: 410:
-   yacc.py: 411:State  : 199
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE . LexToken(FLOAT,'float',21,93)
-   yacc.py: 445:Action : Shift and goto state 8
-   yacc.py: 410:
-   yacc.py: 411:State  : 8
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT . LexToken(IDENT,'b',21,99)
-   yacc.py: 445:Action : Shift and goto state 32
-   yacc.py: 410:
-   yacc.py: 411:State  : 32
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT . LexToken(SEMICOLON,';',21,100)
-   yacc.py: 445:Action : Shift and goto state 65
-   yacc.py: 410:
-   yacc.py: 411:State  : 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT SEMICOLON . LexToken(FLOAT,'float',22,110)
-   yacc.py: 469:Action : Reduce rule [statement2 -> SEMICOLON] with [';'] and goto state 75
-   yacc.py: 506:Result : <dict @ 0x22f986ee6c0> ({'dim': 0, 'sizes': []})
-   yacc.py: 410:
-   yacc.py: 411:State  : 75
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT statement2 . LexToken(FLOAT,'float',22,110)
-   yacc.py: 469:Action : Reduce rule [statement -> FLOAT IDENT statement2] with ['float','b',<dict @ 0x22f986ee6c0>] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement . LexToken(FLOAT,'float',22,110)
-   yacc.py: 445:Action : Shift and goto state 8
-   yacc.py: 410:
-   yacc.py: 411:State  : 8
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement FLOAT . LexToken(IDENT,'j',22,116)
-   yacc.py: 445:Action : Shift and goto state 32
-   yacc.py: 410:
-   yacc.py: 411:State  : 32
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement FLOAT IDENT . LexToken(SEMICOLON,';',22,117)
-   yacc.py: 445:Action : Shift and goto state 65
-   yacc.py: 410:
-   yacc.py: 411:State  : 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement FLOAT IDENT SEMICOLON . LexToken(IDENT,'b',23,127)
-   yacc.py: 469:Action : Reduce rule [statement2 -> SEMICOLON] with [';'] and goto state 75
-   yacc.py: 506:Result : <dict @ 0x22f986ee280> ({'dim': 0, 'sizes': []})
-   yacc.py: 410:
-   yacc.py: 411:State  : 75
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement FLOAT IDENT statement2 . LexToken(IDENT,'b',23,127)
-   yacc.py: 469:Action : Reduce rule [statement -> FLOAT IDENT statement2] with ['float','j',<dict @ 0x22f986ee280>] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement . LexToken(IDENT,'b',23,127)
-   yacc.py: 445:Action : Shift and goto state 7
-   yacc.py: 410:
-   yacc.py: 411:State  : 7
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT . LexToken(ASSIGN,'=',23,129)
-   yacc.py: 445:Action : Shift and goto state 30
-   yacc.py: 410:
-   yacc.py: 411:State  : 30
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN . LexToken(IDENT,'a',23,131)
-   yacc.py: 445:Action : Shift and goto state 72
-   yacc.py: 410:
-   yacc.py: 411:State  : 72
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT . LexToken(LBRACKET,'[',23,132)
-   yacc.py: 445:Action : Shift and goto state 95
-   yacc.py: 410:
-   yacc.py: 411:State  : 95
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET . LexToken(int_constant,'2',23,133)
-   yacc.py: 445:Action : Shift and goto state 48
-   yacc.py: 410:
-   yacc.py: 411:State  : 48
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET int_constant . LexToken(RBRACKET,']',23,134)
-   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['2'] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986eb900> ({'node': Node(value='2', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET factor . LexToken(RBRACKET,']',23,134)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986eb900>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986eb900> ({'node': Node(value='2', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET unaryexpr . LexToken(RBRACKET,']',23,134)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET unaryexpr term1 . LexToken(RBRACKET,']',23,134)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986eb900>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986eb900> ({'node': Node(value='2', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET term . LexToken(RBRACKET,']',23,134)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET term numexpression1 . LexToken(RBRACKET,']',23,134)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986eb900>,None] and goto state 122
-   yacc.py: 506:Result : <dict @ 0x22f986eb900> ({'node': Node(value='2', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 122
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET numexpression . LexToken(RBRACKET,']',23,134)
-   yacc.py: 445:Action : Shift and goto state 143
-   yacc.py: 410:
-   yacc.py: 411:State  : 143
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET numexpression RBRACKET . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 161
-   yacc.py: 548:Result : <dict @ 0x22f986ee1c0> ({'dim': 0, 'sizes': [], 'expression': '' ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 161
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT LBRACKET numexpression RBRACKET lvalue1 . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 469:Action : Reduce rule [lvalue1 -> LBRACKET numexpression RBRACKET lvalue1] with ['[',<dict @ 0x22f986eb900>,']',<dict @ 0x22f986ee1c0>] and goto state 94
-   yacc.py: 506:Result : <dict @ 0x22f986ee640> ({'dim': 1, 'sizes': ['2'], 'expression': ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 94
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN IDENT lvalue1 . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['a',<dict @ 0x22f986ee640>] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986eeac0> ({'node': Node(value="a[{'node': Node(val ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN factor . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986eeac0>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986eeac0> ({'node': Node(value="a[{'node': Node(val ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN unaryexpr . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN unaryexpr term1 . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986eeac0>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986eeac0> ({'node': Node(value="a[{'node': Node(val ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN term . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN term numexpression1 . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986eeac0>,None] and goto state 41
-   yacc.py: 506:Result : <dict @ 0x22f986eeac0> ({'node': Node(value="a[{'node': Node(val ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 41
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN numexpression . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 78
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 78
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN numexpression expression1 . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x22f986eeac0>,None] and goto state 68
-   yacc.py: 506:Result : <dict @ 0x22f986eeac0> ({'node': Node(value="a[{'node': Node(val ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 68
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN expression . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 469:Action : Reduce rule [atribstat1 -> expression] with [<dict @ 0x22f986eeac0>] and goto state 67
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 67
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN atribstat1 . LexToken(SEMICOLON,';',23,135)
-   yacc.py: 445:Action : Shift and goto state 107
-   yacc.py: 410:
-   yacc.py: 411:State  : 107
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN atribstat1 SEMICOLON . LexToken(PRINT,'print',24,145)
-   yacc.py: 469:Action : Reduce rule [statement1 -> ASSIGN atribstat1 SEMICOLON] with ['=',None,';'] and goto state 28
-   yacc.py: 506:Result : <dict @ 0x22f986ee380> ({'type': 'attribution'})
-   yacc.py: 410:
-   yacc.py: 411:State  : 28
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT statement1 . LexToken(PRINT,'print',24,145)
-   yacc.py: 469:Action : Reduce rule [statement -> IDENT statement1] with ['b',<dict @ 0x22f986ee380>] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement . LexToken(PRINT,'print',24,145)
-   yacc.py: 445:Action : Shift and goto state 19
-   yacc.py: 410:
-   yacc.py: 411:State  : 19
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT . LexToken(IDENT,'i',24,151)
-   yacc.py: 445:Action : Shift and goto state 52
-   yacc.py: 410:
-   yacc.py: 411:State  : 52
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT IDENT . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 94
-   yacc.py: 548:Result : <dict @ 0x22f986ee340> ({'dim': 0, 'sizes': [], 'expression': '' ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 94
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT IDENT lvalue1 . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['i',<dict @ 0x22f986ee340>] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986ee1c0> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT factor . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986ee1c0>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986ee1c0> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT unaryexpr . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT unaryexpr term1 . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986ee1c0>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986ee1c0> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT term . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT term numexpression1 . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986ee1c0>,None] and goto state 41
-   yacc.py: 506:Result : <dict @ 0x22f986ee1c0> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 41
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT numexpression . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 78
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 78
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT numexpression expression1 . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x22f986ee1c0>,None] and goto state 40
-   yacc.py: 506:Result : <dict @ 0x22f986ee1c0> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 40
-   yacc.py: 430:Defaulted state 40: Reduce using 49
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT expression . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 469:Action : Reduce rule [printstat -> PRINT expression] with ['print',<dict @ 0x22f986ee1c0>] and goto state 10
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 10
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement printstat . LexToken(SEMICOLON,';',24,152)
-   yacc.py: 445:Action : Shift and goto state 34
-   yacc.py: 410:
-   yacc.py: 411:State  : 34
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement printstat SEMICOLON . LexToken(IF,'if',25,162)
-   yacc.py: 469:Action : Reduce rule [statement -> printstat SEMICOLON] with [None,';'] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement . LexToken(IF,'if',25,162)
-   yacc.py: 445:Action : Shift and goto state 22
-   yacc.py: 410:
-   yacc.py: 411:State  : 22
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF . LexToken(LPAREN,'(',25,165)
-   yacc.py: 445:Action : Shift and goto state 57
-   yacc.py: 410:
-   yacc.py: 411:State  : 57
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN . LexToken(IDENT,'i',25,166)
-   yacc.py: 445:Action : Shift and goto state 52
-   yacc.py: 410:
-   yacc.py: 411:State  : 52
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN IDENT . LexToken(GE,'>=',25,167)
-   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 94
-   yacc.py: 548:Result : <dict @ 0x22f986ee280> ({'dim': 0, 'sizes': [], 'expression': '' ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 94
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN IDENT lvalue1 . LexToken(GE,'>=',25,167)
-   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['i',<dict @ 0x22f986ee280>] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f986ee640> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN factor . LexToken(GE,'>=',25,167)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f986ee640>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f986ee640> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN unaryexpr . LexToken(GE,'>=',25,167)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN unaryexpr term1 . LexToken(GE,'>=',25,167)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f986ee640>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f986ee640> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN term . LexToken(GE,'>=',25,167)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN term numexpression1 . LexToken(GE,'>=',25,167)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f986ee640>,None] and goto state 41
-   yacc.py: 506:Result : <dict @ 0x22f986ee640> ({'node': Node(value='i', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 41
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression . LexToken(GE,'>=',25,167)
-   yacc.py: 445:Action : Shift and goto state 82
-   yacc.py: 410:
-   yacc.py: 411:State  : 82
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression GE . LexToken(int_constant,'2',25,169)
-   yacc.py: 469:Action : Reduce rule [compoperator -> GE] with ['>='] and goto state 79
-   yacc.py: 506:Result : <str @ 0x22f9865f030> ('>=')
-   yacc.py: 410:
-   yacc.py: 411:State  : 79
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator . LexToken(int_constant,'2',25,169)
-   yacc.py: 445:Action : Shift and goto state 48
-   yacc.py: 410:
-   yacc.py: 411:State  : 48
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator int_constant . LexToken(RPAREN,')',25,170)
-   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['2'] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f983f1940> ({'node': Node(value='2', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator factor . LexToken(RPAREN,')',25,170)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f983f1940>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f983f1940> ({'node': Node(value='2', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator unaryexpr . LexToken(RPAREN,')',25,170)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator unaryexpr term1 . LexToken(RPAREN,')',25,170)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f983f1940>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f983f1940> ({'node': Node(value='2', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator term . LexToken(RPAREN,')',25,170)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator term numexpression1 . LexToken(RPAREN,')',25,170)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f983f1940>,None] and goto state 119
-   yacc.py: 506:Result : <dict @ 0x22f983f1940> ({'node': Node(value='2', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 119
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator numexpression . LexToken(RPAREN,')',25,170)
-   yacc.py: 469:Action : Reduce rule [expression1 -> compoperator numexpression] with ['>=',<dict @ 0x22f983f1940>] and goto state 78
-   yacc.py: 506:Result : <dict @ 0x22f983f18c0> ({'operator': '>=', 'node': Node(value='2 ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 78
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression expression1 . LexToken(RPAREN,')',25,170)
-   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x22f986ee640>,<dict @ 0x22f983f18c0>] and goto state 97
-   yacc.py: 506:Result : <dict @ 0x22f983f1600> ({'node': Node(value='>=', left=Node(valu ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 97
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression . LexToken(RPAREN,')',25,170)
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope . LexToken(LPAREN,'(',15,8)
    yacc.py: 445:Action : Shift and goto state 124
    yacc.py: 410:
    yacc.py: 411:State  : 124
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN . LexToken(LBRACE,'{',25,172)
-   yacc.py: 473:Action : Reduce rule [new_scope -> <empty>] with [] and goto state 3
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN . LexToken(RPAREN,')',15,9)
+   yacc.py: 473:Action : Reduce rule [paramlist -> <empty>] with [] and goto state 140
+   yacc.py: 548:Result : <dict @ 0x20eb1e2f9c0> ({'dim': 0, 'code': []})
    yacc.py: 410:
-   yacc.py: 411:State  : 3
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope . LexToken(LBRACE,'{',25,172)
+   yacc.py: 411:State  : 140
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist . LexToken(RPAREN,')',15,9)
+   yacc.py: 445:Action : Shift and goto state 157
+   yacc.py: 410:
+   yacc.py: 411:State  : 157
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN . LexToken(LBRACE,'{',15,11)
+   yacc.py: 445:Action : Shift and goto state 170
+   yacc.py: 410:
+   yacc.py: 411:State  : 170
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE . LexToken(INT,'int',16,17)
+   yacc.py: 445:Action : Shift and goto state 6
+   yacc.py: 410:
+   yacc.py: 411:State  : 6
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE INT . LexToken(IDENT,'i',16,21)
    yacc.py: 445:Action : Shift and goto state 26
    yacc.py: 410:
    yacc.py: 411:State  : 26
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE . LexToken(IDENT,'j',26,186)
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE INT IDENT . LexToken(SEMICOLON,';',16,22)
+   yacc.py: 445:Action : Shift and goto state 64
+   yacc.py: 410:
+   yacc.py: 411:State  : 64
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE INT IDENT SEMICOLON . LexToken(INT,'int',17,28)
+   yacc.py: 469:Action : Reduce rule [statement2 -> SEMICOLON] with [';'] and goto state 62
+   yacc.py: 506:Result : <dict @ 0x20eb1e2f680> ({'dim': 0, 'sizes': [], 'code': [], 'aux ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 62
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE INT IDENT statement2 . LexToken(INT,'int',17,28)
+   yacc.py: 469:Action : Reduce rule [statement -> INT IDENT statement2] with ['int','i',<dict @ 0x20eb1e2f680>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1e2f2c0> ({'code': ['int i']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement . LexToken(INT,'int',17,28)
+   yacc.py: 445:Action : Shift and goto state 6
+   yacc.py: 410:
+   yacc.py: 411:State  : 6
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT . LexToken(IDENT,'a',17,32)
+   yacc.py: 445:Action : Shift and goto state 26
+   yacc.py: 410:
+   yacc.py: 411:State  : 26
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT . LexToken(LBRACKET,'[',17,33)
+   yacc.py: 445:Action : Shift and goto state 63
+   yacc.py: 410:
+   yacc.py: 411:State  : 63
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET . LexToken(int_constant,'3',17,34)
+   yacc.py: 445:Action : Shift and goto state 47
+   yacc.py: 410:
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET int_constant . LexToken(RBRACKET,']',17,35)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['3'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e2fa00> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET factor . LexToken(RBRACKET,']',17,35)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e2fa00>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e2fa00> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET unaryexpr . LexToken(RBRACKET,']',17,35)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e31640> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET unaryexpr term1 . LexToken(RBRACKET,']',17,35)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e2fa00>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e2fa00> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET term . LexToken(RBRACKET,']',17,35)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1e2f280> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET term numexpression1 . LexToken(RBRACKET,']',17,35)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e2fa00>,{'code': []}] and goto state 102
+   yacc.py: 506:Result : <dict @ 0x20eb1e2fa00> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 102
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression . LexToken(RBRACKET,']',17,35)
+   yacc.py: 445:Action : Shift and goto state 125
+   yacc.py: 410:
+   yacc.py: 411:State  : 125
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET . LexToken(LBRACKET,'[',17,36)
+   yacc.py: 445:Action : Shift and goto state 93
+   yacc.py: 410:
+   yacc.py: 411:State  : 93
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET . LexToken(int_constant,'4',17,37)
+   yacc.py: 445:Action : Shift and goto state 47
+   yacc.py: 410:
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET int_constant . LexToken(RBRACKET,']',17,38)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['4'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e31a80> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET factor . LexToken(RBRACKET,']',17,38)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e31a80>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e31a80> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET unaryexpr . LexToken(RBRACKET,']',17,38)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e31080> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET unaryexpr term1 . LexToken(RBRACKET,']',17,38)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e31a80>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e31a80> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET term . LexToken(RBRACKET,']',17,38)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1e2f280> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET term numexpression1 . LexToken(RBRACKET,']',17,38)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e31a80>,{'code': []}] and goto state 118
+   yacc.py: 506:Result : <dict @ 0x20eb1e31a80> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 118
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET numexpression . LexToken(RBRACKET,']',17,38)
+   yacc.py: 445:Action : Shift and goto state 133
+   yacc.py: 410:
+   yacc.py: 411:State  : 133
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET numexpression RBRACKET . LexToken(SEMICOLON,';',17,39)
+   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 149
+   yacc.py: 548:Result : <dict @ 0x20eb1e31040> ({'dim': 0, 'sizes': [], 'expression': '' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 149
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET LBRACKET numexpression RBRACKET lvalue1 . LexToken(SEMICOLON,';',17,39)
+   yacc.py: 469:Action : Reduce rule [lvalue1 -> LBRACKET numexpression RBRACKET lvalue1] with ['[',<dict @ 0x20eb1e31a80>,']',<dict @ 0x20eb1e31040>] and goto state 144
+   yacc.py: 506:Result : <dict @ 0x20eb1e41580> ({'dim': 1, 'sizes': ['4'], 'expression': ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 144
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET lvalue1 . LexToken(SEMICOLON,';',17,39)
+   yacc.py: 445:Action : Shift and goto state 162
+   yacc.py: 410:
+   yacc.py: 411:State  : 162
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT LBRACKET numexpression RBRACKET lvalue1 SEMICOLON . LexToken(INT,'int',18,45)
+   yacc.py: 469:Action : Reduce rule [statement2 -> LBRACKET numexpression RBRACKET lvalue1 SEMICOLON] with ['[',<dict @ 0x20eb1e2fa00>,']',<dict @ 0x20eb1e41580>,';'] and goto state 62
+   yacc.py: 506:Result : <dict @ 0x20eb1e76700> ({'dim': 2, 'sizes': ['3', '4'], 'code':  ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 62
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement INT IDENT statement2 . LexToken(INT,'int',18,45)
+   yacc.py: 469:Action : Reduce rule [statement -> INT IDENT statement2] with ['int','a',<dict @ 0x20eb1e76700>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1e8cf00> ({'code': ['t1 = 3', 't2 = 4', 'int a[t1] ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement . LexToken(INT,'int',18,45)
+   yacc.py: 445:Action : Shift and goto state 6
+   yacc.py: 410:
+   yacc.py: 411:State  : 6
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement INT . LexToken(IDENT,'b',18,49)
+   yacc.py: 445:Action : Shift and goto state 26
+   yacc.py: 410:
+   yacc.py: 411:State  : 26
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement INT IDENT . LexToken(SEMICOLON,';',18,50)
+   yacc.py: 445:Action : Shift and goto state 64
+   yacc.py: 410:
+   yacc.py: 411:State  : 64
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement INT IDENT SEMICOLON . LexToken(FOR,'for',19,56)
+   yacc.py: 469:Action : Reduce rule [statement2 -> SEMICOLON] with [';'] and goto state 62
+   yacc.py: 506:Result : <dict @ 0x20eb1e2fb40> ({'dim': 0, 'sizes': [], 'code': [], 'aux ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 62
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement INT IDENT statement2 . LexToken(FOR,'for',19,56)
+   yacc.py: 469:Action : Reduce rule [statement -> INT IDENT statement2] with ['int','b',<dict @ 0x20eb1e2fb40>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1db6440> ({'code': ['int b']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement . LexToken(FOR,'for',19,56)
+   yacc.py: 473:Action : Reduce rule [new_loop_label -> <empty>] with [] and goto state 23
+   yacc.py: 548:Result : <NoneType @ 0x7ffe9b5c98d0> (None)
+   yacc.py: 410:
+   yacc.py: 411:State  : 23
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label . LexToken(FOR,'for',19,56)
+   yacc.py: 445:Action : Shift and goto state 57
+   yacc.py: 410:
+   yacc.py: 411:State  : 57
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR . LexToken(LPAREN,'(',19,59)
+   yacc.py: 445:Action : Shift and goto state 96
+   yacc.py: 410:
+   yacc.py: 411:State  : 96
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN . LexToken(IDENT,'i',19,60)
+   yacc.py: 445:Action : Shift and goto state 122
+   yacc.py: 410:
+   yacc.py: 411:State  : 122
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT . LexToken(ASSIGN,'=',19,62)
+   yacc.py: 445:Action : Shift and goto state 138
+   yacc.py: 410:
+   yacc.py: 411:State  : 138
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN . LexToken(int_constant,'0',19,64)
+   yacc.py: 445:Action : Shift and goto state 47
+   yacc.py: 410:
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN int_constant . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['0'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e5d2c0> ({'node': Node(value='0', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN factor . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e5d2c0>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e5d2c0> ({'node': Node(value='0', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN unaryexpr . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e4c400> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN unaryexpr term1 . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e5d2c0>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e5d2c0> ({'node': Node(value='0', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN term . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1e26340> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN term numexpression1 . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e5d2c0>,{'code': []}] and goto state 40
+   yacc.py: 506:Result : <dict @ 0x20eb1e5d2c0> ({'node': Node(value='0', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 40
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN numexpression . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 76
+   yacc.py: 548:Result : <dict @ 0x20eb1db6540> ({'code': ''})
+   yacc.py: 410:
+   yacc.py: 411:State  : 76
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN numexpression expression1 . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x20eb1e5d2c0>,{'code': ''}] and goto state 67
+   yacc.py: 506:Result : <dict @ 0x20eb1e5d2c0> ({'node': Node(value='0', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN expression . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 469:Action : Reduce rule [atribstat1 -> expression] with [<dict @ 0x20eb1e5d2c0>] and goto state 155
+   yacc.py: 506:Result : <dict @ 0x20eb1e2fb40> ({'atrib_type': 'expr', 'node': Node(valu ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 155
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT ASSIGN atribstat1 . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 469:Action : Reduce rule [forstat3 -> ASSIGN atribstat1] with ['=',<dict @ 0x20eb1e2fb40>] and goto state 136
+   yacc.py: 506:Result : <dict @ 0x20eb1db6640> ({'code': [], 'aux_code': "= ['t3 = 0']"})
+   yacc.py: 410:
+   yacc.py: 411:State  : 136
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN IDENT forstat3 . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 469:Action : Reduce rule [forstat1 -> IDENT forstat3] with ['i',<dict @ 0x20eb1db6640>] and goto state 121
+   yacc.py: 506:Result : <dict @ 0x20eb1e8b9c0> ({'code': ["i = ['t3 = 0']"]})
+   yacc.py: 410:
+   yacc.py: 411:State  : 121
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 . LexToken(SEMICOLON,';',19,65)
+   yacc.py: 445:Action : Shift and goto state 135
+   yacc.py: 410:
+   yacc.py: 411:State  : 135
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON . LexToken(IDENT,'i',19,67)
+   yacc.py: 445:Action : Shift and goto state 51
+   yacc.py: 410:
+   yacc.py: 411:State  : 51
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON IDENT . LexToken(LT,'<',19,69)
+   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 92
+   yacc.py: 548:Result : <dict @ 0x20eb1dd9100> ({'dim': 0, 'sizes': [], 'expression': '' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 92
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON IDENT lvalue1 . LexToken(LT,'<',19,69)
+   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['i',<dict @ 0x20eb1dd9100>] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e87940> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON factor . LexToken(LT,'<',19,69)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e87940>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e87940> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON unaryexpr . LexToken(LT,'<',19,69)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e4c400> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON unaryexpr term1 . LexToken(LT,'<',19,69)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e87940>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e87940> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON term . LexToken(LT,'<',19,69)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1db6900> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON term numexpression1 . LexToken(LT,'<',19,69)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e87940>,{'code': []}] and goto state 40
+   yacc.py: 506:Result : <dict @ 0x20eb1e87940> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 40
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression . LexToken(LT,'<',19,69)
+   yacc.py: 445:Action : Shift and goto state 79
+   yacc.py: 410:
+   yacc.py: 411:State  : 79
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression LT . LexToken(int_constant,'10',19,71)
+   yacc.py: 469:Action : Reduce rule [compoperator -> LT] with ['<'] and goto state 77
+   yacc.py: 506:Result : <str @ 0x20eaf34bcb0> ('<')
+   yacc.py: 410:
+   yacc.py: 411:State  : 77
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression compoperator . LexToken(int_constant,'10',19,71)
+   yacc.py: 445:Action : Shift and goto state 47
+   yacc.py: 410:
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression compoperator int_constant . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['10'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1dd9100> ({'node': Node(value='10', left=None, rig ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression compoperator factor . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1dd9100>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1dd9100> ({'node': Node(value='10', left=None, rig ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression compoperator unaryexpr . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1db6900> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression compoperator unaryexpr term1 . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1dd9100>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1dd9100> ({'node': Node(value='10', left=None, rig ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression compoperator term . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1e3dd80> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression compoperator term numexpression1 . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1dd9100>,{'code': []}] and goto state 115
+   yacc.py: 506:Result : <dict @ 0x20eb1dd9100> ({'node': Node(value='10', left=None, rig ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 115
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression compoperator numexpression . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 469:Action : Reduce rule [expression1 -> compoperator numexpression] with ['<',<dict @ 0x20eb1dd9100>] and goto state 76
+   yacc.py: 506:Result : <dict @ 0x20eb1db6a80> ({'operator': '<', 'node': Node(value='10 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 76
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON numexpression expression1 . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x20eb1e87940>,<dict @ 0x20eb1db6a80>] and goto state 153
+   yacc.py: 506:Result : <dict @ 0x20eb1e4c400> ({'node': Node(value='<', left=Node(value ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 153
+   yacc.py: 430:Defaulted state 153: Reduce using 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON expression . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 469:Action : Reduce rule [forstat2 -> expression] with [<dict @ 0x20eb1e4c400>] and goto state 152
+   yacc.py: 506:Result : <dict @ 0x20eb1e26340> ({'code': ['t4 = i', 't5 = 10', 't6 = t4  ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 152
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 . LexToken(SEMICOLON,';',19,73)
+   yacc.py: 445:Action : Shift and goto state 167
+   yacc.py: 410:
+   yacc.py: 411:State  : 167
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON . LexToken(IDENT,'i',19,75)
+   yacc.py: 445:Action : Shift and goto state 122
+   yacc.py: 410:
+   yacc.py: 411:State  : 122
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT . LexToken(ASSIGN,'=',19,77)
+   yacc.py: 445:Action : Shift and goto state 138
+   yacc.py: 410:
+   yacc.py: 411:State  : 138
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN . LexToken(IDENT,'i',19,79)
+   yacc.py: 445:Action : Shift and goto state 71
+   yacc.py: 410:
+   yacc.py: 411:State  : 71
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN IDENT . LexToken(PLUS,'+',19,81)
+   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 92
+   yacc.py: 548:Result : <dict @ 0x20eb1e8b980> ({'dim': 0, 'sizes': [], 'expression': '' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 92
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN IDENT lvalue1 . LexToken(PLUS,'+',19,81)
+   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['i',<dict @ 0x20eb1e8b980>] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e3dd80> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN factor . LexToken(PLUS,'+',19,81)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e3dd80>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e3dd80> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN unaryexpr . LexToken(PLUS,'+',19,81)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e4c400> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN unaryexpr term1 . LexToken(PLUS,'+',19,81)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e3dd80>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e3dd80> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term . LexToken(PLUS,'+',19,81)
+   yacc.py: 445:Action : Shift and goto state 45
+   yacc.py: 410:
+   yacc.py: 411:State  : 45
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term PLUS . LexToken(int_constant,'1',19,83)
+   yacc.py: 469:Action : Reduce rule [addsub -> PLUS] with ['+'] and goto state 85
+   yacc.py: 506:Result : <str @ 0x20eaf34bc30> ('+')
+   yacc.py: 410:
+   yacc.py: 411:State  : 85
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub . LexToken(int_constant,'1',19,83)
+   yacc.py: 445:Action : Shift and goto state 47
+   yacc.py: 410:
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub int_constant . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['1'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e378c0> ({'node': Node(value='1', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub factor . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e378c0>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e378c0> ({'node': Node(value='1', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub unaryexpr . LexToken(RPAREN,')',19,84)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e4c400> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub unaryexpr term1 . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e378c0>,{'code': []}] and goto state 116
+   yacc.py: 506:Result : <dict @ 0x20eb1e378c0> ({'node': Node(value='1', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 116
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term addsub term . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [numexpression1 -> addsub term] with ['+',<dict @ 0x20eb1e378c0>] and goto state 84
+   yacc.py: 506:Result : <dict @ 0x20eb1e37600> ({'node': Node(value='1', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN term numexpression1 . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e3dd80>,<dict @ 0x20eb1e37600>] and goto state 40
+   yacc.py: 506:Result : <dict @ 0x20eb1db6900> ({'node': Node(value='+', left=Node(value ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 40
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN numexpression . LexToken(RPAREN,')',19,84)
+   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 76
+   yacc.py: 548:Result : <dict @ 0x20eb1e3d500> ({'code': ''})
+   yacc.py: 410:
+   yacc.py: 411:State  : 76
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN numexpression expression1 . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x20eb1db6900>,{'code': ''}] and goto state 67
+   yacc.py: 506:Result : <dict @ 0x20eb1db6900> ({'node': Node(value='+', left=Node(value ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN expression . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [atribstat1 -> expression] with [<dict @ 0x20eb1db6900>] and goto state 155
+   yacc.py: 506:Result : <dict @ 0x20eb1e377c0> ({'atrib_type': 'expr', 'node': Node(valu ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 155
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT ASSIGN atribstat1 . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [forstat3 -> ASSIGN atribstat1] with ['=',<dict @ 0x20eb1e377c0>] and goto state 136
+   yacc.py: 506:Result : <dict @ 0x20eb1e3dd80> ({'code': [], 'aux_code': "= ['t7 = i', ' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 136
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON IDENT forstat3 . LexToken(RPAREN,')',19,84)
+   yacc.py: 469:Action : Reduce rule [forstat1 -> IDENT forstat3] with ['i',<dict @ 0x20eb1e3dd80>] and goto state 178
+   yacc.py: 506:Result : <dict @ 0x20eb1db6a80> ({'code': ["i = ['t7 = i', 't8 = 1', 't9  ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 178
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 . LexToken(RPAREN,')',19,84)
+   yacc.py: 445:Action : Shift and goto state 186
+   yacc.py: 410:
+   yacc.py: 411:State  : 186
+   yacc.py: 430:Defaulted state 186: Reduce using 3
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN . None
+   yacc.py: 473:Action : Reduce rule [new_scope_loop -> <empty>] with [] and goto state 190
+   yacc.py: 548:Result : <NoneType @ 0x7ffe9b5c98d0> (None)
+   yacc.py: 410:
+   yacc.py: 411:State  : 190
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop . LexToken(LBRACE,'{',19,86)
+   yacc.py: 445:Action : Shift and goto state 192
+   yacc.py: 410:
+   yacc.py: 411:State  : 192
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE . LexToken(FLOAT,'float',20,96)
+   yacc.py: 445:Action : Shift and goto state 8
+   yacc.py: 410:
+   yacc.py: 411:State  : 8
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT . LexToken(IDENT,'b',20,102)
+   yacc.py: 445:Action : Shift and goto state 31
+   yacc.py: 410:
+   yacc.py: 411:State  : 31
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT . LexToken(LBRACKET,'[',20,103)
+   yacc.py: 445:Action : Shift and goto state 63
+   yacc.py: 410:
+   yacc.py: 411:State  : 63
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET . LexToken(int_constant,'3',20,104)
+   yacc.py: 445:Action : Shift and goto state 47
+   yacc.py: 410:
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET int_constant . LexToken(RBRACKET,']',20,105)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['3'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc340> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET factor . LexToken(RBRACKET,']',20,105)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1ddc340>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc340> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET unaryexpr . LexToken(RBRACKET,']',20,105)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e37600> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET unaryexpr term1 . LexToken(RBRACKET,']',20,105)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1ddc340>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc340> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET term . LexToken(RBRACKET,']',20,105)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1e84f40> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET term numexpression1 . LexToken(RBRACKET,']',20,105)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1ddc340>,{'code': []}] and goto state 102
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc340> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 102
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET numexpression . LexToken(RBRACKET,']',20,105)
+   yacc.py: 445:Action : Shift and goto state 125
+   yacc.py: 410:
+   yacc.py: 411:State  : 125
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET numexpression RBRACKET . LexToken(SEMICOLON,';',20,106)
+   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 144
+   yacc.py: 548:Result : <dict @ 0x20eb1ddc580> ({'dim': 0, 'sizes': [], 'expression': '' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 144
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET numexpression RBRACKET lvalue1 . LexToken(SEMICOLON,';',20,106)
+   yacc.py: 445:Action : Shift and goto state 162
+   yacc.py: 410:
+   yacc.py: 411:State  : 162
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT LBRACKET numexpression RBRACKET lvalue1 SEMICOLON . LexToken(FLOAT,'float',21,116)
+   yacc.py: 469:Action : Reduce rule [statement2 -> LBRACKET numexpression RBRACKET lvalue1 SEMICOLON] with ['[',<dict @ 0x20eb1ddc340>,']',<dict @ 0x20eb1ddc580>,';'] and goto state 74
+   yacc.py: 506:Result : <dict @ 0x20eb1e0c600> ({'dim': 1, 'sizes': ['3'], 'code': ['t10 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 74
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE FLOAT IDENT statement2 . LexToken(FLOAT,'float',21,116)
+   yacc.py: 469:Action : Reduce rule [statement -> FLOAT IDENT statement2] with ['float','b',<dict @ 0x20eb1e0c600>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1e377c0> ({'code': ['t10 = 3', 'float b[t10]']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement . LexToken(FLOAT,'float',21,116)
+   yacc.py: 445:Action : Shift and goto state 8
+   yacc.py: 410:
+   yacc.py: 411:State  : 8
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement FLOAT . LexToken(IDENT,'j',21,122)
+   yacc.py: 445:Action : Shift and goto state 31
+   yacc.py: 410:
+   yacc.py: 411:State  : 31
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement FLOAT IDENT . LexToken(SEMICOLON,';',21,123)
+   yacc.py: 445:Action : Shift and goto state 64
+   yacc.py: 410:
+   yacc.py: 411:State  : 64
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement FLOAT IDENT SEMICOLON . LexToken(IDENT,'b',22,133)
+   yacc.py: 469:Action : Reduce rule [statement2 -> SEMICOLON] with [';'] and goto state 74
+   yacc.py: 506:Result : <dict @ 0x20eb1e3d500> ({'dim': 0, 'sizes': [], 'code': [], 'aux ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 74
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement FLOAT IDENT statement2 . LexToken(IDENT,'b',22,133)
+   yacc.py: 469:Action : Reduce rule [statement -> FLOAT IDENT statement2] with ['float','j',<dict @ 0x20eb1e3d500>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1e763c0> ({'code': ['float j']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement . LexToken(IDENT,'b',22,133)
    yacc.py: 445:Action : Shift and goto state 7
    yacc.py: 410:
    yacc.py: 411:State  : 7
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT . LexToken(ASSIGN,'=',26,188)
-   yacc.py: 445:Action : Shift and goto state 30
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT . LexToken(ASSIGN,'=',22,135)
+   yacc.py: 445:Action : Shift and goto state 29
    yacc.py: 410:
-   yacc.py: 411:State  : 30
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN . LexToken(int_constant,'4',26,190)
-   yacc.py: 445:Action : Shift and goto state 48
+   yacc.py: 411:State  : 29
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN . LexToken(NEW,'new',22,137)
+   yacc.py: 445:Action : Shift and goto state 70
    yacc.py: 410:
-   yacc.py: 411:State  : 48
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN int_constant . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['4'] and goto state 45
-   yacc.py: 506:Result : <dict @ 0x22f983f1200> ({'node': Node(value='4', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 45
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN factor . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x22f983f1200>] and goto state 43
-   yacc.py: 506:Result : <dict @ 0x22f983f1200> ({'node': Node(value='4', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 43
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN unaryexpr . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 88
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 88
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN unaryexpr term1 . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x22f983f1200>,None] and goto state 42
-   yacc.py: 506:Result : <dict @ 0x22f983f1200> ({'node': Node(value='4', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 42
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN term . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 86
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 86
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN term numexpression1 . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x22f983f1200>,None] and goto state 41
-   yacc.py: 506:Result : <dict @ 0x22f983f1200> ({'node': Node(value='4', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 41
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN numexpression . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 78
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 78
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN numexpression expression1 . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x22f983f1200>,None] and goto state 68
-   yacc.py: 506:Result : <dict @ 0x22f983f1200> ({'node': Node(value='4', left=None, righ ...)
-   yacc.py: 410:
-   yacc.py: 411:State  : 68
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN expression . LexToken(SEMICOLON,';',26,191)
-   yacc.py: 469:Action : Reduce rule [atribstat1 -> expression] with [<dict @ 0x22f983f1200>] and goto state 67
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 67
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN atribstat1 . LexToken(SEMICOLON,';',26,191)
+   yacc.py: 411:State  : 70
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW . LexToken(FLOAT,'float',22,141)
    yacc.py: 445:Action : Shift and goto state 107
    yacc.py: 410:
    yacc.py: 411:State  : 107
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN atribstat1 SEMICOLON . LexToken(BREAK,'break',27,205)
-   yacc.py: 469:Action : Reduce rule [statement1 -> ASSIGN atribstat1 SEMICOLON] with ['=',None,';'] and goto state 28
-   yacc.py: 506:Result : <dict @ 0x22f983f1400> ({'type': 'attribution'})
+   yacc.py: 430:Defaulted state 107: Reduce using 12
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW FLOAT . None
+   yacc.py: 469:Action : Reduce rule [types -> FLOAT] with ['float'] and goto state 105
+   yacc.py: 506:Result : <dict @ 0x20eb1e0e300> ({'type': <Type.FLOAT: 2>, 'code': 'float ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 28
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT statement1 . LexToken(BREAK,'break',27,205)
-   yacc.py: 469:Action : Reduce rule [statement -> IDENT statement1] with ['j',<dict @ 0x22f983f1400>] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 105
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types . LexToken(LBRACKET,'[',22,146)
+   yacc.py: 445:Action : Shift and goto state 127
    yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement . LexToken(BREAK,'break',27,205)
-   yacc.py: 445:Action : Shift and goto state 17
+   yacc.py: 411:State  : 127
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET . LexToken(int_constant,'3',22,147)
+   yacc.py: 445:Action : Shift and goto state 47
    yacc.py: 410:
-   yacc.py: 411:State  : 17
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement BREAK . LexToken(SEMICOLON,';',27,210)
-   yacc.py: 445:Action : Shift and goto state 37
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET int_constant . LexToken(RBRACKET,']',22,148)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['3'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e76280> ({'node': Node(value='3', left=None, righ ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 37
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement BREAK SEMICOLON . LexToken(RBRACE,'}',28,220)
-   yacc.py: 469:Action : Reduce rule [statement -> BREAK SEMICOLON] with ['break',';'] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET factor . LexToken(RBRACKET,']',22,148)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e76280>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e76280> ({'node': Node(value='3', left=None, righ ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement statement . LexToken(RBRACE,'}',28,220)
-   yacc.py: 473:Action : Reduce rule [statelist1 -> <empty>] with [] and goto state 103
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET unaryexpr . LexToken(RBRACKET,']',22,148)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e840c0> ({'code': []})
    yacc.py: 410:
-   yacc.py: 411:State  : 103
-   yacc.py: 430:Defaulted state 103: Reduce using 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement statement statelist1 . LexToken(RBRACE,'}',28,220)
-   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [None,None] and goto state 104
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET unaryexpr term1 . LexToken(RBRACKET,']',22,148)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e76280>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e76280> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET term . LexToken(RBRACKET,']',22,148)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1e3a680> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET term numexpression1 . LexToken(RBRACKET,']',22,148)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e76280>,{'code': []}] and goto state 146
+   yacc.py: 506:Result : <dict @ 0x20eb1e76280> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 146
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET numexpression . LexToken(RBRACKET,']',22,148)
+   yacc.py: 445:Action : Shift and goto state 164
+   yacc.py: 410:
+   yacc.py: 411:State  : 164
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET numexpression RBRACKET . LexToken(SEMICOLON,';',22,149)
+   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 176
+   yacc.py: 548:Result : <dict @ 0x20eb1e76340> ({'dim': 0, 'sizes': [], 'expression': '' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 176
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN NEW types LBRACKET numexpression RBRACKET lvalue1 . LexToken(SEMICOLON,';',22,149)
+   yacc.py: 469:Action : Reduce rule [allocexpression -> NEW types LBRACKET numexpression RBRACKET lvalue1] with ['new',<dict @ 0x20eb1e0e300>,'[',<dict @ 0x20eb1e76280>,']',<dict @ 0x20eb1e76340>] and goto state 68
+   yacc.py: 506:Result : <dict @ 0x20eb1e3a680> ({'node': Node(value='3', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 68
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN allocexpression . LexToken(SEMICOLON,';',22,149)
+   yacc.py: 469:Action : Reduce rule [atribstat1 -> allocexpression] with [<dict @ 0x20eb1e3a680>] and goto state 66
+   yacc.py: 506:Result : <dict @ 0x20eb1e84f40> ({'atrib_type': 'alloc', 'alloc': {'node' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN atribstat1 . LexToken(SEMICOLON,';',22,149)
+   yacc.py: 445:Action : Shift and goto state 104
    yacc.py: 410:
    yacc.py: 411:State  : 104
-   yacc.py: 430:Defaulted state 104: Reduce using 66
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement statelist . LexToken(RBRACE,'}',28,220)
-   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [None] and goto state 103
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT ASSIGN atribstat1 SEMICOLON . LexToken(PRINT,'print',23,159)
+   yacc.py: 469:Action : Reduce rule [statement1 -> ASSIGN atribstat1 SEMICOLON] with ['=',<dict @ 0x20eb1e84f40>,';'] and goto state 27
+   yacc.py: 506:Result : <dict @ 0x20eb1e0e400> ({'type': 'attribution', 'left_var_dim':  ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 103
-   yacc.py: 430:Defaulted state 103: Reduce using 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement statelist1 . LexToken(RBRACE,'}',28,220)
-   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [None,None] and goto state 61
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 27
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement IDENT statement1 . LexToken(PRINT,'print',23,159)
+   yacc.py: 469:Action : Reduce rule [statement -> IDENT statement1] with ['b',<dict @ 0x20eb1e0e400>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1e37600> ({'code': ['t11 = 3', 't12 = new float',  ...)
    yacc.py: 410:
    yacc.py: 411:State  : 61
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statelist . LexToken(RBRACE,'}',28,220)
-   yacc.py: 445:Action : Shift and goto state 102
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement . LexToken(PRINT,'print',23,159)
+   yacc.py: 445:Action : Shift and goto state 19
    yacc.py: 410:
-   yacc.py: 411:State  : 102
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statelist RBRACE . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statement -> new_scope LBRACE statelist RBRACE] with [None,'{',None,'}'] and goto state 144
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 19
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT . LexToken(IDENT,'i',23,165)
+   yacc.py: 445:Action : Shift and goto state 51
    yacc.py: 410:
-   yacc.py: 411:State  : 144
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN statement . LexToken(RBRACE,'}',29,226)
-   yacc.py: 473:Action : Reduce rule [ifstat1 -> <empty>] with [] and goto state 162
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 51
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT IDENT . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 92
+   yacc.py: 548:Result : <dict @ 0x20eb1e37b80> ({'dim': 0, 'sizes': [], 'expression': '' ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 162
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN statement ifstat1 . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [ifstat -> IF LPAREN expression RPAREN statement ifstat1] with ['if','(',<dict @ 0x22f983f1600>,')',None,None] and goto state 14
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 92
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT IDENT lvalue1 . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['i',<dict @ 0x20eb1e37b80>] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e3a680> ({'node': Node(value='i', left=None, righ ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 14
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement ifstat . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statement -> ifstat] with [None] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT factor . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e3a680>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e3a680> ({'node': Node(value='i', left=None, righ ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement statement . LexToken(RBRACE,'}',29,226)
-   yacc.py: 473:Action : Reduce rule [statelist1 -> <empty>] with [] and goto state 103
-   yacc.py: 548:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT unaryexpr . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1ddc340> ({'code': []})
    yacc.py: 410:
-   yacc.py: 411:State  : 103
-   yacc.py: 430:Defaulted state 103: Reduce using 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement statement statelist1 . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [None,None] and goto state 104
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT unaryexpr term1 . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e3a680>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e3a680> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT term . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1e84f40> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT term numexpression1 . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e3a680>,{'code': []}] and goto state 40
+   yacc.py: 506:Result : <dict @ 0x20eb1e3a680> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 40
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT numexpression . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 76
+   yacc.py: 548:Result : <dict @ 0x20eb1e840c0> ({'code': ''})
+   yacc.py: 410:
+   yacc.py: 411:State  : 76
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT numexpression expression1 . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x20eb1e3a680>,{'code': ''}] and goto state 39
+   yacc.py: 506:Result : <dict @ 0x20eb1e3a680> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 39
+   yacc.py: 430:Defaulted state 39: Reduce using 50
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement PRINT expression . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 469:Action : Reduce rule [printstat -> PRINT expression] with ['print',<dict @ 0x20eb1e3a680>] and goto state 10
+   yacc.py: 506:Result : <dict @ 0x20eb1e8c440> ({'code': ['t13 = i', 'print t13']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 10
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement printstat . LexToken(SEMICOLON,';',23,166)
+   yacc.py: 445:Action : Shift and goto state 33
+   yacc.py: 410:
+   yacc.py: 411:State  : 33
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement printstat SEMICOLON . LexToken(IF,'if',24,176)
+   yacc.py: 469:Action : Reduce rule [statement -> printstat SEMICOLON] with [<dict @ 0x20eb1e8c440>,';'] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc580> ({'code': ['t13 = i', 'print t13']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement . LexToken(IF,'if',24,176)
+   yacc.py: 445:Action : Shift and goto state 22
+   yacc.py: 410:
+   yacc.py: 411:State  : 22
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF . LexToken(LPAREN,'(',24,179)
+   yacc.py: 445:Action : Shift and goto state 56
+   yacc.py: 410:
+   yacc.py: 411:State  : 56
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN . LexToken(IDENT,'i',24,180)
+   yacc.py: 445:Action : Shift and goto state 51
+   yacc.py: 410:
+   yacc.py: 411:State  : 51
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN IDENT . LexToken(GE,'>=',24,181)
+   yacc.py: 473:Action : Reduce rule [lvalue1 -> <empty>] with [] and goto state 92
+   yacc.py: 548:Result : <dict @ 0x20eb1e84f40> ({'dim': 0, 'sizes': [], 'expression': '' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 92
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN IDENT lvalue1 . LexToken(GE,'>=',24,181)
+   yacc.py: 469:Action : Reduce rule [factor -> IDENT lvalue1] with ['i',<dict @ 0x20eb1e84f40>] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc640> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN factor . LexToken(GE,'>=',24,181)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1ddc640>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc640> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN unaryexpr . LexToken(GE,'>=',24,181)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e8c440> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN unaryexpr term1 . LexToken(GE,'>=',24,181)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1ddc640>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc640> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN term . LexToken(GE,'>=',24,181)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1e76340> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN term numexpression1 . LexToken(GE,'>=',24,181)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1ddc640>,{'code': []}] and goto state 40
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc640> ({'node': Node(value='i', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 40
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression . LexToken(GE,'>=',24,181)
+   yacc.py: 445:Action : Shift and goto state 80
+   yacc.py: 410:
+   yacc.py: 411:State  : 80
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression GE . LexToken(int_constant,'2',24,183)
+   yacc.py: 469:Action : Reduce rule [compoperator -> GE] with ['>='] and goto state 77
+   yacc.py: 506:Result : <str @ 0x20eb1f74c30> ('>=')
+   yacc.py: 410:
+   yacc.py: 411:State  : 77
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator . LexToken(int_constant,'2',24,183)
+   yacc.py: 445:Action : Shift and goto state 47
+   yacc.py: 410:
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator int_constant . LexToken(RPAREN,')',24,184)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['2'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e84f40> ({'node': Node(value='2', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator factor . LexToken(RPAREN,')',24,184)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e84f40>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e84f40> ({'node': Node(value='2', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator unaryexpr . LexToken(RPAREN,')',24,184)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1e76340> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator unaryexpr term1 . LexToken(RPAREN,')',24,184)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e84f40>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e84f40> ({'node': Node(value='2', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator term . LexToken(RPAREN,')',24,184)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1ddc280> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator term numexpression1 . LexToken(RPAREN,')',24,184)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e84f40>,{'code': []}] and goto state 115
+   yacc.py: 506:Result : <dict @ 0x20eb1e84f40> ({'node': Node(value='2', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 115
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression compoperator numexpression . LexToken(RPAREN,')',24,184)
+   yacc.py: 469:Action : Reduce rule [expression1 -> compoperator numexpression] with ['>=',<dict @ 0x20eb1e84f40>] and goto state 76
+   yacc.py: 506:Result : <dict @ 0x20eb1e840c0> ({'operator': '>=', 'node': Node(value='2 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 76
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN numexpression expression1 . LexToken(RPAREN,')',24,184)
+   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x20eb1ddc640>,<dict @ 0x20eb1e840c0>] and goto state 95
+   yacc.py: 506:Result : <dict @ 0x20eb1e8c440> ({'node': Node(value='>=', left=Node(valu ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 95
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression . LexToken(RPAREN,')',24,184)
+   yacc.py: 445:Action : Shift and goto state 120
+   yacc.py: 410:
+   yacc.py: 411:State  : 120
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN . LexToken(LBRACE,'{',24,186)
+   yacc.py: 473:Action : Reduce rule [new_scope -> <empty>] with [] and goto state 3
+   yacc.py: 548:Result : <NoneType @ 0x7ffe9b5c98d0> (None)
+   yacc.py: 410:
+   yacc.py: 411:State  : 3
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope . LexToken(LBRACE,'{',24,186)
+   yacc.py: 445:Action : Shift and goto state 25
+   yacc.py: 410:
+   yacc.py: 411:State  : 25
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE . LexToken(IDENT,'j',25,200)
+   yacc.py: 445:Action : Shift and goto state 7
+   yacc.py: 410:
+   yacc.py: 411:State  : 7
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT . LexToken(ASSIGN,'=',25,202)
+   yacc.py: 445:Action : Shift and goto state 29
+   yacc.py: 410:
+   yacc.py: 411:State  : 29
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN . LexToken(int_constant,'4',25,204)
+   yacc.py: 445:Action : Shift and goto state 47
+   yacc.py: 410:
+   yacc.py: 411:State  : 47
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN int_constant . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 469:Action : Reduce rule [factor -> int_constant] with ['4'] and goto state 44
+   yacc.py: 506:Result : <dict @ 0x20eb1e84600> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 44
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN factor . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 469:Action : Reduce rule [unaryexpr -> factor] with [<dict @ 0x20eb1e84600>] and goto state 42
+   yacc.py: 506:Result : <dict @ 0x20eb1e84600> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 42
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN unaryexpr . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 473:Action : Reduce rule [term1 -> <empty>] with [] and goto state 86
+   yacc.py: 548:Result : <dict @ 0x20eb1ddc300> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 86
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN unaryexpr term1 . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 469:Action : Reduce rule [term -> unaryexpr term1] with [<dict @ 0x20eb1e84600>,{'code': []}] and goto state 41
+   yacc.py: 506:Result : <dict @ 0x20eb1e84600> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 41
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN term . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 473:Action : Reduce rule [numexpression1 -> <empty>] with [] and goto state 84
+   yacc.py: 548:Result : <dict @ 0x20eb1ddc280> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 84
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN term numexpression1 . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 469:Action : Reduce rule [numexpression -> term numexpression1] with [<dict @ 0x20eb1e84600>,{'code': []}] and goto state 40
+   yacc.py: 506:Result : <dict @ 0x20eb1e84600> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 40
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN numexpression . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 473:Action : Reduce rule [expression1 -> <empty>] with [] and goto state 76
+   yacc.py: 548:Result : <dict @ 0x20eb1db6c00> ({'code': ''})
+   yacc.py: 410:
+   yacc.py: 411:State  : 76
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN numexpression expression1 . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 469:Action : Reduce rule [expression -> numexpression expression1] with [<dict @ 0x20eb1e84600>,{'code': ''}] and goto state 67
+   yacc.py: 506:Result : <dict @ 0x20eb1e84600> ({'node': Node(value='4', left=None, righ ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN expression . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 469:Action : Reduce rule [atribstat1 -> expression] with [<dict @ 0x20eb1e84600>] and goto state 66
+   yacc.py: 506:Result : <dict @ 0x20eb1e76340> ({'atrib_type': 'expr', 'node': Node(valu ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN atribstat1 . LexToken(SEMICOLON,';',25,205)
+   yacc.py: 445:Action : Shift and goto state 104
    yacc.py: 410:
    yacc.py: 411:State  : 104
-   yacc.py: 430:Defaulted state 104: Reduce using 66
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement statelist . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [None] and goto state 103
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT ASSIGN atribstat1 SEMICOLON . LexToken(BREAK,'break',26,219)
+   yacc.py: 469:Action : Reduce rule [statement1 -> ASSIGN atribstat1 SEMICOLON] with ['=',<dict @ 0x20eb1e76340>,';'] and goto state 27
+   yacc.py: 506:Result : <dict @ 0x20eb1db1f00> ({'type': 'attribution', 'left_var_dim':  ...)
    yacc.py: 410:
-   yacc.py: 411:State  : 103
-   yacc.py: 430:Defaulted state 103: Reduce using 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement statelist1 . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [None,None] and goto state 104
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
+   yacc.py: 411:State  : 27
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE IDENT statement1 . LexToken(BREAK,'break',26,219)
+   yacc.py: 469:Action : Reduce rule [statement -> IDENT statement1] with ['j',<dict @ 0x20eb1db1f00>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1e840c0> ({'code': ['t17 = 4', 'j = t17']})
    yacc.py: 410:
-   yacc.py: 411:State  : 104
-   yacc.py: 430:Defaulted state 104: Reduce using 66
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statelist . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [None] and goto state 103
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 103
-   yacc.py: 430:Defaulted state 103: Reduce using 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statelist1 . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [None,None] and goto state 104
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 104
-   yacc.py: 430:Defaulted state 104: Reduce using 66
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statelist . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [None] and goto state 103
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 103
-   yacc.py: 430:Defaulted state 103: Reduce using 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statelist1 . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [None,None] and goto state 104
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 104
-   yacc.py: 430:Defaulted state 104: Reduce using 66
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statelist . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [None] and goto state 103
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 103
-   yacc.py: 430:Defaulted state 103: Reduce using 65
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statelist1 . LexToken(RBRACE,'}',29,226)
-   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [None,None] and goto state 200
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 200
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist . LexToken(RBRACE,'}',29,226)
-   yacc.py: 445:Action : Shift and goto state 201
-   yacc.py: 410:
-   yacc.py: 411:State  : 201
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE . LexToken(BREAK,'break',30,232)
-   yacc.py: 469:Action : Reduce rule [forstat -> FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE] with ['for','(',None,';',None,';',None,')',None,'{',None,'}'] and goto state 15
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 15
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement forstat . LexToken(BREAK,'break',30,232)
-   yacc.py: 469:Action : Reduce rule [statement -> forstat] with [None] and goto state 62
-   yacc.py: 506:Result : <NoneType @ 0x7fff9cff9880> (None)
-   yacc.py: 410:
-   yacc.py: 411:State  : 62
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement statement . LexToken(BREAK,'break',30,232)
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement . LexToken(BREAK,'break',26,219)
    yacc.py: 445:Action : Shift and goto state 17
    yacc.py: 410:
    yacc.py: 411:State  : 17
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement statement BREAK . LexToken(SEMICOLON,';',30,237)
-   yacc.py: 445:Action : Shift and goto state 37
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement BREAK . LexToken(SEMICOLON,';',26,224)
+   yacc.py: 445:Action : Shift and goto state 36
+   yacc.py: 410:
+   yacc.py: 411:State  : 36
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement BREAK SEMICOLON . LexToken(RBRACE,'}',27,234)
+   yacc.py: 469:Action : Reduce rule [statement -> BREAK SEMICOLON] with ['break',';'] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc640> ({'code': ['goto L1']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement statement . LexToken(RBRACE,'}',27,234)
+   yacc.py: 473:Action : Reduce rule [statelist1 -> <empty>] with [] and goto state 100
+   yacc.py: 548:Result : <dict @ 0x20eb1ddc300> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement statement statelist1 . LexToken(RBRACE,'}',27,234)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1ddc640>,{'code': []}] and goto state 101
+   yacc.py: 506:Result : <dict @ 0x20eb1db1ec0> ({'code': ['goto L1']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 101
+   yacc.py: 430:Defaulted state 101: Reduce using 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement statelist . LexToken(RBRACE,'}',27,234)
+   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [<dict @ 0x20eb1db1ec0>] and goto state 100
+   yacc.py: 506:Result : <dict @ 0x20eb1e84e80> ({'code': ['goto L1']})
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statement statelist1 . LexToken(RBRACE,'}',27,234)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1e840c0>,<dict @ 0x20eb1e84e80>] and goto state 60
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc280> ({'code': ['t17 = 4', 'j = t17', 'goto L1 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 60
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statelist . LexToken(RBRACE,'}',27,234)
+   yacc.py: 445:Action : Shift and goto state 99
+   yacc.py: 410:
+   yacc.py: 411:State  : 99
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN new_scope LBRACE statelist RBRACE . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statement -> new_scope LBRACE statelist RBRACE] with [None,'{',<dict @ 0x20eb1ddc280>,'}'] and goto state 134
+   yacc.py: 506:Result : <dict @ 0x20eb1e84600> ({'code': ['t17 = 4', 'j = t17', 'goto L1 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 134
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN statement . LexToken(RBRACE,'}',28,240)
+   yacc.py: 473:Action : Reduce rule [ifstat1 -> <empty>] with [] and goto state 150
+   yacc.py: 548:Result : <dict @ 0x20eb1e84b40> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 150
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement IF LPAREN expression RPAREN statement ifstat1 . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [ifstat -> IF LPAREN expression RPAREN statement ifstat1] with ['if','(',<dict @ 0x20eb1e8c440>,')',<dict @ 0x20eb1e84600>,{'code': []}] and goto state 14
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc640> ({'code': ['t14 = i', 't15 = 2', 't16 = t ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 14
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement ifstat . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statement -> ifstat] with [<dict @ 0x20eb1ddc640>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc340> ({'code': ['t14 = i', 't15 = 2', 't16 = t ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement statement . LexToken(RBRACE,'}',28,240)
+   yacc.py: 473:Action : Reduce rule [statelist1 -> <empty>] with [] and goto state 100
+   yacc.py: 548:Result : <dict @ 0x20eb1e84f40> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement statement statelist1 . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1ddc340>,{'code': []}] and goto state 101
+   yacc.py: 506:Result : <dict @ 0x20eb1e37b80> ({'code': ['t14 = i', 't15 = 2', 't16 = t ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 101
+   yacc.py: 430:Defaulted state 101: Reduce using 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement statelist . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [<dict @ 0x20eb1e37b80>] and goto state 100
+   yacc.py: 506:Result : <dict @ 0x20eb1e0f300> ({'code': ['t14 = i', 't15 = 2', 't16 = t ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statement statelist1 . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1ddc580>,<dict @ 0x20eb1e0f300>] and goto state 101
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc640> ({'code': ['t13 = i', 'print t13', 't14 = ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 101
+   yacc.py: 430:Defaulted state 101: Reduce using 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statelist . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [<dict @ 0x20eb1ddc640>] and goto state 100
+   yacc.py: 506:Result : <dict @ 0x20eb1e0e340> ({'code': ['t13 = i', 'print t13', 't14 = ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statement statelist1 . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1e37600>,<dict @ 0x20eb1e0e340>] and goto state 101
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc340> ({'code': ['t11 = 3', 't12 = new float',  ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 101
+   yacc.py: 430:Defaulted state 101: Reduce using 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statelist . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [<dict @ 0x20eb1ddc340>] and goto state 100
+   yacc.py: 506:Result : <dict @ 0x20eb1e3d500> ({'code': ['t11 = 3', 't12 = new float',  ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statement statelist1 . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1e763c0>,<dict @ 0x20eb1e3d500>] and goto state 101
+   yacc.py: 506:Result : <dict @ 0x20eb1ddc580> ({'code': ['float j', 't11 = 3', 't12 = n ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 101
+   yacc.py: 430:Defaulted state 101: Reduce using 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statelist . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [<dict @ 0x20eb1ddc580>] and goto state 100
+   yacc.py: 506:Result : <dict @ 0x20eb1e3dd80> ({'code': ['float j', 't11 = 3', 't12 = n ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statement statelist1 . LexToken(RBRACE,'}',28,240)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1e377c0>,<dict @ 0x20eb1e3dd80>] and goto state 193
+   yacc.py: 506:Result : <dict @ 0x20eb1e37600> ({'code': ['t10 = 3', 'float b[t10]', 'fl ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 193
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist . LexToken(RBRACE,'}',28,240)
+   yacc.py: 445:Action : Shift and goto state 194
+   yacc.py: 410:
+   yacc.py: 411:State  : 194
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [forstat -> new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE] with [None,'for','(',<dict @ 0x20eb1e8b9c0>,';',<dict @ 0x20eb1e26340>,';',<dict @ 0x20eb1db6a80>,')',None,'{',<dict @ 0x20eb1e37600>,'}'] and goto state 15
+   yacc.py: 506:Result : <dict @ 0x20eb1e0c580> ({'code': ["i = ['t3 = 0']", 'L3:', 't4 = ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 15
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement forstat . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [statement -> forstat] with [<dict @ 0x20eb1e0c580>] and goto state 61
+   yacc.py: 506:Result : <dict @ 0x20eb1dd9080> ({'code': ["i = ['t3 = 0']", 'L3:', 't4 = ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 61
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement statement . LexToken(RBRACE,'}',29,242)
+   yacc.py: 473:Action : Reduce rule [statelist1 -> <empty>] with [] and goto state 100
+   yacc.py: 548:Result : <dict @ 0x20eb1db1980> ({'code': []})
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement statement statelist1 . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1dd9080>,{'code': []}] and goto state 101
+   yacc.py: 506:Result : <dict @ 0x20eb1e8b9c0> ({'code': ["i = ['t3 = 0']", 'L3:', 't4 = ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 101
+   yacc.py: 430:Defaulted state 101: Reduce using 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement statelist . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [<dict @ 0x20eb1e8b9c0>] and goto state 100
+   yacc.py: 506:Result : <dict @ 0x20eb1e377c0> ({'code': ["i = ['t3 = 0']", 'L3:', 't4 = ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement statelist1 . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1db6440>,<dict @ 0x20eb1e377c0>] and goto state 101
+   yacc.py: 506:Result : <dict @ 0x20eb1e0c580> ({'code': ['int b', "i = ['t3 = 0']", 'L3 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 101
+   yacc.py: 430:Defaulted state 101: Reduce using 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statelist . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [<dict @ 0x20eb1e0c580>] and goto state 100
+   yacc.py: 506:Result : <dict @ 0x20eb1e2ff40> ({'code': ['int b', "i = ['t3 = 0']", 'L3 ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statelist1 . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1e8cf00>,<dict @ 0x20eb1e2ff40>] and goto state 101
+   yacc.py: 506:Result : <dict @ 0x20eb1dd9080> ({'code': ['t1 = 3', 't2 = 4', 'int a[t1] ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 101
+   yacc.py: 430:Defaulted state 101: Reduce using 67
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statelist . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [statelist1 -> statelist] with [<dict @ 0x20eb1dd9080>] and goto state 100
+   yacc.py: 506:Result : <dict @ 0x20eb1e8cd80> ({'code': ['t1 = 3', 't2 = 4', 'int a[t1] ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 100
+   yacc.py: 430:Defaulted state 100: Reduce using 66
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statelist1 . LexToken(RBRACE,'}',29,242)
+   yacc.py: 469:Action : Reduce rule [statelist -> statement statelist1] with [<dict @ 0x20eb1e2f2c0>,<dict @ 0x20eb1e8cd80>] and goto state 180
+   yacc.py: 506:Result : <dict @ 0x20eb1db6440> ({'code': ['int i', 't1 = 3', 't2 = 4', ' ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 180
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist . LexToken(RBRACE,'}',29,242)
+   yacc.py: 445:Action : Shift and goto state 188
+   yacc.py: 410:
+   yacc.py: 411:State  : 188
+   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist RBRACE . $end
+   yacc.py: 469:Action : Reduce rule [funcdef -> DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist RBRACE] with ['def','main',None,'(',<dict @ 0x20eb1e2f9c0>,')','{',<dict @ 0x20eb1db6440>,'}'] and goto state 18
+   yacc.py: 506:Result : <dict @ 0x20eb1e2f2c0> ({'code': ['goto L4', '$label:main:', 'in ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 18
+   yacc.py: 434:Stack  : new_scope funcdef . $end
+   yacc.py: 473:Action : Reduce rule [funclist1 -> <empty>] with [] and goto state 37
+   yacc.py: 548:Result : <dict @ 0x20eb1e2ee00> ({'code': ['']})
    yacc.py: 410:
    yacc.py: 411:State  : 37
-   yacc.py: 434:Stack  : new_scope DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statement statement statement statement BREAK SEMICOLON . LexToken(RBRACE,'}',31,239)
-   yacc.py: 469:Action : Reduce rule [statement -> BREAK SEMICOLON] with ['break',';'] and goto state 62
+   yacc.py: 430:Defaulted state 37: Reduce using 7
+   yacc.py: 434:Stack  : new_scope funcdef funclist1 . $end
+   yacc.py: 469:Action : Reduce rule [funclist -> funcdef funclist1] with [<dict @ 0x20eb1e2f2c0>,{'code': ['']}] and goto state 5
+   yacc.py: 506:Result : <dict @ 0x20eb1e2f600> ({'code': [['goto L4', '$label:main:', 'i ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 5
+   yacc.py: 430:Defaulted state 5: Reduce using 5
+   yacc.py: 434:Stack  : new_scope funclist . $end
+   yacc.py: 469:Action : Reduce rule [program -> new_scope funclist] with [None,<dict @ 0x20eb1e2f600>] and goto state 1
+   yacc.py: 506:Result : <dict @ 0x20eb1db6900> ({'scopes': {'label': 'global', 'table':  ...)
+   yacc.py: 410:
+   yacc.py: 411:State  : 1
+   yacc.py: 434:Stack  : program . $end
+   yacc.py: 571:Done   : Returning <dict @ 0x20eb1db6900> ({'scopes': {'label': 'global', 'table':  ...)
+   yacc.py: 572:PLY: PARSE DEBUG END

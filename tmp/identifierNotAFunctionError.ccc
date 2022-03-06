@@ -1,0 +1,13 @@
+def func() {
+    int a = "string";
+    return "string1" + "string2";
+}
+
+def main() {
+    int b;
+    string not_a_function;
+
+    b = func();
+
+    b = not_a_function();
+}

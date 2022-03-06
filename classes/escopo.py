@@ -66,6 +66,36 @@ class Node:
             'right': right
         }
 
+    def leaf(self):
+        return self.left is None and self.right is None
+
+    # def code(self, label_func):
+    #     if self.left is None and self.right is None:
+    #         return
+    #     else:
+    #         code = ""
+    #         left_label = None
+    #         right_label = None
+    #         aux_code_left = []
+    #         aux_code_right = []
+    #         if self.left.leaf():
+    #             code += self.left.value
+    #         else:
+    #             left_label, aux_code_left = self.left.code(label_func)
+    #             code += left_label
+            
+    #         code += self.value
+
+    #         if self.right.leaf():
+    #             code += self.right.value
+    #         else:
+    #             right_label, aux_code_right = self.right.code(label_func)
+    #             code += right_label
+
+    #         this_label = label_func()
+
+    #         return (this_label, [*aux_code_left, aux_code_right, f'{this_label} = code'])
+
     def __str__(self):
         if self.left is not None or self.right is not None:
             return f'({self.left}{self.value}{self.right})'

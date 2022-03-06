@@ -1,0 +1,16 @@
+def function_with_3_params(int length, int start, int end) {
+    return (length + start) / end;
+}
+
+def main() {
+    int param1;
+    int param2;
+    int param3;
+    int param4_too_much;
+    float result;
+    
+
+    result = function_with_3_params(param1, param2, paramr3, param4_too_much);
+
+    return;
+}

@@ -1,0 +1,17 @@
+def main() {
+    int a;
+    int b.
+    int c;
+    
+    a = 4;
+    b = 5;
+    c = 3;
+
+    print a;
+    print b;
+    print c;
+
+    d_not_declared = a + b * c;
+
+    print d_not_declared;
+}

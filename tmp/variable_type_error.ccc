@@ -1,0 +1,15 @@
+  
+def main() {
+    int a;
+    int b;
+    float c;
+    
+    a = 5;
+    b = 2;
+
+    string d;
+
+    d = "some-string";
+
+    c = d + "create_error";
+}

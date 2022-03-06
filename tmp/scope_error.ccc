@@ -1,0 +1,22 @@
+def func() {
+    int a;
+    string b;
+
+    int a = 90;
+    string b = "arroz";
+
+    return b;
+}
+
+def main() {
+    string b;
+    
+    int c;
+
+    
+    b = func();
+
+    c = 10 + a;
+
+    return;
+}
