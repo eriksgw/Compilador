@@ -17,9 +17,9 @@ NEXT_LOOP_LABEL = ""
 def format_code(code):
     if '$label:' in code:
         label = code[7:]
-        return "{15} | \n".format(label)
+        return "{:<20} | \n".format(label)
 
-    return "{15} | {}".format("", code)
+    return "{:<20} | {}\n".format("", code)
 
 def generate_label(loop=False):
     global LC
@@ -48,7 +48,10 @@ def type2str(t, dim, ndim):
 
     return f"{t}{'[]' * (dim - ndim)}"
 
-def search_var(ident, line_no):
+lazy_check_var = []
+
+def search_var(ident, line_no, lazy=False):
+    global lazy_check_var
     if scope_stack:
         scope = scope_stack[-1]
         while scope:
@@ -57,14 +60,35 @@ def search_var(ident, line_no):
                     return e
             
             scope = scope.escopo_pai
-            
-        raise VariableAlreadyDeclaredError(f'Linha {line_no}: Variável {ident} não declarada')
+        
+        if lazy:
+            lazy_check_var.append((ident, line_no))
+            return
+        else:
+            raise VariableAlreadyDeclaredError(f'Linha {line_no}: Variável {ident} não declarada')
 
     raise ScopeNotExistError()
+
+def lazy_check():
+    global lazy_check_var
+
+    # scope_stack.append(scope)
+
+    for var in lazy_check_var:
+        search_var(*var)
+
+    # scope_stack.pop()
+
+    lazy_check_var = []
+
 
 def check_type(left, right, operation, lineno):
     valids = {
         ('string', '+', 'string'): 'string',
+        ('string', '+', 'int'): 'string',
+        ('string', '+', 'float'): 'string',
+        ('int', '+', 'string'): 'string',
+        ('float', '+', 'string'): 'string',
         ('int', '+', 'int'): 'int',
         ('int', '-', 'int'): 'int',
         ('int', '*', 'int'): 'int',
@@ -168,7 +192,7 @@ def p_funclist(p):
     funclist : funcdef funclist1
     '''
     p[0] = {
-        'code': [p[1]['code'], *p[2]['code']]
+        'code': [*p[1]['code'], *p[2]['code']]
     }
 
 def p_funclist1_1(p):
@@ -196,8 +220,10 @@ def p_funcdef(p):
 
     scope.new_entry(entry)
 
+    lazy_check()
+
     next = generate_label()
-    p[0] = { 'code': [f'goto {next}', f'$label:{p[2]}:', *p[5]['code'], *p[8]['code'], next] }
+    p[0] = { 'code': [f'$label:{p[2]}:', *p[5]['code'], *p[8]['code']] }
 
 def p_types_1(p):
     '''
@@ -223,10 +249,10 @@ def p_paramlist_1(p):
     '''
 
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[3], str('string'), p[2], [-1] * p[2], p.lineno(3))
+    entry = EntradaTabela(p[3], str('string'), p[2]['dim'], [-1] * p[2]['dim'], p.lineno(3))
     scope.new_entry(entry)
 
-    p[0] = { 'dim': p[4].dim + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
+    p[0] = { 'dim': p[4]['dim'] + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
 
 
 def p_paramlist_2(p):
@@ -235,10 +261,10 @@ def p_paramlist_2(p):
     '''
 
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[3], str('float'), p[2], [-1] * p[2],p.lineno(3))
+    entry = EntradaTabela(p[3], str('float'), p[2]['dim'], [-1] * p[2]['dim'],p.lineno(3))
     scope.new_entry(entry)
 
-    p[0] = { 'dim': p[4].dim + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
+    p[0] = { 'dim': p[4]['dim'] + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
 
 
 def p_paramlist_3(p):
@@ -249,7 +275,7 @@ def p_paramlist_3(p):
     entry = EntradaTabela(p[3], str('int'), p[2]['dim'], [-1] * p[2]['dim'], p.lineno(3))
     scope.new_entry(entry)
 
-    p[0] = { 'dim': p[4].dim + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
+    p[0] = { 'dim': p[4]['dim'] + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
 
 
 def p_paramlist_4(p):
@@ -262,7 +288,7 @@ def p_paramlist1_1(p):
     '''
     paramlist1 : COMMA paramlist
     '''
-    p[0] = { 'dim': p[2].dim + 1, 'code': p[2]['code'] }
+    p[0] = { 'dim': p[2]['dim'], 'code': p[2]['code'] }
 
 def p_paramlist1_2(p):
     '''
@@ -274,7 +300,7 @@ def p_listdcl_1(p):
     '''
     listdcl : LBRACKET RBRACKET listdcl
     '''
-    p[0] = {'dim': p[1] + 1, 'code': ['[]' * (len(p[3]['code']) + 1)]}
+    p[0] = {'dim': p[3]['dim'] + 1, 'code': ['[]' * (len(p[3]['code']) + 1)]}
 
 def p_listdcl_2(p):
     '''
@@ -323,14 +349,15 @@ def p_statement_2(p):
     '''
     statement : IDENT statement1
     '''
-    var = search_var(p[1], p.lineno(2))
+    var = search_var(p[1], p.lineno(2), p[2]['type'] == 'function')
     if p[2]['type'] == 'function':
 
-        if var.type != 'function':
-            raise IdentifierNotFunction(f'{p.lineno(2)}')
+        if var is not None:
+            if var.type != 'function':
+                raise IdentifierNotFunction(f'{p.lineno(2)}')
 
-        if var.dim != len(p[3]['params']):
-            raise ParamCountError(f"Função possui {len(p[2]['params'])} parâmetros, esperado: {var.dim}")
+            if var.dimension != len(p[2]['params']):
+                raise ParamCountError(f"Função possui {len(p[2]['params'])} parâmetros, esperado: {var.dimension}")
 
         p[0] = { 'code': [*p[2]['code'], f"call {p[1]}{p[2]['aux_code']}"]}
     else:
@@ -491,8 +518,8 @@ def p_funccall(p):
     if var.type != 'function':
         raise IdentifierNotFunction(f'{p.lineno(2)}')
 
-    if var.dim != len(p[3]['params']):
-        raise ParamCountError(f"Função possui {len(p[3]['params'])} parâmetros, esperado: {var.dim}")
+    if var.dimension != len(p[3]['params']):
+        raise ParamCountError(f"Função possui {len(p[3]['params'])} parâmetros, esperado: {var.dimension}")
 
     tvar = get_var()
 
@@ -504,14 +531,16 @@ def p_paramlistcall_1(p):
     '''
     scope = scope_stack[-1]
 
-    if p[1]['vartype'] != 'ident':
+    if 'vartype' in p[1] and p[1]['vartype'] != 'ident':
         var = EntradaTabela(f't{scope.tempcontador.inc()}', p[1]['type'], p[1]['dim'], p[1]['sizes'], p.lineno(2))
         if p[2]['array']:
             raise TypeError(f"{p[1]['label']} is not an array")
-    else:
+    elif p[1]['label'] not in VARS:
         var = search_var(p[1]['label'], p.lineno(2))
+    else:
+        var = p[1]['label']
 
-    p[0] = { 'params': [var, *p[2]['params']], 'code': [f"param {p[1]['code']}{p[2]['aux_code']}", *p[2]['code']] }
+    p[0] = { 'params': [var, *p[2]['params']], 'code': [f"param {p[1]['label']}{p[2]['aux_code']}", *p[2]['code']] }
 
 def p_paramlistcall_2(p):
     '''
@@ -551,6 +580,7 @@ def p_paramlistcall2_2(p):
     p[0] = {
         'array': False,
         'code': p[1]['code'],
+        'params': p[1]['params'],
         'aux_code': ''
     }
 
@@ -570,7 +600,7 @@ def p_returnstat(p):
     '''
     returnstat : RETURN returnstat1
     '''
-    p[0] = { 'code': [f"return {p[2]['label']}", *p[2]['code']] }
+    p[0] = { 'code': [*p[2]['code'], f"return {p[2]['label']}"] }
 
 
 def p_returnstat1_2(p):
@@ -600,7 +630,7 @@ def p_ifstat(p):
                 *p[5]['code'],
                 f"goto {end_if_label}",
                 *p[6]['code'],
-                f'{end_if_label}:'
+                f'$label:{end_if_label}:'
             ]
         }
     else:
@@ -609,7 +639,7 @@ def p_ifstat(p):
                 *p[3]['code'],
                 f"if False {p[3]['label']} goto {end_if_label}",
                 *p[5]['code'],
-                f'{end_if_label}:'
+                f'$label:{end_if_label}:'
             ]
         }
 
@@ -619,7 +649,7 @@ def p_ifstat1_1(p):
     '''
     label = generate_label()
     p[0] = {
-        'code': [f'{label}:', *p[2]['code']],
+        'code': [f'$label:{label}:', *p[2]['code']],
         'label': label
     }
 
@@ -641,12 +671,13 @@ def p_forstat(p):
     p[0] = {
         'code': [
             *p[4]['code'],
-            f'{start}:',
+            f'$label:{start}:',
             *p[6]['code'],
             *([f"if False {p[6]['label']} goto {next_label}"] if p[6]['label'] else []),
             *p[12]['code'],
             *p[8]['code'],
-            f'goto {start}'
+            f'goto {start}',
+            f'$label:{next_label}:',
         ]
     }
 
@@ -680,13 +711,13 @@ def p_forstat3_1(p):
     '''
     forstat3 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1
     '''
-    p[0] = { 'code': [*p[2]['code'], *p[4]['code']], 'aux_code': f"[{p[2]['label']}]{p[4]['aux_code']} = {p[6]['code']}" }
+    p[0] = { 'code': [*p[2]['code'], *p[4]['code']], 'aux_code': f"[{p[2]['label']}]{p[4]['aux_code']} = {p[6]['label']}" }
 
 def p_forstat3_2(p):
     '''
     forstat3 : ASSIGN atribstat1
     '''
-    p[0] = { 'code': [], 'aux_code': f"= {p[2]['code']}" }
+    p[0] = { 'code': [*p[2]['code']], 'aux_code': f"= {p[2]['label']}" }
 
 def p_whilestat(p):
     '''
@@ -699,11 +730,12 @@ def p_whilestat(p):
 
     p[0] = {
         'code': [
-            f'{start}:',
+            f'$label:{start}:',
             *p[4]['code'],
             f"if False {p[4]['label']} goto {next}",
             *p[7]['code'],
-            'goto {start}'
+            f'goto {start}',
+            f'$label:{next}:',
         ]
     }
 
@@ -740,7 +772,7 @@ def p_allocexpression(p):
         'dim': p[6]['dim'] + 1,
         'sizes': [str(p[4]['node']), *p[6]['sizes']],
         'label': var,
-        'code': [*p[4]['code'], *p[6]['code'], f"{var} = new {p[2]['code']}{p[6]['aux_code']}"], 
+        'code': [*p[4]['code'], *p[6]['code'], f"{var} = new {p[2]['code']}[{p[4]['label']}]{p[6]['aux_code']}"], 
     }
 
 def p_expression(p):
@@ -980,7 +1012,8 @@ def p_factor_5(p):
     p[0] = {
         'node': Node(p[1] + p[2]['expression'], None, None, type2str(var.type, var.dimension, p[2]['dim'])),
         'code': [f"{nvar} = {p[1]}{p[2]['aux_code']}"],
-        'label': nvar
+        'label': nvar,
+        'vartype': 'ident'
     }
 
 def p_factor_6(p):
@@ -1042,8 +1075,15 @@ precedence = (
 )
 parser = yacc.yacc(start='program', outputdir='./debug')  #build the parser
 
+def gci(codes):
+    with open('debug/ci.txt', 'w') as f:
+        for c in codes:
+            f.write(format_code(c))
+
 def analyze(input_value):
     global text
     text = input_value
     result = parser.parse(input=input_value, debug=log)
     print(result)
+
+    gci(result['code'])

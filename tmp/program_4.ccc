@@ -41,7 +41,7 @@ def selection(int[] array, int len) {
 
         for(j = 0; j < length; j = j + 1)
         {
-            if (array[J] < array[minimo]) {
+            if (array[j] < array[minimo]) {
                 minimo = j;
             }
         }
@@ -58,11 +58,10 @@ def selection(int[] array, int len) {
 
 
 def print_arr(int[] array, int len) {
-
+    int i;
     for(i = 0; i < len; i = i + 1) {
         print array[i];
     }
-
 }
 
 
@@ -88,7 +87,7 @@ def main() {
     print "Test array sort methods: ";
 
     print "Original array: ";
-    print_arr();
+    print_arr(array, 10);
 
     print "Array sorted by bubble sort";
     result = bubble(array, 10);

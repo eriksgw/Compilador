@@ -1,8 +1,23 @@
-def main() {
+def f(int a, int b) {
+    read a;
+    print b;
+
+    while (a > b) {
+        a = b - 2;
+    }
+
+    f(b, a);
+
+    return b;
+}
+def main(int argn, string[] argc) {
     int i;
     int a[3][4];
     int b;
     for(i = 0; i < 10; i = i + 1) {
+        string c[2];
+        c[0] = "a";
+        c[1] = "b";
         float b[3];
         float j;
         b = new float[3];
@@ -12,4 +27,6 @@ def main() {
             break;
         }
     }
+
+    return 0;
 }
