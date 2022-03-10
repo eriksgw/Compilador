@@ -67,7 +67,7 @@ Rule 61    forstat2 -> expression
 Rule 62    forstat2 -> <empty>
 Rule 63    forstat3 -> LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1
 Rule 64    forstat3 -> ASSIGN atribstat1
-Rule 65    whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+Rule 65    whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
 Rule 66    statelist -> statement statelist1
 Rule 67    statelist1 -> statelist
 Rule 68    statelist1 -> <empty>
@@ -119,7 +119,7 @@ GT                   : 73
 IDENT                : 10 14 15 16 22 23 24 25 43 59 96
 IF                   : 55
 INT                  : 11 16 22
-LBRACE               : 10 32 58
+LBRACE               : 10 32 58 65
 LBRACKET             : 20 35 38 48 63 69 98
 LE                   : 76
 LPAREN               : 10 37 43 55 58 65 97
@@ -130,7 +130,7 @@ NEQ                  : 78
 NEW                  : 69
 PLUS                 : 82
 PRINT                : 50
-RBRACE               : 10 32 58
+RBRACE               : 10 32 58 65
 RBRACKET             : 20 35 38 48 63 69 98
 READ                 : 51
 REM                  : 89
@@ -182,9 +182,9 @@ program              : 0
 readstat             : 27
 returnstat           : 28
 returnstat1          : 52
-statelist            : 10 32 58 67
+statelist            : 10 32 58 65 67
 statelist1           : 66
-statement            : 4 55 56 65 66
+statement            : 4 55 56 66
 statement1           : 25
 statement2           : 22 23 24
 term                 : 79 80
@@ -251,7 +251,7 @@ state 2
     (52) returnstat -> . RETURN returnstat1
     (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
     (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
     (2) new_scope -> .
     (10) funcdef -> . DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist RBRACE
     (1) new_loop_label -> .
@@ -582,7 +582,7 @@ state 22
 state 23
 
     (58) forstat -> new_loop_label . FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> new_loop_label . WHILE LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> new_loop_label . WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
 
     FOR             shift and go to state 57
     WHILE           shift and go to state 58
@@ -617,7 +617,7 @@ state 25
     (52) returnstat -> . RETURN returnstat1
     (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
     (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
     (2) new_scope -> .
     (1) new_loop_label -> .
 
@@ -1257,7 +1257,7 @@ state 57
 
 state 58
 
-    (65) whilestat -> new_loop_label WHILE . LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> new_loop_label WHILE . LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
 
     LPAREN          shift and go to state 97
 
@@ -1302,7 +1302,7 @@ state 61
     (52) returnstat -> . RETURN returnstat1
     (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
     (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
     (2) new_scope -> .
     (1) new_loop_label -> .
 
@@ -1903,7 +1903,7 @@ state 96
 
 state 97
 
-    (65) whilestat -> new_loop_label WHILE LPAREN . expression RPAREN new_scope_loop statement
+    (65) whilestat -> new_loop_label WHILE LPAREN . expression RPAREN new_scope_loop LBRACE statelist RBRACE
     (70) expression -> . numexpression expression1
     (79) numexpression -> . term numexpression1
     (84) term -> . unaryexpr term1
@@ -2243,7 +2243,7 @@ state 120
     (52) returnstat -> . RETURN returnstat1
     (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
     (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
     (2) new_scope -> .
     (1) new_loop_label -> .
 
@@ -2291,7 +2291,7 @@ state 122
 
 state 123
 
-    (65) whilestat -> new_loop_label WHILE LPAREN expression . RPAREN new_scope_loop statement
+    (65) whilestat -> new_loop_label WHILE LPAREN expression . RPAREN new_scope_loop LBRACE statelist RBRACE
 
     RPAREN          shift and go to state 139
 
@@ -2596,22 +2596,10 @@ state 138
 
 state 139
 
-    (65) whilestat -> new_loop_label WHILE LPAREN expression RPAREN . new_scope_loop statement
+    (65) whilestat -> new_loop_label WHILE LPAREN expression RPAREN . new_scope_loop LBRACE statelist RBRACE
     (3) new_scope_loop -> .
 
-    INT             reduce using rule 3 (new_scope_loop -> .)
-    FLOAT           reduce using rule 3 (new_scope_loop -> .)
-    STRING          reduce using rule 3 (new_scope_loop -> .)
-    IDENT           reduce using rule 3 (new_scope_loop -> .)
-    BREAK           reduce using rule 3 (new_scope_loop -> .)
-    SEMICOLON       reduce using rule 3 (new_scope_loop -> .)
-    PRINT           reduce using rule 3 (new_scope_loop -> .)
-    READ            reduce using rule 3 (new_scope_loop -> .)
-    RETURN          reduce using rule 3 (new_scope_loop -> .)
-    IF              reduce using rule 3 (new_scope_loop -> .)
     LBRACE          reduce using rule 3 (new_scope_loop -> .)
-    FOR             reduce using rule 3 (new_scope_loop -> .)
-    WHILE           reduce using rule 3 (new_scope_loop -> .)
 
     new_scope_loop                 shift and go to state 156
 
@@ -2797,7 +2785,7 @@ state 151
     (52) returnstat -> . RETURN returnstat1
     (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
     (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
     (2) new_scope -> .
     (1) new_loop_label -> .
 
@@ -2856,52 +2844,10 @@ state 155
 
 state 156
 
-    (65) whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop . statement
-    (22) statement -> . INT IDENT statement2
-    (23) statement -> . FLOAT IDENT statement2
-    (24) statement -> . STRING IDENT statement2
-    (25) statement -> . IDENT statement1
-    (26) statement -> . printstat SEMICOLON
-    (27) statement -> . readstat SEMICOLON
-    (28) statement -> . returnstat SEMICOLON
-    (29) statement -> . ifstat
-    (30) statement -> . forstat
-    (31) statement -> . whilestat
-    (32) statement -> . new_scope LBRACE statelist RBRACE
-    (33) statement -> . BREAK SEMICOLON
-    (34) statement -> . SEMICOLON
-    (50) printstat -> . PRINT expression
-    (51) readstat -> . READ expression
-    (52) returnstat -> . RETURN returnstat1
-    (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
-    (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
-    (2) new_scope -> .
-    (1) new_loop_label -> .
+    (65) whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop . LBRACE statelist RBRACE
 
-    INT             shift and go to state 6
-    FLOAT           shift and go to state 8
-    STRING          shift and go to state 9
-    IDENT           shift and go to state 7
-    BREAK           shift and go to state 17
-    SEMICOLON       shift and go to state 11
-    PRINT           shift and go to state 19
-    READ            shift and go to state 20
-    RETURN          shift and go to state 21
-    IF              shift and go to state 22
-    LBRACE          reduce using rule 2 (new_scope -> .)
-    FOR             reduce using rule 1 (new_loop_label -> .)
-    WHILE           reduce using rule 1 (new_loop_label -> .)
+    LBRACE          shift and go to state 169
 
-    new_loop_label                 shift and go to state 23
-    statement                      shift and go to state 169
-    printstat                      shift and go to state 10
-    readstat                       shift and go to state 12
-    returnstat                     shift and go to state 13
-    ifstat                         shift and go to state 14
-    forstat                        shift and go to state 15
-    whilestat                      shift and go to state 16
-    new_scope                      shift and go to state 3
 
 state 157
 
@@ -3036,25 +2982,54 @@ state 168
 
 state 169
 
-    (65) whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .
+    (65) whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE . statelist RBRACE
+    (66) statelist -> . statement statelist1
+    (22) statement -> . INT IDENT statement2
+    (23) statement -> . FLOAT IDENT statement2
+    (24) statement -> . STRING IDENT statement2
+    (25) statement -> . IDENT statement1
+    (26) statement -> . printstat SEMICOLON
+    (27) statement -> . readstat SEMICOLON
+    (28) statement -> . returnstat SEMICOLON
+    (29) statement -> . ifstat
+    (30) statement -> . forstat
+    (31) statement -> . whilestat
+    (32) statement -> . new_scope LBRACE statelist RBRACE
+    (33) statement -> . BREAK SEMICOLON
+    (34) statement -> . SEMICOLON
+    (50) printstat -> . PRINT expression
+    (51) readstat -> . READ expression
+    (52) returnstat -> . RETURN returnstat1
+    (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
+    (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
+    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
+    (2) new_scope -> .
+    (1) new_loop_label -> .
 
-    $end            reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    INT             reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    FLOAT           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    STRING          reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    IDENT           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    BREAK           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    SEMICOLON       reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    PRINT           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    READ            reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    RETURN          reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    IF              reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    LBRACE          reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    FOR             reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    WHILE           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    RBRACE          reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
-    ELSE            reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement .)
+    INT             shift and go to state 6
+    FLOAT           shift and go to state 8
+    STRING          shift and go to state 9
+    IDENT           shift and go to state 7
+    BREAK           shift and go to state 17
+    SEMICOLON       shift and go to state 11
+    PRINT           shift and go to state 19
+    READ            shift and go to state 20
+    RETURN          shift and go to state 21
+    IF              shift and go to state 22
+    LBRACE          reduce using rule 2 (new_scope -> .)
+    FOR             reduce using rule 1 (new_loop_label -> .)
+    WHILE           reduce using rule 1 (new_loop_label -> .)
 
+    new_loop_label                 shift and go to state 23
+    statelist                      shift and go to state 180
+    statement                      shift and go to state 61
+    printstat                      shift and go to state 10
+    readstat                       shift and go to state 12
+    returnstat                     shift and go to state 13
+    ifstat                         shift and go to state 14
+    forstat                        shift and go to state 15
+    whilestat                      shift and go to state 16
+    new_scope                      shift and go to state 3
 
 state 170
 
@@ -3078,7 +3053,7 @@ state 170
     (52) returnstat -> . RETURN returnstat1
     (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
     (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
     (2) new_scope -> .
     (1) new_loop_label -> .
 
@@ -3097,7 +3072,7 @@ state 170
     WHILE           reduce using rule 1 (new_loop_label -> .)
 
     new_scope                      shift and go to state 3
-    statelist                      shift and go to state 180
+    statelist                      shift and go to state 181
     statement                      shift and go to state 61
     printstat                      shift and go to state 10
     readstat                       shift and go to state 12
@@ -3113,10 +3088,10 @@ state 171
     (18) paramlist1 -> . COMMA paramlist
     (19) paramlist1 -> .
 
-    COMMA           shift and go to state 182
+    COMMA           shift and go to state 183
     RPAREN          reduce using rule 19 (paramlist1 -> .)
 
-    paramlist1                     shift and go to state 181
+    paramlist1                     shift and go to state 182
 
 state 172
 
@@ -3127,7 +3102,7 @@ state 172
     LBRACKET        shift and go to state 159
     IDENT           reduce using rule 21 (listdcl -> .)
 
-    listdcl                        shift and go to state 183
+    listdcl                        shift and go to state 184
 
 state 173
 
@@ -3135,10 +3110,10 @@ state 173
     (18) paramlist1 -> . COMMA paramlist
     (19) paramlist1 -> .
 
-    COMMA           shift and go to state 182
+    COMMA           shift and go to state 183
     RPAREN          reduce using rule 19 (paramlist1 -> .)
 
-    paramlist1                     shift and go to state 184
+    paramlist1                     shift and go to state 185
 
 state 174
 
@@ -3146,10 +3121,10 @@ state 174
     (18) paramlist1 -> . COMMA paramlist
     (19) paramlist1 -> .
 
-    COMMA           shift and go to state 182
+    COMMA           shift and go to state 183
     RPAREN          reduce using rule 19 (paramlist1 -> .)
 
-    paramlist1                     shift and go to state 185
+    paramlist1                     shift and go to state 186
 
 state 175
 
@@ -3192,31 +3167,38 @@ state 178
 
     (58) forstat -> new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 . RPAREN new_scope_loop LBRACE statelist RBRACE
 
-    RPAREN          shift and go to state 186
+    RPAREN          shift and go to state 187
 
 
 state 179
 
     (63) forstat3 -> LBRACKET numexpression RBRACKET lvalue1 . ASSIGN atribstat1
 
-    ASSIGN          shift and go to state 187
+    ASSIGN          shift and go to state 188
 
 
 state 180
 
-    (10) funcdef -> DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist . RBRACE
+    (65) whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist . RBRACE
 
-    RBRACE          shift and go to state 188
+    RBRACE          shift and go to state 189
 
 
 state 181
+
+    (10) funcdef -> DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist . RBRACE
+
+    RBRACE          shift and go to state 190
+
+
+state 182
 
     (14) paramlist -> STRING listdcl IDENT paramlist1 .
 
     RPAREN          reduce using rule 14 (paramlist -> STRING listdcl IDENT paramlist1 .)
 
 
-state 182
+state 183
 
     (18) paramlist1 -> COMMA . paramlist
     (14) paramlist -> . STRING listdcl IDENT paramlist1
@@ -3229,39 +3211,39 @@ state 182
     INT             shift and go to state 143
     RPAREN          reduce using rule 17 (paramlist -> .)
 
-    paramlist                      shift and go to state 189
+    paramlist                      shift and go to state 191
 
-state 183
+state 184
 
     (20) listdcl -> LBRACKET RBRACKET listdcl .
 
     IDENT           reduce using rule 20 (listdcl -> LBRACKET RBRACKET listdcl .)
 
 
-state 184
+state 185
 
     (15) paramlist -> FLOAT listdcl IDENT paramlist1 .
 
     RPAREN          reduce using rule 15 (paramlist -> FLOAT listdcl IDENT paramlist1 .)
 
 
-state 185
+state 186
 
     (16) paramlist -> INT listdcl IDENT paramlist1 .
 
     RPAREN          reduce using rule 16 (paramlist -> INT listdcl IDENT paramlist1 .)
 
 
-state 186
+state 187
 
     (58) forstat -> new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN . new_scope_loop LBRACE statelist RBRACE
     (3) new_scope_loop -> .
 
     LBRACE          reduce using rule 3 (new_scope_loop -> .)
 
-    new_scope_loop                 shift and go to state 190
+    new_scope_loop                 shift and go to state 192
 
-state 187
+state 188
 
     (63) forstat3 -> LBRACKET numexpression RBRACKET lvalue1 ASSIGN . atribstat1
     (40) atribstat1 -> . expression
@@ -3294,7 +3276,7 @@ state 187
     LPAREN          shift and go to state 52
 
     numexpression                  shift and go to state 40
-    atribstat1                     shift and go to state 191
+    atribstat1                     shift and go to state 193
     expression                     shift and go to state 67
     allocexpression                shift and go to state 68
     funccall                       shift and go to state 69
@@ -3303,7 +3285,29 @@ state 187
     addsub                         shift and go to state 43
     factor                         shift and go to state 44
 
-state 188
+state 189
+
+    (65) whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .
+
+    $end            reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    INT             reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    FLOAT           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    STRING          reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    IDENT           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    BREAK           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    SEMICOLON       reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    PRINT           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    READ            reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    RETURN          reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    IF              reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    LBRACE          reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    FOR             reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    WHILE           reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    RBRACE          reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+    ELSE            reduce using rule 65 (whilestat -> new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE .)
+
+
+state 190
 
     (10) funcdef -> DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist RBRACE .
 
@@ -3311,21 +3315,21 @@ state 188
     $end            reduce using rule 10 (funcdef -> DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist RBRACE .)
 
 
-state 189
+state 191
 
     (18) paramlist1 -> COMMA paramlist .
 
     RPAREN          reduce using rule 18 (paramlist1 -> COMMA paramlist .)
 
 
-state 190
+state 192
 
     (58) forstat -> new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop . LBRACE statelist RBRACE
 
-    LBRACE          shift and go to state 192
+    LBRACE          shift and go to state 194
 
 
-state 191
+state 193
 
     (63) forstat3 -> LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 .
 
@@ -3333,7 +3337,7 @@ state 191
     RPAREN          reduce using rule 63 (forstat3 -> LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 .)
 
 
-state 192
+state 194
 
     (58) forstat -> new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE . statelist RBRACE
     (66) statelist -> . statement statelist1
@@ -3355,7 +3359,7 @@ state 192
     (52) returnstat -> . RETURN returnstat1
     (55) ifstat -> . IF LPAREN expression RPAREN statement ifstat1
     (58) forstat -> . new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
-    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+    (65) whilestat -> . new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
     (2) new_scope -> .
     (1) new_loop_label -> .
 
@@ -3374,7 +3378,7 @@ state 192
     WHILE           reduce using rule 1 (new_loop_label -> .)
 
     new_loop_label                 shift and go to state 23
-    statelist                      shift and go to state 193
+    statelist                      shift and go to state 195
     statement                      shift and go to state 61
     printstat                      shift and go to state 10
     readstat                       shift and go to state 12
@@ -3384,14 +3388,14 @@ state 192
     whilestat                      shift and go to state 16
     new_scope                      shift and go to state 3
 
-state 193
+state 195
 
     (58) forstat -> new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist . RBRACE
 
-    RBRACE          shift and go to state 194
+    RBRACE          shift and go to state 196
 
 
-state 194
+state 196
 
     (58) forstat -> new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE .
 

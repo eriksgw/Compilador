@@ -31,9 +31,6 @@ def get_var():
     VARS.append(var)
     return var
 
-def get_last_var():
-    return VARS[-1]
-
 def convert_type(enum):
     types = {
         Type.INT: 'int',
@@ -206,7 +203,7 @@ def p_funclist1_2(p):
     '''
     funclist1 : 
     '''
-    p[0] = {'code': ['']}
+    p[0] = {'code': []}
 
 def p_funcdef(p):
     '''
@@ -223,7 +220,7 @@ def p_funcdef(p):
     lazy_check()
 
     next = generate_label()
-    p[0] = { 'code': [f'$label:{p[2]}:', *p[5]['code'], *p[8]['code']] }
+    p[0] = { 'code': [f'goto {next}', f'$label:{p[2]}:', *p[5]['code'], *p[8]['code'], f'$label:{next}:'] }
 
 def p_types_1(p):
     '''
@@ -249,7 +246,7 @@ def p_paramlist_1(p):
     '''
 
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[3], str('string'), p[2]['dim'], [-1] * p[2]['dim'], p.lineno(3))
+    entry = EntradaTabela(p[3], 'string', p[2]['dim'], [-1] * p[2]['dim'], p.lineno(3))
     scope.new_entry(entry)
 
     p[0] = { 'dim': p[4]['dim'] + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
@@ -261,7 +258,7 @@ def p_paramlist_2(p):
     '''
 
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[3], str('float'), p[2]['dim'], [-1] * p[2]['dim'],p.lineno(3))
+    entry = EntradaTabela(p[3], 'float', p[2]['dim'], [-1] * p[2]['dim'],p.lineno(3))
     scope.new_entry(entry)
 
     p[0] = { 'dim': p[4]['dim'] + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
@@ -272,7 +269,7 @@ def p_paramlist_3(p):
     paramlist : INT listdcl IDENT paramlist1 
     '''
     scope = scope_stack[-1]
-    entry = EntradaTabela(p[3], str('int'), p[2]['dim'], [-1] * p[2]['dim'], p.lineno(3))
+    entry = EntradaTabela(p[3], 'int', p[2]['dim'], [-1] * p[2]['dim'], p.lineno(3))
     scope.new_entry(entry)
 
     p[0] = { 'dim': p[4]['dim'] + 1, 'code': [f'from_params {p[3]}', *p[4]['code']] }
@@ -300,13 +297,13 @@ def p_listdcl_1(p):
     '''
     listdcl : LBRACKET RBRACKET listdcl
     '''
-    p[0] = {'dim': p[3]['dim'] + 1, 'code': ['[]' * (len(p[3]['code']) + 1)]}
+    p[0] = {'dim': p[3]['dim'] + 1, 'code': f"[]{p[3]['code']}"}
 
 def p_listdcl_2(p):
     '''
     listdcl : 
     '''
-    p[0] = {'dim': 0, 'code': []}
+    p[0] = {'dim': 0, 'code': ''}
 
 # def p_statement_1(p):
 #     '''
@@ -452,7 +449,7 @@ def p_statement1_1(p):
         'type': 'attribution',
         'left_var_dim': p[4]['dim'] + 1,
         'right_var': p[6],
-        'code': [*p[2]['code'], *p[6]['code'], *p[4]['code']],
+        'code': [*p[2]['code'], *p[4]['code'], *p[6]['code']],
         'aux_code': f"[{p[2]['label']}]{p[4]['aux_code']} = {p[6]['label']}"
     }
 
@@ -464,7 +461,7 @@ def p_statement1_2(p):
         'type': 'attribution',
         'left_var_dim': 0,
         'right_var': p[2],
-        'code': [*p[2]['code']],
+        'code': p[2]['code'],
         'aux_code': f" = {p[2]['label']}"
     }
 
@@ -472,7 +469,7 @@ def p_statement1_3(p):
     '''
     statement1 : LPAREN paramlistcall RPAREN SEMICOLON
     '''
-    p[0] = { 'type': 'function', 'params': p[2]['params'], 'code': [*p[2]['code']], 'aux_code': f", {len(p[2]['params'])}" }
+    p[0] = { 'type': 'function', 'params': p[2]['params'], 'code': p[2]['code'], 'aux_code': f", {len(p[2]['params'])}" }
 
 def p_statement2_1(p):
     '''
@@ -567,7 +564,7 @@ def p_paramlistcall2_1(p):
     p[0] = {
         'array': True,
         'dim': p[4]['dim'] + 1,
-        'sizes': [str(p[2]), *p[4]['sizes']],
+        'sizes': [str(p[2]['node']), *p[4]['sizes']],
         'params': p[5]['params'],
         'code': [*p[2]['code'], *p[4]['code'], *p[5]['code']],
         'aux_code': f"[{p[2]['label']}]{p[4]['aux_code']}"
@@ -699,7 +696,7 @@ def p_forstat2_1(p):
     forstat2 : expression
     '''
 
-    p[0] = { 'code': p[1]['code'], 'label': get_last_var() }
+    p[0] = { 'code': p[1]['code'], 'label': p[1]['label'] }
 
 def p_forstat2_2(p):
     '''
@@ -717,11 +714,11 @@ def p_forstat3_2(p):
     '''
     forstat3 : ASSIGN atribstat1
     '''
-    p[0] = { 'code': [*p[2]['code']], 'aux_code': f"= {p[2]['label']}" }
+    p[0] = { 'code': p[2]['code'], 'aux_code': f"= {p[2]['label']}" }
 
 def p_whilestat(p):
     '''
-    whilestat : new_loop_label WHILE LPAREN expression RPAREN new_scope_loop statement
+    whilestat : new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
     '''
     scope_stack.pop()
 
@@ -767,10 +764,8 @@ def p_allocexpression(p):
     var = get_var()
 
     p[0] = {
-        'node': p[4]['node'],
         'type': convert_type(p[2]['type']),
         'dim': p[6]['dim'] + 1,
-        'sizes': [str(p[4]['node']), *p[6]['sizes']],
         'label': var,
         'code': [*p[4]['code'], *p[6]['code'], f"{var} = new {p[2]['code']}[{p[4]['label']}]{p[6]['aux_code']}"], 
     }

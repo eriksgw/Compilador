@@ -1,0 +1,186 @@
+scope_stack = []
+num_expressions = []
+
+search_var(ident, lineno, lazy)
+num_expressions_as_json()
+new_scope(loop)
+check_type(left, right, operation, lineno)
+
+expression : numexpression expression1 {
+    if expression1['code']:
+        rvar = get_var()
+        expression.node = Node(expression1['operator'], numexpression['node'], expression1['node'], 'bool')
+        expression.label = rvar
+        expression.code = [
+                *numexpression['code'],
+                *expression1['code'],
+                "{rvar} = {numexpression['label']}" + (" {expression1['operator']} {expression1['label']}" if len(expression1['code']) > 0 else "")
+        ]
+    else:
+        expression = numexpression
+
+    num_expressions.append((expression['node'], numexpression.lineno))
+}
+
+expression1 : compoperator { expression1.operator = compoperator } numexpression {
+    expression1.node = numexpression['node']
+    expression1.label = numexpression['label']
+    expression1.'code = numexpression['code']
+}
+
+expression1 : & { expression1.code = '' }
+
+compoperator : GT { compoperator = '>' }
+
+compoperator : LT { compoperator = '<' }
+
+compoperator : GE { compoperator = '>=' }
+
+compoperator : LE { compoperator = '<=' }
+
+compoperator : EQ { compoperator = '==' }
+
+compoperator : NEQ { compoperator = '!=' }
+
+numexpression : term numexpression1 {
+    if numexpression1['code']:
+        rtype = check_type(term['node'], numexpression1['node'], numexpression1['operator'], term.lineno)
+
+        var = get_var()
+        numexpression.node = Node(numexpression1['operator'], term['node'], numexpression1['node'], rtype)
+        numexpression.label = var
+        numexpression.code = [
+            *term['code'], 
+            *numexpression1['code'], 
+            "{var} = {term['label']} {numexpression1['operator']} {numexpression1['label']}"
+        ]
+    else:
+        numexpression = term
+}
+
+numexpression1 : addsub { numexpression1.operator = addsub } term {
+    numexpression1.node = term['node']
+    numexpression1.code = term['code']
+    numexpression1.label = term['label']
+}
+
+numexpression1 : & { numexpression1.code = [] }
+
+addsub : PLUS { addsub = '+' }
+
+addsub : MINUS { addsub = '-' }
+
+term : unaryexpr term1 {
+    if term1['code']:
+        rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+        var = get_var()
+
+        term.node = Node(term1['operator'], unaryexpr['node'], term1['node'], rtype),
+        term.label = var
+        term.code = [*unaryexpr['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+    else:
+        term = unaryexpr
+}
+
+term1-1 : multdiv { term1-1.operator = multdiv } unaryexpr term1-2 {
+    if term1['code']:
+        rtype = check_type(unaryexpr['node'], term1-2['node'], term1-2['operator'], unaryexpr.lineno)
+
+        var = get_var()
+
+        term1-1.node = Node(term1-2['operator'], unaryexpr['node'], term1-2['node'], rtype)
+        term1-1.label = var
+        term1-1.code = [*unaryexpr['code'], *term1-2['code'], "{var} = {unaryexpr['label']} {term1-2['operator']} {term1-2['label']}"]
+    else:
+        term1-1.node = unaryexpr['node']
+        term1-1.label = unaryexpr['label']
+        term1-1.code = unaryexpr['code']
+}
+
+term1 : & { term1.code = [] }
+
+multdiv : MULTIPLY { multdiv = '*' }
+
+multdiv : DIVIDE { multdiv = '/' }
+
+multdiv : REM { multdiv = '%' }
+
+unaryexpr : addsub factor {
+    if (addsub == '-'):
+        factor['node'].value *= -1
+
+    var = get_var()
+
+    unaryexpr.node = factor['node']
+    unaryexpr.code = [*factor['code'], *(["{var} = {addsub}{factor['label']}"] if addsub == '-' else [])]
+    unaryexpr.label = var
+}
+
+unaryexpr : factor { unaryexpr = factor }
+
+factor : int_constant {
+    var = get_var()
+
+    factor.node = Node(int_constant, None, None, 'int')
+    factor.code = ['{var} = {int_constant}'], 'label = var
+}
+
+factor : float_constant {
+    var = get_var()
+
+    factor.node = Node(float_constant, None, None, 'float')
+    factor.code = ['{var} = {float_constant}']
+    factor.label = var
+}
+
+factor : string_constant {
+    var = get_var()
+
+    factor.node = Node(string_constant, None, None, 'string')
+    factor.code = ['{var} = {string_constant}']
+    factor.label = var
+}
+
+factor : null_constant {
+    var =  get_var() 
+
+    factor.node = Node('null', None, None, 'null')
+    factor.code = code = ['{var} = null']
+    factor.label = var
+}
+
+factor : IDENT lvalue1 {
+    var = search_var(IDENT, IDENT.lineno)
+    nvar = get_var()
+
+    factor.node = Node(IDENT + lvalue1['expression'], None, None, type2str(var.type, var.dimension, lvalue1['dim']))
+    factor.code = ["{nvar} = {IDENT}{lvalue1['aux_code']}"]
+    factor.label = nvar
+    factor.vartype = 'ident'
+}
+
+factor : LPAREN numexpression RPAREN {
+    factor = numexpression
+
+    num_expressions.append((numexpression['node'], numexpression.lineno))
+}
+
+lvalue1 : LBRACKET numexpression RBRACKET lvalue1 {
+    lvalue1.dim = lvalue1['dim'] + 1
+    lvalue1.sizes = [str(numexpression['node']), *lvalue1['sizes']]
+    lvalue1.expression =  '[{str(numexpression)}]{lvalue1}'
+    lvalue1.code = [*numexpression['code'], *lvalue1['code']]
+    lvalue1.aux_code = "[{numexpression['label']}]{lvalue1['aux_code']}"
+
+
+    num_expressions.append((numexpression['node'], numexpression.lineno))
+}
+
+lvalue1 : & {
+    lvalue1.dim =  0
+    lvalue1.sizes = []
+    lvalue1.expression = ''
+    lvalue1.code = []
+    lvalue1.aux_code = ''
+}

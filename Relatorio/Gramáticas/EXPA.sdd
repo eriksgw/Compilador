@@ -1,0 +1,279 @@
+scope_stack = []
+num_expressions = []
+
+search_var(ident, lineno, lazy)
+num_expressions_as_json()
+new_scope(loop)
+check_type(left, right, operation, lineno)
+lazy_check()
+
+'''
+expression : numexpression expression1
+'''
+
+if expression1['code']:
+    rvar = get_var()
+    expression = {
+        'node': Node(expression1['operator'], numexpression['node'], expression1['node'], 'bool'),
+        'label': rvar,
+        'code': [
+            *numexpression['code'],
+            *expression1['code'],
+            "{rvar} = {numexpression['label']}" + (f" {expression1['operator']} {expression1['label']}" if len(expression1['code']) > 0 else "")
+        ]
+    }
+else:
+    expression = numexpression
+
+num_expressions.append((expression['node'], numexpression.lineno))
+
+'''
+expression1 : compoperator numexpression
+'''
+expression1 = { 
+    'operator': compoperator,
+    'node': numexpression['node'],
+    'label': numexpression['label'],
+    'code': numexpression['code']
+}
+
+
+'''
+expression1 : &
+'''
+expression1 = { 'code': '' }
+
+'''
+compoperator : GT
+'''
+
+compoperator = '>'
+
+'''
+compoperator : LT
+'''
+
+compoperator = '<'
+
+'''
+compoperator : GE
+'''
+compoperator = '>='
+
+'''
+compoperator : LE
+'''
+compoperator = '<='
+
+'''
+compoperator : EQ
+'''
+
+compoperator = '=='
+
+'''
+compoperator : NEQ
+'''
+
+compoperator = '!='
+
+'''
+numexpression : term numexpression1
+'''
+
+if numexpression1['code']:
+    rtype = check_type(term['node'], numexpression1['node'], numexpression1['operator'], term.lineno)
+
+    var = get_var()
+    numexpression = { 
+        'node': Node(numexpression1['operator'], term['node'], numexpression1['node'], rtype),
+        'code': [*term['code'], *numexpression1['code'], "{var} = {term['label']} {numexpression1['operator']} {numexpression1['label']}"],
+        'label': var
+    }
+else:
+    numexpression = term
+
+'''
+numexpression1 : addsub term
+'''
+
+numexpression1 = { 'node': term['node'], 'operator': addsub, 'code': term['code'], 'label': term['label'] }
+
+
+'''
+numexpression1 : &
+'''
+
+numexpression1 = { 'code': [] }
+
+'''
+addsub : PLUS
+'''
+
+addsub = '+'
+
+
+'''
+addsub : MINUS
+'''
+
+addsub = '-'
+
+
+'''
+term : unaryexpr term1
+'''
+
+if term1['code']:
+    rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+    var = get_var()
+
+
+    term = {
+        'node': Node(term1['operator'], unaryexpr['node'], term1['node'], rtype),
+        'code': [*unaryexpr['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+        'label': var
+    } 
+else:
+    term = unaryexpr
+
+
+'''
+term1 : multdiv unaryexpr term1
+'''
+
+if term1['code']:
+    rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+    var = get_var()
+
+    term1 = { 
+        'node': Node(term1['operator'], unaryexpr['node'], term1['node'], rtype), 
+        'operator': multdiv,
+        'code': [*unaryexpr['code'], *term1['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+        'label': var
+    }
+else:
+    term1 = { 'node': unaryexpr['node'], 'operator': multdiv, 'code': unaryexpr['code'], 'label': unaryexpr['label'] }
+
+'''
+term1 : &
+'''
+
+term1 = { 'code': [] }
+
+'''
+multdiv : MULTIPLY
+'''
+
+multdiv = '*'
+
+'''
+multdiv : DIVIDE
+'''
+
+multdiv = '/'
+
+'''
+multdiv : REM
+'''
+
+multdiv = '%'
+
+'''
+unaryexpr : addsub factor
+'''
+if (addsub == '-'):
+    factor['node'].value *= -1
+
+var = get_var()
+
+unaryexpr = { 'node': factor['node'], 'code': [*factor['code'], *([f"{var} = {addsub}{factor['label']}"] if addsub == '-' else [])], 'label': var }
+
+
+'''
+unaryexpr : factor
+'''
+
+unaryexpr = factor
+
+
+'''
+factor : int_constant
+'''
+var = get_var()
+
+factor = { 'node': Node(int_constant, None, None, 'int'), 'code': [f'{var} = {int_constant}'], 'label': var }
+
+
+'''
+factor : float_constant
+'''
+
+var = get_var()
+
+factor = { 'node': Node(float_constant, None, None, 'float'), 'code': [f'{var} = {float_constant}'], 'label': var  }
+
+
+'''
+factor : string_constant
+'''
+
+var = get_var()
+
+factor = { 'node': Node(string_constant, None, None, 'string'), 'code': [f'{var} = {string_constant}'], 'label': var  }
+
+
+'''
+factor : null_constant
+'''
+
+var = get_var()
+
+factor = { 'node': Node('null', None, None, 'null'), 'code': ['{var} = null'], 'label': var }
+
+'''
+factor : IDENT lvalue1
+'''
+
+var = search_var(IDENT, IDENT.lineno)
+nvar = get_var()
+
+factor = {
+    'node': Node(IDENT + lvalue1['expression'], None, None, type2str(var.type, var.dimension, lvalue1['dim'])),
+    'code': [f"{nvar} = {IDENT}{lvalue1['aux_code']}"],
+    'label': nvar,
+    'vartype': 'ident'
+}
+
+'''
+factor : LPAREN numexpression RPAREN
+'''
+factor = numexpression
+
+num_expressions.append((numexpression['node'], numexpression.lineno))
+
+'''
+lvalue1 : LBRACKET numexpression RBRACKET lvalue1
+'''
+lvalue1 = {
+    'dim': lvalue1['dim'] + 1,
+    'sizes': [numexpression['node'], *lvalue1['sizes']],
+    'expression': '[{numexpression}]{lvalue1}',
+    'code': [*numexpression['code'], *lvalue1['code']],
+    'aux_code': "[{numexpression['label']}]{lvalue1['aux_code']}"
+}
+
+num_expressions.append((numexpression['node'], numexpression.lineno))
+
+'''
+lvalue1 : &
+'''
+lvalue1 = {
+    'dim': 0,
+    'sizes': [],
+    'expression': '',
+    'code': [],
+    'aux_code': ''
+}

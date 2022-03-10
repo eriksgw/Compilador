@@ -1,0 +1,305 @@
+scope_stack = []
+num_expressions = []
+
+search_var(ident, lineno, lazy)
+num_expressions_as_json()
+new_scope(loop)
+check_type(left, right, operation, lineno)
+
+new_loop_label : & { NEXT_LOOP_LABEL = generate_label() }
+
+new_scope : & { add_scope(False) }
+
+new_scope_loop : & { add_scope(True) }
+
+program : new_scope statement {
+    global_scope = scope_stack.pop()
+
+    program.scopes = global_scope.as_json(),
+    program.num_expressions = num_expressions_as_json(),
+    program.code = statement['code']
+}
+
+program : new_scope funclist {
+    global_scope = scope_stack.pop()
+
+    program.scopes = global_scope.as_json(),
+    program.num_expressions = num_expressions_as_json(),
+    program.code = statement['code']
+}
+
+program : &
+
+funclist : funcdef funclist1 { funclist.code = [*funcdef['code'], *funclist1['code']] }
+
+funclist1 : funclist { funclist1.code = funclist['code'] }
+
+funclist1 : & { funclist1.code = [] }
+
+funcdef : DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist RBRACE {
+    scope_stack.pop()
+
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, 'function', paramlist['dim'], [], IDENT.lineno)
+
+    scope.new_entry(entry)
+
+    lazy_check()
+
+    next = generate_label()
+    funcdef.code = ['goto {next}', '{IDENT}:', *paramlist['code'], *statelist['code'], '{next}:']
+}
+
+
+types : INT { 
+    types.type= INT 
+    types.code = INT 
+}
+
+
+types : FLOAT {
+    types.type = FLOAT 
+    types.code = FLOAT
+}
+
+
+types : STRING {
+    types.type = STRING
+    types.code = STRING
+}
+
+
+paramlist : STRING listdcl IDENT paramlist1 {
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, STRING, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+    scope.new_entry(entry)
+
+    paramlist.dim = paramlist1['dim'] + 1
+    paramlist.code = ['from_params {IDENT}', *paramlist1['code']]
+}
+
+
+paramlist : FLOAT listdcl IDENT paramlist1  {
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, FLOAT, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+    scope.new_entry(entry)
+
+    paralist.dim = paramlist1['dim'] + 1
+    paramlist.code = ['from_params {IDENT}', *paramlist1['code']]
+    
+}
+
+paramlist : INT listdcl IDENT paramlist1 {
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, INT, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+    scope.new_entry(entry)
+
+    paralist.dim = paramlist1['dim'] + 1
+    paramlist.code = ['from_params {IDENT}', *paramlist1['code']]
+}
+ 
+paramlist: & { 
+    paramlist.dim = 0
+    paramlist.code = [] 
+}
+
+paramlist1 : COMMA paramlist {
+    paramlist1.dim = paramlist['dim']
+    paramlist1.code = paramlist['code']
+}
+
+paramlist1 : & {
+    paramlist1.dim = 0
+    paramlist1.code = []
+}
+
+listdcl-1 : LBRACKET RBRACKET listdcl-2 {
+    listdcl-1.dim = listdcl['dim'] + 1
+    listdcl-1.code = "[]{listdcl['code']}"
+}
+
+listdcl : & {
+    listdcl.dim = 0
+    listdcl.code = ''
+}
+
+statement : INT IDENT statement2 {
+    entry = EntradaTabela(IDENT, INT, statement2['dim'], statement2['sizes'], IDENT.lineno)
+    scope = scope_stack[-1]
+    scope.new_entry(entry)
+
+    statement.code = [*statement2['code'], "int {IDENT}{statement2['aux_code']}"]
+}
+
+statement : FLOAT IDENT statement2 {
+    entry = EntradaTabela(IDENT, FLOAT, statement2['dim'], statement2['sizes'], IDENT.lineno)
+    scope = scope_stack[-1]
+    scope.new_entry(entry)
+
+    statement.code = [*statement2['code'], "int {IDENT}{statement2['aux_code']}"]
+}
+
+statement : STRING IDENT statement2 {
+    entry = EntradaTabela(IDENT, STRING, statement2['dim'], statement2['sizes'], IDENT.lineno)
+    scope = scope_stack[-1]
+    scope.new_entry(entry)
+
+    statement.code = [*statement2['code'], "int {IDENT}{statement2['aux_code']}"]
+}
+
+statement2 : LBRACKET numexpression RBRACKET lvalue1 {
+    statement2.dim = lvalue1['dim'] + 1
+    statement2.sizes = [str(numexpression['node']), *lvalue1['sizes']]
+    statement2.code = [*numexpression['code'], *lvalue1['code']]
+    statement2.aux_code = "[{numexpression['label']}]{lvalue1['aux_code']}"
+} SEMICOLON
+
+statement2 : SEMICOLON {
+    statement2.dim = 0
+    statement2.sizes = [] 
+    statement2.code = []
+    statement2.aux_code = ''
+}
+
+numexpression : term numexpression1 {
+    if numexpression1['code']:
+        rtype = check_type(term['node'], numexpression1['node'], numexpression1['operator'], term.lineno)
+
+        var = get_var()
+        numexpression.node = Node(numexpression1['operator'], term['node'], numexpression1['node'], rtype)
+        numexpression.label = var
+        numexpression.code = [
+            *term['code'], 
+            *numexpression1['code'], 
+            "{var} = {term['label']} {numexpression1['operator']} {numexpression1['label']}"
+        ]
+    else:
+        numexpression = term
+}
+
+numexpression1 : addsub { numexpression1.operator = addsub } term {
+    numexpression1.node = term['node']
+    numexpression1.code = term['code']
+    numexpression1.label = term['label']
+}
+
+numexpression1 : & { numexpression1.code = [] }
+
+addsub : PLUS { addsub = '+' }
+
+addsub : MINUS { addsub = '-' }
+
+term : unaryexpr term1 {
+    if term1['code']:
+        rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+        var = get_var()
+
+        term.node = Node(term1['operator'], unaryexpr['node'], term1['node'], rtype),
+        term.label = var
+        term.code = [*unaryexpr['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+    else:
+        term = unaryexpr
+}
+
+term1-1 : multdiv { term1-1.operator = multdiv } unaryexpr term1-2 {
+    if term1['code']:
+        rtype = check_type(unaryexpr['node'], term1-2['node'], term1-2['operator'], unaryexpr.lineno)
+
+        var = get_var()
+
+        term1-1.node = Node(term1-2['operator'], unaryexpr['node'], term1-2['node'], rtype)
+        term1-1.label = var
+        term1-1.code = [*unaryexpr['code'], *term1-2['code'], "{var} = {unaryexpr['label']} {term1-2['operator']} {term1-2['label']}"]
+    else:
+        term1-1.node = unaryexpr['node']
+        term1-1.label = unaryexpr['label']
+        term1-1.code = unaryexpr['code']
+}
+
+term1 : & { term1.code = [] }
+
+multdiv : MULTIPLY { multdiv = '*' }
+
+multdiv : DIVIDE { multdiv = '/' }
+
+multdiv : REM { multdiv = '%' }
+
+unaryexpr : addsub factor {
+    if (addsub == '-'):
+        factor['node'].value *= -1
+
+    var = get_var()
+
+    unaryexpr.node = factor['node']
+    unaryexpr.code = [*factor['code'], *(["{var} = {addsub}{factor['label']}"] if addsub == '-' else [])]
+    unaryexpr.label = var
+}
+
+unaryexpr : factor { unaryexpr = factor }
+
+factor : int_constant {
+    var = get_var()
+
+    factor.node = Node(int_constant, None, None, 'int')
+    factor.code = ['{var} = {int_constant}'], 'label = var
+}
+
+factor : float_constant {
+    var = get_var()
+
+    factor.node = Node(float_constant, None, None, 'float')
+    factor.code = ['{var} = {float_constant}']
+    factor.label = var
+}
+
+factor : string_constant {
+    var = get_var()
+
+    factor.node = Node(string_constant, None, None, 'string')
+    factor.code = ['{var} = {string_constant}']
+    factor.label = var
+}
+
+factor : null_constant {
+    var =  get_var() 
+
+    factor.node = Node('null', None, None, 'null')
+    factor.code = code = ['{var} = null']
+    factor.label = var
+}
+
+factor : IDENT lvalue1 {
+    var = search_var(IDENT, IDENT.lineno)
+    nvar = get_var()
+
+    factor.node = Node(IDENT + lvalue1['expression'], None, None, type2str(var.type, var.dimension, lvalue1['dim']))
+    factor.code = ["{nvar} = {IDENT}{lvalue1['aux_code']}"]
+    factor.label = nvar
+    factor.vartype = 'ident'
+}
+
+factor : LPAREN numexpression RPAREN {
+    factor = numexpression
+
+    num_expressions.append((numexpression['node'], numexpression.lineno))
+}
+
+lvalue1 : LBRACKET numexpression RBRACKET lvalue1 {
+    lvalue1.dim = lvalue1['dim'] + 1
+    lvalue1.sizes = [str(numexpression['node']), *lvalue1['sizes']]
+    lvalue1.expression =  '[{str(numexpression)}]{lvalue1}'
+    lvalue1.code = [*numexpression['code'], *lvalue1['code']]
+    lvalue1.aux_code = "[{numexpression['label']}]{lvalue1['aux_code']}"
+
+
+    num_expressions.append((numexpression['node'], numexpression.lineno))
+}
+
+lvalue1 : & {
+    lvalue1.dim =  0
+    lvalue1.sizes = []
+    lvalue1.expression = ''
+    lvalue1.code = []
+    lvalue1.aux_code = ''
+}

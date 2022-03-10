@@ -1,3 +1,4 @@
+                     | goto L6
 bubble:              | 
                      | from_params array
                      | from_params len
@@ -54,6 +55,8 @@ L2:                  |
 L2:                  | 
                      | t37 = array
                      | return t37
+L6:                  | 
+                     | goto L13
 selection:           | 
                      | from_params array
                      | from_params len
@@ -124,6 +127,8 @@ L11:                 |
 L8:                  | 
                      | t77 = array
                      | return t77
+L13:                 | 
+                     | goto L16
 print_arr:           | 
                      | from_params array
                      | from_params len
@@ -143,6 +148,8 @@ L15:                 |
                      | i = t84
                      | goto L15
 L14:                 | 
+L16:                 | 
+                     | goto L17
 main:                | 
                      | t87 = 8
                      | int array[t87]
@@ -209,4 +216,4 @@ main:                |
                      | param t127
                      | param t128
                      | call print_arr, 2
-                     | 
+L17:                 | 
