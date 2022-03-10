@@ -349,7 +349,7 @@ def p_statement_2(p):
 
         p[0] = { 'code': [*p[2]['code'], f"call {p[1]}{p[2]['aux_code']}"]}
     else:
-        if p[2]['right_var']['atrib_type'] == 'alloc':
+        if p[2]['right_var']['atrib_type'] == 'alloc' and var:
             alloc = p[2]['right_var']['alloc']
             if alloc['type'] != var.type:
                 raise InvalidTypeOperationError('Error Type')
@@ -503,11 +503,12 @@ def p_funccall(p):
     '''
     var = search_var(p[1], p.lineno(2))
 
-    if var.type != 'function':
-        raise IdentifierNotFunction(f'{p.lineno(2)}')
+    if var:
+        if var.type != 'function':
+            raise IdentifierNotFunction(f'{p.lineno(2)}')
 
-    if var.dimension != len(p[3]['params']):
-        raise ParamCountError(f"Função possui {len(p[3]['params'])} parâmetros, esperado: {var.dimension}")
+        if var.dimension != len(p[3]['params']):
+            raise ParamCountError(f"Função possui {len(p[3]['params'])} parâmetros, esperado: {var.dimension}")
 
     tvar = get_var()
 
@@ -994,13 +995,13 @@ def p_factor_5(p):
     var = search_var(p[1], p.lineno(1))
 
     nvar = get_var()
-
-    p[0] = {
-        'node': Node(p[1] + p[2]['expression'], None, None, type2str(var.type, var.dimension, p[2]['dim'])),
-        'code': [f"{nvar} = {p[1]}{p[2]['aux_code']}"],
-        'label': nvar,
-        'vartype': 'ident'
-    }
+    if var:
+        p[0] = {
+            'node': Node(p[1] + p[2]['expression'], None, None, type2str(var.type, var.dimension, p[2]['dim'])),
+            'code': [f"{nvar} = {p[1]}{p[2]['aux_code']}"],
+            'label': nvar,
+            'vartype': 'ident'
+        }
 
 def p_factor_6(p):
     '''
