@@ -69,12 +69,8 @@ def search_var(ident, line_no, lazy=False):
 def lazy_check():
     global lazy_check_var
 
-    # scope_stack.append(scope)
-
     for var in lazy_check_var:
         search_var(*var)
-
-    # scope_stack.pop()
 
     lazy_check_var = []
 
@@ -304,11 +300,6 @@ def p_listdcl_2(p):
     listdcl : 
     '''
     p[0] = {'dim': 0, 'code': ''}
-
-# def p_statement_1(p):
-#     '''
-#     statement : vardecl SEMICOLON
-#     '''
 
 def p_statement_1_1(p):
     '''
@@ -730,7 +721,7 @@ def p_whilestat(p):
             f'$label:{start}:',
             *p[4]['code'],
             f"if False {p[4]['label']} goto {next}",
-            *p[7]['code'],
+            *p[8]['code'],
             f'goto {start}',
             f'$label:{next}:',
         ]
@@ -1075,10 +1066,14 @@ def gci(codes):
         for c in codes:
             f.write(format_code(c))
 
+import json
+
 def analyze(input_value):
     global text
     text = input_value
     result = parser.parse(input=input_value, debug=log)
-    print(result)
-
     gci(result['code'])
+
+    del result['code']
+
+    log.log(logging.INFO, json.dumps(result, indent=2, sort_keys=True))

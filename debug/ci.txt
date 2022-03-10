@@ -1,219 +1,74 @@
-                     | goto L6
-bubble:              | 
-                     | from_params array
-                     | from_params len
-                     | int length
-                     | t1 = len
-                     | length = t1
-                     | int aux
-                     | t2 = 0
-                     | aux = t2
-                     | int i
-                     | int j
-                     | t3 = 0
-                     | i = t3
-L5:                  | 
-                     | t4 = i
-                     | t5 = length
-                     | t6 = t4 < t5
-                     | if False t6 goto L2
-                     | t10 = 1
-                     | j = t10
-L4:                  | 
-                     | t11 = j
-                     | t12 = length
-                     | t13 = i
-                     | t14 = t12 - t13
-                     | t15 = t11 < t14
-                     | if False t15 goto L2
-                     | t22 = array[t21]
-                     | t24 = array[t23]
-                     | t25 = t22 > t24
-                     | if False t25 goto L3
-                     | t29 = array[t28]
-                     | aux = t29
-                     | t30 = j
-                     | t31 = 1
-                     | t32 = t30 - t31
-                     | t34 = array[t33]
-                     | array[t32] = t34
-                     | t35 = j
-                     | t36 = aux
-                     | array[t35] = t36
+                     | goto L3
+f:                   | 
+                     | from_params a
+                     | from_params b
+                     | t1 = a
+                     | read t1
+                     | t2 = b
+                     | print t2
+L2:                  | 
+                     | t3 = a
+                     | t4 = b
+                     | t5 = t3 > t4
+                     | if False t5 goto L1
+                     | t6 = b
+                     | t7 = 2
+                     | t8 = t6 - t7
+                     | a = t8
+                     | goto L2
+L1:                  | 
+                     | param t9
+                     | param t10
+                     | call f, 2
+                     | t11 = b
+                     | return t11
 L3:                  | 
-                     | t16 = j
-                     | t17 = 1
-                     | t18 = t16 + t17
-                     | j = t18
-                     | goto L4
-L2:                  | 
-                     | t7 = i
-                     | t8 = 1
-                     | t9 = t7 + t8
-                     | i = t9
-                     | goto L5
-L2:                  | 
-                     | t37 = array
-                     | return t37
-L6:                  | 
-                     | goto L13
-selection:           | 
-                     | from_params array
-                     | from_params len
-                     | int length
-                     | t38 = len
-                     | length = t38
-                     | int i
-                     | int j
-                     | int minimo
-                     | t39 = 0
-                     | minimo = t39
-                     | int aux
-                     | t40 = 0
-                     | aux = t40
-                     | t41 = 0
-                     | i = t41
-L12:                 | 
-                     | t42 = i
-                     | t43 = length
-                     | t44 = 1
-                     | t45 = t43 - t44
-                     | t46 = t42 < t45
-                     | if False t46 goto L8
-                     | t50 = i
-                     | minimo = t50
-                     | t51 = i
-                     | t52 = 1
-                     | t53 = t51 + t52
-                     | j = t53
-                     | t54 = 0
-                     | j = t54
-L10:                 | 
-                     | t55 = j
-                     | t56 = length
-                     | t57 = t55 < t56
-                     | if False t57 goto L8
-                     | t62 = array[t61]
-                     | t64 = array[t63]
-                     | t65 = t62 < t64
-                     | if False t65 goto L9
-                     | t66 = j
-                     | minimo = t66
-L9:                  | 
-                     | t58 = j
-                     | t59 = 1
-                     | t60 = t58 + t59
-                     | j = t60
-                     | goto L10
-L8:                  | 
-                     | t67 = minimo
-                     | t68 = j
-                     | t69 = t67 != t68
-                     | if False t69 goto L11
-                     | t71 = array[t70]
-                     | aux = t71
-                     | t72 = minimo
-                     | t74 = array[t73]
-                     | array[t72] = t74
-                     | t75 = i
-                     | t76 = aux
-                     | array[t75] = t76
-L11:                 | 
-                     | t47 = i
-                     | t48 = 1
-                     | t49 = t47 + t48
-                     | i = t49
-                     | goto L12
-L8:                  | 
-                     | t77 = array
-                     | return t77
-L13:                 | 
-                     | goto L16
-print_arr:           | 
-                     | from_params array
-                     | from_params len
-                     | int i
-                     | t78 = 0
-                     | i = t78
-L15:                 | 
-                     | t79 = i
-                     | t80 = len
-                     | t81 = t79 < t80
-                     | if False t81 goto L14
-                     | t86 = array[t85]
-                     | print t86
-                     | t82 = i
-                     | t83 = 1
-                     | t84 = t82 + t83
-                     | i = t84
-                     | goto L15
-L14:                 | 
-L16:                 | 
-                     | goto L17
+                     | goto L7
 main:                | 
-                     | t87 = 8
-                     | int array[t87]
-                     | t88 = 8
-                     | int result[t88]
-                     | t89 = 10
-                     | t90 = new int[t89]
-                     | array = t90
-                     | t91 = 0
-                     | t92 = -6
-                     | array[t91] = t92
-                     | t93 = 1
-                     | t94 = 8
-                     | array[t93] = t94
-                     | t95 = 2
-                     | t96 = 12
-                     | array[t95] = t96
-                     | t97 = 3
-                     | t98 = 1
-                     | array[t97] = t98
-                     | t99 = 4
-                     | t100 = 22
-                     | array[t99] = t100
-                     | t101 = 5
-                     | t102 = 69
-                     | array[t101] = t102
-                     | t103 = 6
-                     | t104 = 90
-                     | array[t103] = t104
-                     | t105 = 7
-                     | t106 = 8
-                     | array[t105] = t106
-                     | t107 = 8
-                     | t108 = -33
-                     | array[t107] = t108
-                     | t109 = 9
-                     | t110 = -57
-                     | array[t109] = t110
-                     | t111 = 10
-                     | t112 = -12
-                     | array[t111] = t112
-                     | t113 = "Test array sort methods: "
-                     | print t113
-                     | t114 = "Original array: "
-                     | print t114
-                     | param t115
-                     | param t116
-                     | call print_arr, 2
-                     | t117 = "Array sorted by bubble sort"
-                     | print t117
-                     | param t118
-                     | param t119
-                     | t120 = call bubble, 2
-                     | result = t120
-                     | param t121
-                     | param t122
-                     | call print_arr, 2
-                     | t123 = "Array sorted by selection sort"
-                     | print t123
-                     | param t124
-                     | param t125
-                     | t126 = call selection, 2
-                     | result = t126
-                     | param t127
-                     | param t128
-                     | call print_arr, 2
-L17:                 | 
+                     | from_params argn
+                     | from_params argc
+                     | int i
+                     | t12 = 3
+                     | t13 = 4
+                     | int a[t12][t13]
+                     | int b
+                     | t14 = 0
+                     | i = t14
+L6:                  | 
+                     | t15 = i
+                     | t16 = 10
+                     | t17 = t15 < t16
+                     | if False t17 goto L4
+                     | t21 = 2
+                     | string c[t21]
+                     | t22 = 0
+                     | t23 = "a"
+                     | c[t22] = t23
+                     | t24 = 1
+                     | t25 = "b"
+                     | c[t24] = t25
+                     | t26 = 3
+                     | float b[t26]
+                     | float j
+                     | t27 = 3
+                     | t28 = new float[t27]
+                     | b = t28
+                     | t29 = i
+                     | print t29
+                     | t30 = i
+                     | t31 = 2
+                     | t32 = t30 >= t31
+                     | if False t32 goto L5
+                     | t33 = 4
+                     | j = t33
+                     | goto L4
+L5:                  | 
+                     | t18 = i
+                     | t19 = 1
+                     | t20 = t18 + t19
+                     | i = t20
+                     | goto L6
+L4:                  | 
+                     | t34 = 0
+                     | return t34
+L7:                  | 
