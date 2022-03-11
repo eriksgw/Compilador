@@ -1073,8 +1073,25 @@ def analyze(input_value):
     global text
     text = input_value
     result = parser.parse(input=input_value, debug=log)
+
+    print("\nExpressões aritméticas: Sucesso")
+    print("Declaração de Variáveis: Sucesso")
+    print("Checagem de Breaks: Sucesso\n")
+
     gci(result['code'])
 
+    print("Código Intermediário Gerado: ./debug/ci.txt")
+
     del result['code']
+
+    print("Árvore de expressões númericas: ./debug/num_expressions.txt")
+
+    with open("debug/num_expressions.txt", "w") as f:
+        f.write(json.dumps(result['num_expressions'], indent=2, sort_keys=True))
+    
+    print("Escopos e tabela de símbolos: ./debug/scopes.txt")
+
+    with open("debug/scopes.txt", "w") as f:
+        f.write(json.dumps(result['scopes'], indent=2, sort_keys=True))   
 
     log.log(logging.INFO, json.dumps(result, indent=2, sort_keys=True))

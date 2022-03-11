@@ -1,6 +1,6 @@
 def main() {
     int a;
-    int b.
+    int b;
     int c;
     
     a = 4;

@@ -1,0 +1,131 @@
+{
+  "escopos_internos": [
+    {
+      "escopos_internos": [
+        {
+          "escopos_internos": [],
+          "label": 1,
+          "table": []
+        }
+      ],
+      "label": 1,
+      "table": [
+        {
+          "dimension": 0,
+          "ident": "b",
+          "line": 32,
+          "sizes": [],
+          "type": "int"
+        },
+        {
+          "dimension": 0,
+          "ident": "a",
+          "line": 32,
+          "sizes": [],
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "escopos_internos": [
+        {
+          "escopos_internos": [
+            {
+              "escopos_internos": [],
+              "label": 1,
+              "table": []
+            }
+          ],
+          "label": 1,
+          "table": [
+            {
+              "dimension": 1,
+              "ident": "c",
+              "line": 49,
+              "sizes": [
+                "2"
+              ],
+              "type": "string"
+            },
+            {
+              "dimension": 1,
+              "ident": "b",
+              "line": 52,
+              "sizes": [
+                "3"
+              ],
+              "type": "float"
+            },
+            {
+              "dimension": 0,
+              "ident": "j",
+              "line": 53,
+              "sizes": [],
+              "type": "float"
+            }
+          ]
+        }
+      ],
+      "label": 2,
+      "table": [
+        {
+          "dimension": 1,
+          "ident": "argc",
+          "line": 44,
+          "sizes": [
+            -1
+          ],
+          "type": "string"
+        },
+        {
+          "dimension": 0,
+          "ident": "argn",
+          "line": 44,
+          "sizes": [],
+          "type": "int"
+        },
+        {
+          "dimension": 0,
+          "ident": "i",
+          "line": 45,
+          "sizes": [],
+          "type": "int"
+        },
+        {
+          "dimension": 2,
+          "ident": "a",
+          "line": 46,
+          "sizes": [
+            "3",
+            "4"
+          ],
+          "type": "int"
+        },
+        {
+          "dimension": 0,
+          "ident": "b",
+          "line": 47,
+          "sizes": [],
+          "type": "int"
+        }
+      ]
+    }
+  ],
+  "label": "global",
+  "table": [
+    {
+      "dimension": 2,
+      "ident": "f",
+      "line": 32,
+      "sizes": [],
+      "type": "function"
+    },
+    {
+      "dimension": 2,
+      "ident": "main",
+      "line": 44,
+      "sizes": [],
+      "type": "function"
+    }
+  ]
+}

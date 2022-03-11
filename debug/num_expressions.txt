@@ -1,0 +1,87 @@
+[
+  {
+    "ID": "(a>b)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "a"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "b"
+      },
+      "value": ">"
+    }
+  },
+  {
+    "ID": "(b-2)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "b"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "2"
+      },
+      "value": "-"
+    }
+  },
+  {
+    "ID": "(i<10)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "i"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "10"
+      },
+      "value": "<"
+    }
+  },
+  {
+    "ID": "(i+1)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "i"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "1"
+      },
+      "value": "+"
+    }
+  },
+  {
+    "ID": "(i>=2)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "i"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "2"
+      },
+      "value": ">="
+    }
+  }
+]
