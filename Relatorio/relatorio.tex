@@ -2358,6 +2358,7 @@ que não existe ciclos entre as produções, os atributos são sintetizados ou h
 sendo assim a SDD é L-Atribuída.
 
 A construção da SDT para a SDD de EXPA, pode ser encontrada em \emph{Relatorio/Gramaticas/EXPA.sdd}.
+Para realizar a sua transformação, basta adicionar as regras semânticas definidas nas próprias produções.
 Segue uma amostra da SDT para a produção TERM.
 
 \begin{python}
@@ -2390,14 +2391,14 @@ Node(term1['operator'], unaryexpr['node'], term1['node'], rtype)
 4) TERM = x
 Node(term1['operator'], unaryexpr['node'], term1['node'], rtype) 
 
-Agora partindo pela folha de valor "1"
+Agora, partindo pela folha de valor "1"
 
 5) FACTOR = 1 = int
 Node(int_constant, None, None, 'int')
 
 6) UNARYEXPR = FACTOR = 1 = int
 
-Agora partindo pela folha de valor "2"
+Agora, partindo pela folha de valor "2"
 
 7) FACTOR = 2 = int
 Node(int_constant, None, None, 'int')
@@ -2420,7 +2421,54 @@ expression = numexpression
 \includegraphics[scale=0.6]{tree.drawio.png}
 \end{center}
 
+\section{Inserção do tipo na tabela de símbolos}
+Para realizar o processo de construção da árvore de declarações,
+realizamos os mesmos procedimentos semelhantes à construção da árvore EXPA.
+Primeiro, separamos a grámatica de DEC e utilizamos uma tabela de símbolos 
+com uma função chamada new\_entry() para inserir na tabela. Seus parâmetros são: identificador, tipo, tabela e número da linha
+em que foi encontrado.
+
+Para demonstrar, que a SDD de DEC é L-Atribuída, basta verificar se os atributos são
+sintetizados ou se são herdados pelo pai, irmão ou por si mesmo, desde que não haja ciclos entre as produções.
+Ao verificar o arquivo em '\emph{Relatorio/Gramáticas/DEC.sdd}' notamos que todas produções respeitam essas condições e, portanto,
+é L-Atribuída. Agora, para transformar a SDD em SDT, adicionamos as regras semânticas nas produções.
+Segue abaixo uma produção chamada PARAMLIST em SDD e outra em SDT. Note que a SDT de DEC se encontra em 
+'\emph{Relatorio/Gramáticas/DEC.sdt}'
+
+\begin{python}
+# PARAMLIST EM SDD
+
+'''
+paramlist : STRING listdcl IDENT paramlist1 
+'''
+
+scope = scope_stack[-1]
+entry = EntradaTabela(IDENT, STRING, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+scope.new_entry(entry)
+
+paramlist = { 'dim': paramlist1['dim'] + 1, 'code': ['from_params {IDENT}', *paramlist1['code']] }    
+\end{python}
+
+\begin{python}
+#PARAMLIST EM SDT
+
+paramlist : STRING listdcl IDENT paramlist1 {
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, STRING, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+    scope.new_entry(entry)
+
+    paramlist.dim = paramlist1['dim'] + 1
+    paramlist.code = ['from_params {IDENT}', *paramlist1['code']]
+}
+
+\end{python}
 \section{Verificação de Tipo}
+A verificação dos tipos são necessárias para validar as entradas de uma expressão
+de acordo com uma regra definida entre operações diferentes. Dentro da função
+check\_type(), ela verifica o tipo dos nodos da direita e da esquerda. Caso essa combinação
+não exista dentro do dicionário, é retornado o valor None e mostrado um erro chamado
+\emph{InvalidTypeOperationError}, que indica um tipo de operação inválida.
+
 \begin{python}
     
 def check_type(left, right, operation, lineno):
@@ -2457,7 +2505,208 @@ def check_type(left, right, operation, lineno):
     return result
 
 \end{python}
+\section{Verificação de Identificadores por Escopo}
+A declaração de váriaveis dentro de um mesmo escopo não pode ocorrer para o mesmo
+identificador com dois tipos diferentes. Por exemplo, caso a váriavel declara como int a,
+não pode ser possível declarar a váriavel string a dentro do mesmo escopo.
+Para tratar esse escopo, foi criado a classe Escopo e o método new\_entry().
+Dentro dessa classe, foi adicionado tabela de símbolos denominada escopo, uma lista de escopo
+internos e uma váriavel booleana que mostra se um escopo é um comando de repetição.
+Todas as vezes que uma nova entrada é inserida, primeiro é verificado se ela já está presente na tabela.
+Caso esteja presente, é retornado o
+erro \emph{VariableAlreadyDeclaredError}, indicando que ela já foi declarada. 
 
+\begin{python}
+class Escopo:
+    ''' Classe de Escopo '''
+
+    def __init__(self, label='global', escopo_pai=None, loop=False):
+        self.label = label
+        self.escopo_pai = escopo_pai
+        self.loop = loop
+        self.table = []
+        self.escopos_internos = []
+
+    def new_entry(self, entry):
+        '''Adiciona entrada na tabela de simbolos'''
+
+        # Se variavel ja foi declarada
+        var = list(filter(lambda x: x.ident == entry.ident, self.table))
+
+        if len(var) > 0:
+            raise VariableAlreadyDeclaredError('Variavel ja declarada')
+
+        self.table.append(entry)
+\end{python}
+
+\section{Comandos dentro do Escopo}
+A implementação da linguagem deve considerar a presença de um break fora
+do escopo de um comando de repetição.
+
+\begin{python}
+def p_statement_10(p):
+    '''
+    statement : BREAK SEMICOLON
+    '''
+    scope = scope_stack[-1]
+    while scope:
+        if scope.loop:
+            break
+
+        scope = scope.escopo_pai
+
+    if not scope:
+        raise BreakOutLoopError(p.lineno(2))
+
+    p[0] = { 'code': [f'goto {NEXT_LOOP_LABEL}'] }
+
+\end{python}
+Para simular o comando \emph{break} fora de um loop, é executado
+o arquivo '\emph{tmp/break\_scope\_error.ccc}'.
+\begin{lstlisting}[escapechar=\#]
+
+             $ make run file='tmp/break_scope_error.ccc'
+
+ IDENT   | (LINE,COLUMN)                                                                                       
+  main   | [(1, 5)]                                                                                            
+   i     | [(2, 9), (5, 9), (5, 16), (5, 24), (5, 28), (7, 13)]                                                
+   a     | [(3, 9)]                                                                                            
+   b     | [(4, 9), (7, 9)]                         f                                                           
+Generating LALR tables
+WARNING: 2 shift/reduce conflicts
+Traceback (most recent call last):
+  File "main.py", line 23, in <module>
+    sa(input_value)
+  File "/home/erik/Documents/Github/Compilador/syntax.py", line 1075,
+  in analyze
+    result = parser.parse(input=input_value, debug=log)
+  File "/usr/local/lib/python3.8/dist-packages/ply-3.11-py3.8.egg/ply/yacc.py",
+  line 329, in parse
+    return self.parsedebug(input, lexer, debug, tracking, tokenfunc)
+  File "/usr/local/lib/python3.8/dist-packages/ply-3.11-py3.8.egg/ply/yacc.py",
+  line 503, in parsedebug
+    p.callable(pslice)
+  File "/home/erik/Documents/Github/Compilador/syntax.py", line 424,
+  in p_statement_10
+
+#$\textbf{raise BreakOutLoopError(p.lineno(2))}$#
+
+classes.exception.BreakOutLoopError: 18
+make: *** [Makefile:16: run] Error 1
+\end{lstlisting}
+
+\section{Geração de Código Intermediário}
+
+Os arquivos estão em \emph{Relatorio/Gramátiocas/ConvCC-2021-1.sdd}
+Os arquivos estão em \emph{Relatorio/Gramátiocas/ConvCC-2021-1.sdt}
+
+\begin{python}
+def p_forstat(p):
+    '''
+    forstat : new_loop_label FOR LPAREN forstat1 SEMICOLON forstat2 SEMICOLON forstat1 RPAREN new_scope_loop LBRACE statelist RBRACE
+    '''
+    scope_stack.pop()
+
+    start = generate_label()
+    next_label = NEXT_LOOP_LABEL
+
+    p[0] = {
+        'code': [
+            *p[4]['code'],
+            f'$label:{start}:',
+            *p[6]['code'],
+            *([f"if False {p[6]['label']} goto {next_label}"] if p[6]['label'] else []),
+            *p[12]['code'],
+            *p[8]['code'],
+            f'goto {start}',
+            f'$label:{next_label}:',
+        ]
+}
+\end{python}
+Código Intermediário
+
+\begin{lstlisting}
+    
+Arquivo 'debug/ci.txt' gerado ao compilar 'lil_example.ccc'
+
+                $ make run file='tmp/lil_example.ccc'
+
+                     | goto L3
+f:                   | 
+                     | from_params a
+                     | from_params b
+                     | t1 = a
+                     | read t1
+                     | t2 = b
+                     | print t2
+L2:                  | 
+                     | t3 = a
+                     | t4 = b
+                     | t5 = t3 > t4
+                     | if False t5 goto L1
+                     | t6 = b
+                     | t7 = 2
+                     | t8 = t6 - t7
+                     | a = t8
+                     | goto L2
+L1:                  | 
+                     | param t9
+                     | param t10
+                     | call f, 2
+                     | t11 = b
+                     | return t11
+L3:                  | 
+                     | goto L7
+main:                | 
+                     | from_params argn
+                     | from_params argc
+                     | int i
+                     | t12 = 3
+                     | t13 = 4
+                     | int a[t12][t13]
+                     | int b
+                     | t14 = 0
+                     | i = t14
+L6:                  | 
+                     | t15 = i
+                     | t16 = 10
+                     | t17 = t15 < t16
+                     | if False t17 goto L4
+                     | t21 = 2
+                     | string c[t21]
+                     | t22 = 0
+                     | t23 = "a"
+                     | c[t22] = t23
+                     | t24 = 1
+                     | t25 = "b"
+                     | c[t24] = t25
+                     | t26 = 3
+                     | float b[t26]
+                     | float j
+                     | t27 = 3
+                     | t28 = new float[t27]
+                     | b = t28
+                     | t29 = i
+                     | print t29
+                     | t30 = i
+                     | t31 = 2
+                     | t32 = t30 >= t31
+                     | if False t32 goto L5
+                     | t33 = 4
+                     | j = t33
+                     | goto L4
+L5:                  | 
+                     | t18 = i
+                     | t19 = 1
+                     | t20 = t18 + t19
+                     | i = t20
+                     | goto L6
+L4:                  | 
+                     | t34 = 0
+                     | return t34
+L7:                  | 
+
+\end{lstlisting}
 \section{Lazy Check}
 Um problema encontrado no desenvolvimento do trabalho, foi a definição de funções recursivas, visto que quando uma função chama ela própria no seu código, sua definição ainda não existe na tabela de símbolos, pois essa inclusão só acontece após o final da interpretação da função. Dessa forma, para solucionar esse problema e possibilitar o uso de código recursivo, foi criada uma funcionalidade de checagem preguiçosa através da função lazy check e uma lista de variáveis que não existem no escopo. Nesse sentido, quando uma função termina de ser interpretada essa função lazy check é chamada, de forma que ela percorre essa lista de variáveis que não existem no escopo e procura pelo nome da função recursiva e caso esse nome seja encontrado, a função será reinterpretada mas agora com a definição existente na tabela de símbolos possibilitando a funcionalidade de recursão.
 Segue abaixo a implementação da função lazy check.
@@ -2491,6 +2740,31 @@ def search_var(ident, line_no, lazy=False):
     raise ScopeNotExistError()
 \end{python}
 \section{Exceções}
+\begin{python}
+    class VariableAlreadyDeclaredError(Exception):
+        ''' A variavel ja foi declarada '''
+
+    class VariableNotDeclaredError(Exception):
+        ''' A variavel nao foi declarada '''
+
+    class ScopeNotExistError(Exception):
+        ''' O escopo nao existe '''
+
+    class InvalidTypeOperationError(Exception):
+        ''' Tipo de operacao invalida '''
+
+    class BreakOutLoopError(Exception):
+        ''' Break fora de um loop '''
+
+    class TypeError(Exception):
+        ''' Operacao com variavel de tipo invalido '''
+
+    class IdentifierNotFunction(Exception):
+        ''' A variavel e um indentificador, nao uma funcao '''
+
+    class ParamCountError(Exception):
+        ''' Numero invalido de parametros '''
+\end{python}
 % ---
 % Conclusão (outro exemplo de capítulo sem numeração e presente no sumário)
 % ---
