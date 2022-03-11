@@ -67,6 +67,7 @@
 % Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
 % ---
 \usepackage{lipsum}				% para geração de dummy text
+\usepackage{tabularx}
 % ---
 
 % ---
@@ -2267,6 +2268,229 @@ def analyze(input_value):
     print(result)
 \end{python}
 
+
+\part{Analisador Semântico}
+
+\section{Introdução}
+
+
+\section{Árvore de Expressão (EXPA)}
+
+Para construir a árvore de expressão (EXPA),
+foi necessário separar da grámatica ConvCC-2021-2 fatorada à esquerda as produções
+que derivam expressões aritméticas, formando a grámatica de EXPA, conforme abaixo.
+
+\begin{lstlisting}[escapechar=\#]
+[GRAMATICA de EXPA]
+
+EXPRESSION #$\rightarrow$#  NUMEXPRESSION 
+
+NUMEXPRESSION #$\rightarrow$#  TERM NUMEXPRESSION' 
+
+NUMEXPRESSION' #$\rightarrow$#  ADDSUB TERM 
+                  | #$\bm{\varepsilon}$# 
+
+ADDSUB #$\rightarrow$#  + 
+          | - 
+
+TERM #$\rightarrow$#  UNARYEXPR TERM' 
+
+TERM' #$\rightarrow$#  MULTDIV UNARYEXPR TERM' 
+         | #$\bm{\varepsilon}$# 
+
+MULTDIV #$\rightarrow$#  * 
+           | / 
+           | % 
+
+UNARYEXPR #$\rightarrow$#  UNARYEXPR' FACTOR 
+
+UNARYEXPR' #$\rightarrow$#  FACTOR
+
+FACTOR #$\rightarrow$#  int_constant 
+          | float_constant 
+          | string_constant 
+          | null 
+          | LVALUE 
+          | ( NUMEXPRESSION ) 
+
+LVALUE #$\rightarrow$#  ident LVALUE' 
+
+LVALUE' #$\rightarrow$#  [ NUM_EXPRESSION ] LVALUE' 
+           | #$\bm{\varepsilon}$#  
+\end{lstlisting}
+
+Com a nossa gramática EXPA separada e levando
+levando em consideração possíveis ciclos que poderiam ser gerados através das produções,
+foi criada a SDD L-Atribuída. A sua implementação se encontra no arquivo \emph{Relatorio/Gramaticas/EXPA.sdd} com mais detalhes.
+
+Segue uma amostra da produção TERM, com sua regra semântica na chave ``node'' no objeto ``term''.
+Note que para realizar a verificação de tipos é utizado a função check\_type(), que será
+demonstrada na seção 5.7
+
+\begin{python}
+
+'''
+term : unaryexpr term1
+'''
+
+if term1['code']:
+    rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+    var = get_var()
+
+
+    term = {
+        'node': Node(term1['operator'], unaryexpr['node'], term1['node'], rtype),
+        'code': [*unaryexpr['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+        'label': var
+    } 
+else:
+    term = unaryexpr
+\end{python}
+
+
+Para que uma SDD seja classificada como uma SDD L-Atribuída,
+é necessário que não exista ciclos entre as produções.
+Sendo assim, cada atributo deve ser sintetizado ou herdados do pai,
+dos irmãos ou de si mesmo, permitindo que suas produções sigam apenas uma
+única direção. Ao analisar a SDD L-Atribuída no arquivo \emph{EXPA.sdd}, é possível notar
+que não existe ciclos entre as produções, os atributos são sintetizados ou herdados do pai,
+sendo assim a SDD é L-Atribuída.
+
+A construção da SDT para a SDD de EXPA, pode ser encontrada em \emph{Relatorio/Gramaticas/EXPA.sdd}.
+Segue uma amostra da SDT para a produção TERM.
+
+\begin{python}
+term : unaryexpr term1 {
+if term1['code']:
+    rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+    var = get_var()
+
+    term.node = Node(term1['operator'], unaryexpr['node'], term1['node'], rtype),
+    term.label = var
+    term.code = [*unaryexpr['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+else:
+    term = unaryexpr
+}
+\end{python}
+Para realizar a validação da expressões derivadas de EXPA,
+criamos uma árvore de expressão para ``x + 1 * 2'', conforme a árvore abaixo.
+Utilizando a SDD criada, seguimos a árvore por suas folhas da esquerda para à direita.
+
+\begin{lstlisting}
+1) FACTOR = x
+Node(IDENT + lvalue1['expression'], None, None,
+type2str(var.type, var.dimension, lvalue1['dim']))
+
+2) UNARYEXPR = x
+Node(term1['operator'], unaryexpr['node'], term1['node'], rtype)
+
+3) UNARYEXPR = FACTOR = X
+4) TERM = x
+Node(term1['operator'], unaryexpr['node'], term1['node'], rtype) 
+
+Agora partindo pela folha de valor "1"
+
+5) FACTOR = 1 = int
+Node(int_constant, None, None, 'int')
+
+6) UNARYEXPR = FACTOR = 1 = int
+
+Agora partindo pela folha de valor "2"
+
+7) FACTOR = 2 = int
+Node(int_constant, None, None, 'int')
+
+8) TERM' = 2 = int
+Node(term1['operator'], unaryexpr['node'], term1['node'], rtype)
+
+9) NUMEXPRESSION' = 1 * 2
+Node(addsub['operator'], term['node'], numexpression1['node'], rtype)
+
+10) NUMEXPRESSION = x + 1 * 2
+Node(numexpression1['operator'], term['node'], numexpression1['node'], rtype
+
+11) EXPRESSION = x + 1 * 2
+expression = numexpression
+
+\end{lstlisting}
+
+\begin{center}
+\includegraphics[scale=0.6]{tree.drawio.png}
+\end{center}
+
+\section{Verificação de Tipo}
+\begin{python}
+    
+def check_type(left, right, operation, lineno):
+    valids = {
+        ('string', '+', 'string'): 'string',
+        ('string', '+', 'int'): 'string',
+        ('string', '+', 'float'): 'string',
+        ('int', '+', 'string'): 'string',
+        ('float', '+', 'string'): 'string',
+        ('int', '+', 'int'): 'int',
+        ('int', '-', 'int'): 'int',
+        ('int', '*', 'int'): 'int',
+        ('int', '%', 'int'): 'int',
+        ('int', '/', 'int'): 'float',
+        ('float', '+', 'float'): 'float',
+        ('float', '-', 'float'): 'float',
+        ('float', '*', 'float'): 'float',
+        ('float', '/', 'float'): 'float',
+        ('float', '+', 'int'): 'float',
+        ('float', '-', 'int'): 'float',
+        ('float', '*', 'int'): 'float',
+        ('float', '/', 'int'): 'float',
+        ('int', '+', 'float'): 'float',
+        ('int', '-', 'float'): 'float',
+        ('int', '*', 'float'): 'float',
+        ('int', '/', 'float'): 'float',
+    }
+ 
+    result = valids.get((left.result_type, operation, right.result_type), None)
+ 
+    if result is None:
+        raise InvalidTypeOperationError(f'Error on operation {operation}: {left.result_type},{right.result_type},{lineno}')
+ 
+    return result
+
+\end{python}
+
+\section{Lazy Check}
+Um problema encontrado no desenvolvimento do trabalho, foi a definição de funções recursivas, visto que quando uma função chama ela própria no seu código, sua definição ainda não existe na tabela de símbolos, pois essa inclusão só acontece após o final da interpretação da função. Dessa forma, para solucionar esse problema e possibilitar o uso de código recursivo, foi criada uma funcionalidade de checagem preguiçosa através da função lazy check e uma lista de variáveis que não existem no escopo. Nesse sentido, quando uma função termina de ser interpretada essa função lazy check é chamada, de forma que ela percorre essa lista de variáveis que não existem no escopo e procura pelo nome da função recursiva e caso esse nome seja encontrado, a função será reinterpretada mas agora com a definição existente na tabela de símbolos possibilitando a funcionalidade de recursão.
+Segue abaixo a implementação da função lazy check.
+
+\begin{python}
+def lazy_check():
+    global lazy_check_var
+  
+    for var in lazy_check_var:
+        search_var(*var)
+  
+    lazy_check_var = []
+
+def search_var(ident, line_no, lazy=False):
+    global lazy_check_var
+    if scope_stack:
+        scope = scope_stack[-1]
+        while scope:
+            for e in scope.table:
+                if e.ident == ident:
+                    return e
+            
+            scope = scope.escopo_pai
+        
+        if lazy:
+            lazy_check_var.append((ident, line_no))
+            return
+        else:
+            raise VariableAlreadyDeclaredError(f'Linha {line_no}: Variavel {ident} nao declarada')
+
+    raise ScopeNotExistError()
+\end{python}
+\section{Exceções}
 % ---
 % Conclusão (outro exemplo de capítulo sem numeração e presente no sumário)
 % ---
