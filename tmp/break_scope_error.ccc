@@ -3,13 +3,8 @@ def main() {
     int a[3][4];
     int b;
     for(i = 0; i < 10; i = i + 1) {
-        float b;
-        float j;
-        b = new int[3];
-        print i;
-        if (i>=2) {
-            j = 4;
-        }
+        
+        b = i;
     }
     break;
 }
