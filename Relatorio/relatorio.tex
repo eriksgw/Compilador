@@ -2272,13 +2272,34 @@ def analyze(input_value):
 \part{Analisador Semântico}
 
 \section{Introdução}
+Os analisadores semânticos, por definição, verificam os erros semânticos em um código.
+Sendo assim, é analisado o escopo dos nomes, correspondências entre declarações, uso dos nomes e
+compatibilidade dos tipos em expressões.
 
+Nesta etapa do trabalho, verificamos todos estes processos.
+Para isso, utilizamos a gramática fatorada à esquerda \textbf{ConvCC-2021-2}.
+Através dela, criamos uma Árvore de Expressão (EXPA) para expressões aritméticas, uma SDD L-Atríbuida e 
+sua transformação de SDD para SDT, como também construímos uma árvore de expressão levando em consideração
+as regras semânticas.
+
+Na parte de Declaração de Váriaveis, realizamos a inserção do tipo na tabela
+e também construímos uma SDD L-Atribuída e convertemos-a para uma SDT.
+Para o problema de verificação de tipos, realizamos operações para
+verificar se uma expressão é válida, considerando os tipos de cada operando.
+
+Além disso, para a Verificação de Identificadores por Escopo, onde um identificador
+não pode ser declarado duas vezes no mesmo escopo para tipos diferentes, foi
+adicionados escopos interno e externo para realizar a verificação. Por fim, durante
+a Verificação de Comandos dentro de escopos, como no caso de um comando \emph{break}
+fora de um loop, foi utilizado uma verificação por escopo. Por fim,
+executamos os mesmos processos de SDD, SDD L-Atribuída, e SDT para ConvCC-2021-1,
+no qual foi utilizada no código intermediário.
 
 \section{Árvore de Expressão (EXPA)}
 
-Para construir a árvore de expressão (EXPA),
-foi necessário separar da grámatica ConvCC-2021-2 fatorada à esquerda as produções
-que derivam expressões aritméticas, formando a grámatica de EXPA, conforme abaixo.
+Para iniciar o processo de construção da Árvore de Expressão (EXPA),
+foi necessário separar da grámatica ConvCC-2021-2 fatorada à esquerda, as produções
+que derivam expressões aritméticas, formando a grámatica de EXPA conforme descrita abaixo.
 
 \begin{lstlisting}[escapechar=\#]
 [GRAMATICA de EXPA]
@@ -2319,13 +2340,13 @@ LVALUE' #$\rightarrow$#  [ NUM_EXPRESSION ] LVALUE'
            | #$\bm{\varepsilon}$#  
 \end{lstlisting}
 
-Com a nossa gramática EXPA separada e levando
+Com a nossa gramática EXPA separada e
 levando em consideração possíveis ciclos que poderiam ser gerados através das produções,
-foi criada a SDD L-Atribuída. A sua implementação se encontra no arquivo \emph{Relatorio/Gramaticas/EXPA.sdd} com mais detalhes.
-
-Segue uma amostra da produção TERM, com sua regra semântica na chave ``node'' no objeto ``term''.
-Note que para realizar a verificação de tipos é utizado a função check\_type(), que será
-demonstrada na seção 5.7
+foi criada a SDD L-Atribuída. Para demonstrar a estruturação da SDD,
+utilizamos a produção TERM, com sua regra semântica na chave ``\textbf{node}'' e valor léxico na váriavel ``\textbf{rtype}''.
+Note que para realizar a verificação de tipos é utizado a função \textbf{check\_type()}, que será
+demonstrada na seção 5.8. A implementação da SDD L-Atribuída com mais detalhes se encontra no arquivo 
+'\emph{Relatorio/Gramaticas/EXPA.sdd}'.
 
 \begin{python}
 
@@ -2354,10 +2375,10 @@ Para que uma SDD seja classificada como uma SDD L-Atribuída,
 Sendo assim, cada atributo deve ser sintetizado ou herdados do pai,
 dos irmãos ou de si mesmo, permitindo que suas produções sigam apenas uma
 única direção. Ao analisar a SDD L-Atribuída no arquivo \emph{EXPA.sdd}, é possível notar
-que não existe ciclos entre as produções, os atributos são sintetizados ou herdados do pai,
-sendo assim a SDD é L-Atribuída.
+que não existe ciclos entre as produções, os atributos são sintetizados ou herdados do pai.
+Levando em consideração as regras, a SDD é L-Atribuída.
 
-A construção da SDT para a SDD de EXPA, pode ser encontrada em \emph{Relatorio/Gramaticas/EXPA.sdd}.
+A construção da SDT para a SDD de EXPA, pode ser encontrada em '\emph{Relatorio/Gramaticas/EXPA.sdd}'.
 Para realizar a sua transformação, basta adicionar as regras semânticas definidas nas próprias produções.
 Segue uma amostra da SDT para a produção TERM.
 
@@ -2376,10 +2397,16 @@ else:
 }
 \end{python}
 Para realizar a validação da expressões derivadas de EXPA,
-criamos uma árvore de expressão para ``x + 1 * 2'', conforme a árvore abaixo.
-Utilizando a SDD criada, seguimos a árvore por suas folhas da esquerda para à direita.
+criamos uma árvore de expressão para ``\textbf{x + 1 * 2}'', conforme a árvore abaixo.
+Utilizando a SDD criada, seguimos a árvore por suas folhas da esquerda para à direita
+através dos seguintes passos:
 
-\begin{lstlisting}
+\begin{lstlisting}[escapechar=\#]
+
+
+
+#\textbf{Primeiramente, iniciamos pela folha "ident = x".}#
+
 1) FACTOR = x
 Node(IDENT + lvalue1['expression'], None, None,
 type2str(var.type, var.dimension, lvalue1['dim']))
@@ -2391,14 +2418,14 @@ Node(term1['operator'], unaryexpr['node'], term1['node'], rtype)
 4) TERM = x
 Node(term1['operator'], unaryexpr['node'], term1['node'], rtype) 
 
-Agora, partindo pela folha de valor "1"
+#\textbf{Agora, partindo pela folha de valor "1"}#
 
 5) FACTOR = 1 = int
 Node(int_constant, None, None, 'int')
 
 6) UNARYEXPR = FACTOR = 1 = int
 
-Agora, partindo pela folha de valor "2"
+#\textbf{Agora, partindo pela folha de valor "2"}#
 
 7) FACTOR = 2 = int
 Node(int_constant, None, None, 'int')
@@ -2425,7 +2452,7 @@ expression = numexpression
 Para realizar o processo de construção da árvore de declarações,
 realizamos os mesmos procedimentos semelhantes à construção da árvore EXPA.
 Primeiro, separamos a grámatica de DEC e utilizamos uma tabela de símbolos 
-com uma função chamada new\_entry() para inserir na tabela. Seus parâmetros são: identificador, tipo, tabela e número da linha
+com uma função chamada \textbf{new\_entry()} para inserir na tabela. Seus parâmetros são: identificador, tipo, tabela e número da linha
 em que foi encontrado.
 
 Para demonstrar, que a SDD de DEC é L-Atribuída, basta verificar se os atributos são
@@ -2450,7 +2477,7 @@ paramlist = { 'dim': paramlist1['dim'] + 1, 'code': ['from_params {IDENT}', *par
 \end{python}
 
 \begin{python}
-#PARAMLIST EM SDT
+# PARAMLIST EM SDT
 
 paramlist : STRING listdcl IDENT paramlist1 {
     scope = scope_stack[-1]
@@ -2463,10 +2490,10 @@ paramlist : STRING listdcl IDENT paramlist1 {
 
 \end{python}
 \section{Verificação de Tipo}
-A verificação dos tipos são necessárias para validar as entradas de uma expressão
-de acordo com uma regra definida entre operações diferentes. Dentro da função
-check\_type(), ela verifica o tipo dos nodos da direita e da esquerda. Caso essa combinação
-não exista dentro do dicionário, é retornado o valor None e mostrado um erro chamado
+A verificação dos tipos é necessária para validar as entradas de uma expressão
+de acordo com uma regra semântica entre operações diferentes. Dentro da função
+\textbf{check\_type()}, é verificado o tipo dos nodos da direita e da esquerda. Caso essa combinação
+não exista dentro do dicionário, é retornado o valor \textbf{None} e mostrado um erro chamado
 \emph{InvalidTypeOperationError}, que indica um tipo de operação inválida.
 
 \begin{python}
@@ -2506,14 +2533,15 @@ def check_type(left, right, operation, lineno):
 
 \end{python}
 \section{Verificação de Identificadores por Escopo}
-A declaração de váriaveis dentro de um mesmo escopo não pode ocorrer para o mesmo
-identificador com dois tipos diferentes. Por exemplo, caso a váriavel declara como int a,
-não pode ser possível declarar a váriavel string a dentro do mesmo escopo.
-Para tratar esse escopo, foi criado a classe Escopo e o método new\_entry().
+Para declarar uma váriavel dentro de um escopo, ela precisa seguir determinadas regras.
+Uma delas é que não pode aparecer o mesmo
+identificador com dois tipos diferentes. Caso seja declarada como \textbf{float x},
+não pode ser possível declara-lá como \textbf{string x} dentro do mesmo escopo.
+Para tratar esse escopo, foi criado a classe Escopo e o método \textbf{new\_entry()}.
 Dentro dessa classe, foi adicionado tabela de símbolos denominada escopo, uma lista de escopo
-internos e uma váriavel booleana que mostra se um escopo é um comando de repetição.
-Todas as vezes que uma nova entrada é inserida, primeiro é verificado se ela já está presente na tabela.
-Caso esteja presente, é retornado o
+internos e um booleano \emph{loop} que mostra se um escopo é um comando normal ou de repetição.
+Todas as vezes que uma nova entrada é inserida, é verificado se ela já está presente na tabela.
+Caso esteja, é retornado o
 erro \emph{VariableAlreadyDeclaredError}, indicando que ela já foi declarada. 
 
 \begin{python}
@@ -2540,8 +2568,10 @@ class Escopo:
 \end{python}
 
 \section{Comandos dentro do Escopo}
-A implementação da linguagem deve considerar a presença de um break fora
-do escopo de um comando de repetição.
+Seguindo as orientações, a implementação da linguagem deve considerar a presença de um \emph{break} fora
+do escopo de um comando de repetição. Para realizar a verificação, utilizamos um escopo pai com
+o objetivo de verificar se o comando break está dentro de um escopo, do contrário
+é emitido o erro \emph{BreakOutLoopError}.
 
 \begin{python}
 def p_statement_10(p):
@@ -2561,9 +2591,15 @@ def p_statement_10(p):
     p[0] = { 'code': [f'goto {NEXT_LOOP_LABEL}'] }
 
 \end{python}
-Para simular o comando \emph{break} fora de um loop, é executado
-o arquivo '\emph{tmp/break\_scope\_error.ccc}'.
+Para simular o comando \emph{break} fora de um loop, criamos um
+programa chamado '\emph{tmp/break\_scope\_error.ccc}',
+dentro dele é utilizado um loop do tipo ``for'', com um comando \emph{break} fora do escopo.
+Segue abaixo a saída do programa com o comportamento esperado, um
+erro do tipo ``\emph{BreakOutLoopError}''.
+
 \begin{lstlisting}[escapechar=\#]
+
+
 
              $ make run file='tmp/break_scope_error.ccc'
 
@@ -2574,21 +2610,7 @@ o arquivo '\emph{tmp/break\_scope\_error.ccc}'.
    b     | [(4, 9), (7, 9)]                         f                                                           
 Generating LALR tables
 WARNING: 2 shift/reduce conflicts
-Traceback (most recent call last):
-  File "main.py", line 23, in <module>
-    sa(input_value)
-  File "/home/erik/Documents/Github/Compilador/syntax.py", line 1075,
-  in analyze
-    result = parser.parse(input=input_value, debug=log)
-  File "/usr/local/lib/python3.8/dist-packages/ply-3.11-py3.8.egg/ply/yacc.py",
-  line 329, in parse
-    return self.parsedebug(input, lexer, debug, tracking, tokenfunc)
-  File "/usr/local/lib/python3.8/dist-packages/ply-3.11-py3.8.egg/ply/yacc.py",
-  line 503, in parsedebug
-    p.callable(pslice)
-  File "/home/erik/Documents/Github/Compilador/syntax.py", line 424,
-  in p_statement_10
-
+...
 #$\textbf{raise BreakOutLoopError(p.lineno(2))}$#
 
 classes.exception.BreakOutLoopError: 18
@@ -2596,9 +2618,20 @@ make: *** [Makefile:16: run] Error 1
 \end{lstlisting}
 
 \section{Geração de Código Intermediário}
+A tradução do programa em alto nível para o código do processador
+está associado a traduzir para a linguagem-alvo a representação
+da árvore gramátical, ou seja, a transformação da árvore de derivação
+em um segmento de código. Uma das vantanges dessa realização é
+simplificar a implementação do compilador.
 
-Os arquivos estão em \emph{Relatorio/Gramátiocas/ConvCC-2021-1.sdd}
-Os arquivos estão em \emph{Relatorio/Gramátiocas/ConvCC-2021-1.sdt}
+Nesse contexto, realizamos a transformação da gramática ConvCC-2021-1.
+Para isso, criamos a sua SDD L-Atribuída e a sua SDT. A prova de que a SDD é L-Atribuída
+segue as mesmas que utilizamos na SDD de EXPA e DEC. Dessa forma,
+conseguimos utiliza-lá para geração do código intermediário. Para efeitos de demonstração, na produção FORSTART,
+podemos ver na chave '\textbf{code}' trechos que compõe o código intermediário. 
+Note que os arquivos da SDD e SDT, se encontram respectivamente em:
+'\emph{Relatorio/Gramátiocas/ConvCC-2021-1.sdd}'
+e '\emph{Relatorio/Gramátiocas/ConvCC-2021-1.sdt}'
 
 \begin{python}
 def p_forstat(p):
@@ -2623,10 +2656,9 @@ def p_forstat(p):
         ]
 }
 \end{python}
-Código Intermediário
 
 \begin{lstlisting}
-    
+Codigo Intermediario Gerado    
 Arquivo 'debug/ci.txt' gerado ao compilar 'lil_example.ccc'
 
                 $ make run file='tmp/lil_example.ccc'
@@ -2740,6 +2772,10 @@ def search_var(ident, line_no, lazy=False):
     raise ScopeNotExistError()
 \end{python}
 \section{Exceções}
+Algumas execeções foram definidas para organizar melhor o código
+e melhorar a visualização caso ocorra um erro na compilação.
+No total, foram declaradas 8 execeções conforme mostrado abaixo.
+
 \begin{python}
     class VariableAlreadyDeclaredError(Exception):
         ''' A variavel ja foi declarada '''
@@ -2768,6 +2804,292 @@ def search_var(ident, line_no, lazy=False):
 % ---
 % Conclusão (outro exemplo de capítulo sem numeração e presente no sumário)
 % ---
+
+\section{Saída}
+
+A saída do compilador, em caso de sucesso, é demonstrada na saída abaixo ao compilar o arquivo
+'lil\_example.ccc'. Note que a saída é a tabela de símbolos, uma mensagem de sucesso para
+expressões aritméticas, declaração de váriaveis e checagem de break. Além disso,
+é mostrado o local dos arquivos onde cada estrutura se encontra.
+
+\begin{lstlisting}
+                  $ make run file='tmp/lil_example.ccc'
+
+ IDENT   | (LINE,COLUMN)                                                                                       
+   f     | [(1, 5), (9, 5)]                                                                                    
+   a     | [(1, 11), (2, 10), (5, 12), (6, 9), (9, 10), (15, 9)]                                               
+   b     | [(1, 18), (3, 11), (5, 16), (6, 13), (9, 7), (11, 12), (16, 9), (21, 15), (23, 9)]                  
+  main   | [(13, 5)]                                                                                           
+  argn   | [(13, 14)]                                                                                          
+  argc   | [(13, 29)]                                                                                          
+   i     | [(14, 9), (17, 9), (17, 16), (17, 24), (17, 28), (24, 15), (25, 13)]                                
+   c     | [(18, 16), (19, 9), (20, 9)]                                                                        
+   j     | [(22, 15), (26, 13)]                                                                                
+Generating LALR tables
+WARNING: 2 shift/reduce conflicts
+
+Expressoes aritmeticas: Sucesso
+Declaracao de Variaveis: Sucesso
+Checagem de Breaks: Sucesso
+
+Codigo Intermediario Gerado: ./debug/ci.txt
+Arvore de expressoes numericas: ./debug/num_expressions.txt
+Escopos e tabela de simbolos: ./debug/scopes.txt
+\end{lstlisting}
+
+\section{Saída com Erro de Compilação}
+Para exemplificar uma saída com erro de compilação, tentamos compilar o arquivo de teste
+'variable\_not\_declared\_error.ccc' com uma variável que não foi declarada no escopo.
+
+\begin{lstlisting}[escapechar=\#]
+
+    $ make run file='tmp/variable_not_declared_error.ccc'
+
+      IDENT        | (LINE,COLUMN)                                                                                       
+       main        | [(1, 5)]                                                                                            
+        a          | [(2, 9), (6, 5), (10, 11), (14, 22)]                                                                
+        b          | [(3, 9), (7, 5), (11, 11), (14, 26)]                                                                
+        c          | [(4, 9), (8, 5), (12, 11), (14, 30)]                                                                
+  d_not_declared   | [(14, 5), (16, 11)]    
+
+Generating LALR tables
+WARNING: 2 shift/reduce conflicts
+...
+    raise VariableAlreadyDeclaredError(f'Linha {line_no}:
+    Variavel {ident} nao declarada')
+
+    classes.exception.VariableAlreadyDeclaredError: Linha 0:
+    Variavel d_not_declared nao declarada
+make: *** [Makefile:16: run] Error 1
+\end{lstlisting}
+
+\section{Árvore de Expressão (EXPA)}
+Exemplo da árvore gerada ao executar o programa 'lil\_example.ccc'.
+\begin{lstlisting}
+[
+  {
+    "ID": "(a>b)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "a"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "b"
+      },
+      "value": ">"
+    }
+  },
+  {
+    "ID": "(b-2)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "b"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "2"
+      },
+      "value": "-"
+    }
+  },
+  {
+    "ID": "(i<10)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "i"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "10"
+      },
+      "value": "<"
+    }
+  },
+  {
+    "ID": "(i+1)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "i"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "1"
+      },
+      "value": "+"
+    }
+  },
+  {
+    "ID": "(i>=2)",
+    "lineno": 0,
+    "tree": {
+      "left": {
+        "left": null,
+        "right": null,
+        "value": "i"
+      },
+      "right": {
+        "left": null,
+        "right": null,
+        "value": "2"
+      },
+      "value": ">="
+    }
+  }
+]
+\end{lstlisting}
+\section{Tabela de Símbolos, Tipo e Escopo}
+Exemplo da tabela de símbolos, tipo e escopo ao executar o programa 'lil\_example.ccc'.
+
+\begin{lstlisting}
+{
+  "escopos_internos": [
+    {
+      "escopos_internos": [
+        {
+          "escopos_internos": [],
+          "label": 1,
+          "table": []
+        }
+      ],
+      "label": 1,
+      "table": [
+        {
+          "dimension": 0,
+          "ident": "b",
+          "line": 32,
+          "sizes": [],
+          "type": "int"
+        },
+        {
+          "dimension": 0,
+          "ident": "a",
+          "line": 32,
+          "sizes": [],
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "escopos_internos": [
+        {
+          "escopos_internos": [
+            {
+              "escopos_internos": [],
+              "label": 1,
+              "table": []
+            }
+          ],
+          "label": 1,
+          "table": [
+            {
+              "dimension": 1,
+              "ident": "c",
+              "line": 49,
+              "sizes": [
+                "2"
+              ],
+              "type": "string"
+            },
+            {
+              "dimension": 1,
+              "ident": "b",
+              "line": 52,
+              "sizes": [
+                "3"
+              ],
+              "type": "float"
+            },
+            {
+              "dimension": 0,
+              "ident": "j",
+              "line": 53,
+              "sizes": [],
+              "type": "float"
+            }
+          ]
+        }
+      ],
+      "label": 2,
+      "table": [
+        {
+          "dimension": 1,
+          "ident": "argc",
+          "line": 44,
+          "sizes": [
+            -1
+          ],
+          "type": "string"
+        },
+        {
+          "dimension": 0,
+          "ident": "argn",
+          "line": 44,
+          "sizes": [],
+          "type": "int"
+        },
+        {
+          "dimension": 0,
+          "ident": "i",
+          "line": 45,
+          "sizes": [],
+          "type": "int"
+        },
+        {
+          "dimension": 2,
+          "ident": "a",
+          "line": 46,
+          "sizes": [
+            "3",
+            "4"
+          ],
+          "type": "int"
+        },
+        {
+          "dimension": 0,
+          "ident": "b",
+          "line": 47,
+          "sizes": [],
+          "type": "int"
+        }
+      ]
+    }
+  ],
+  "label": "global",
+  "table": [
+    {
+      "dimension": 2,
+      "ident": "f",
+      "line": 32,
+      "sizes": [],
+      "type": "function"
+    },
+    {
+      "dimension": 2,
+      "ident": "main",
+      "line": 44,
+      "sizes": [],
+      "type": "function"
+    }
+  ]
+}
+\end{lstlisting}
 \chapter*[Conclusão]{Conclusão}
 Os compiladores traduzem o código fonte de uma linguagem de programação
 de alto nível para uma linguagem de programação de baixo nível. Sem eles 
@@ -2781,7 +3103,8 @@ compreendemos os cuidados e formas de se criar uma gramática consistente. Utili
 entendemos os princípios utilizados para se construir um compilador de uma
 linguagem qualquer através da sua aplicação prática. Além disso, com o Diagrama
 de Transição foi possível entender como ocorre a leitura das palavras e como são
-identificado os tokens. Portanto, ao realizar este trabalho,
+identificado os tokens. Através da análise semântica e geração de código intermedíario,
+compreendemos de como são utilizadas e aplicadas regras semânticas. Portanto, ao realizar este trabalho,
 ficou evidente como criar um compilador através de ferramentas geradores de 
 analisadores léxicos e sintáticos e dos estudos e pesquisas sobre compiladores.
 
@@ -2792,8 +3115,1462 @@ analisadores léxicos e sintáticos e dos estudos e pesquisas sobre compiladores
 % ELEMENTOS PÓS-TEXTUAIS
 % ----------------------------------------------------------
 \postextual
+\begin{apendicesenv}
+
+% Imprime uma página indicando o início dos apêndices
+\partapendices
+
+% ----------------------------------------------------------
+\chapter{SDD de ConvCC-2021-1}
+
+\begin{lstlisting}
+scope_stack = []
+num_expressions = []
+
+search_var(ident, lineno, lazy)
+num_expressions_as_json()
+new_scope(loop)
+check_type(left, right, operation, lineno)
+lazy_check()
+
+'''
+new_loop_label : &
+'''
+
+NEXT_LOOP_LABEL = generate_label()
+
+'''
+new_scope : &
+'''
+
+add_scope(False)
+
+'''
+new_scope_loop : &
+'''
+
+add_scope(True)
+
+'''
+program : new_scope statement | new_scope funclist
+'''
+
+global_scope = scope_stack.pop()
+program = {
+    'scopes': global_scope.as_json(),
+    'num_expressions': num_expressions_as_json(),
+    'code': statement['code']
+}
+
+'''
+program : &
+'''
+
+'''
+funclist : funcdef funclist1
+'''
+
+funclist = {
+    'code': [*funcdef['code'], *funclist1['code']]
+}
+
+'''
+funclist1 : funclist
+'''
+
+funclist1 = {'code': funclist['code'] }
+
+'''
+funclist1 : &
+'''
+
+funclist1 = {'code': []}
+
+
+'''
+funcdef : DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist RBRACE
+'''
+
+scope_stack.pop()
+
+scope = scope_stack[-1]
+entry = EntradaTabela(IDENT, 'function', paramlist['dim'], [], IDENT.lineno)
+
+scope.new_entry(entry)
+
+lazy_check()
+
+next = generate_label()
+funcdef = { 'code': ['goto {next}', '{IDENT}:', *paramlist['code'], *statelist['code'], '{next}:'] }
+
+'''
+types : INT
+'''
+
+types = {'type': INT, 'code': INT}
+
+'''
+types : FLOAT
+'''
+
+types = {'type': FLOAT, 'code': FLOAT}
+
+'''
+types : STRING
+'''
+
+types = {'type': STRING, 'code': STRING}
+
+'''
+paramlist : STRING listdcl IDENT paramlist1 
+'''
+
+scope = scope_stack[-1]
+entry = EntradaTabela(IDENT, STRING, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+scope.new_entry(entry)
+
+paramlist = { 'dim': paramlist1['dim'] + 1, 'code': ['from_params {IDENT}', *paramlist1['code']] }
+
+'''
+paramlist : FLOAT listdcl IDENT paramlist1 
+'''
+
+scope = scope_stack[-1]
+entry = EntradaTabela(IDENT, FLOAT, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+scope.new_entry(entry)
+
+paramlist = { 'dim': paramlist1['dim'] + 1, 'code': ['from_params {IDENT}', *paramlist1['code']] }
+
+'''
+paramlist : INT listdcl IDENT paramlist1 
+'''
+scope = scope_stack[-1]
+entry = EntradaTabela(IDENT, INT, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+scope.new_entry(entry)
+
+paramlist = { 'dim': paramlist1['dim'] + 1, 'code': [f'from_params {IDENT}', *paramlist1['code']] }
+
+'''
+paramlist : &
+'''
+
+paramlist = { 'dim': 0, 'code': [] }
+
+
+'''
+paramlist1 : COMMA paramlist
+'''
+
+paramlist1 = { 'dim': paramlist['dim'], 'code': paramlist['code'] }
+
+
+'''
+paramlist1 : &
+'''
+paramlist1 = { 'dim': 0, 'code': [] }
+
+
+'''
+listdcl-1 : LBRACKET RBRACKET listdcl-2
+'''
+
+listdcl-1 = {'dim': listdcl-2['dim'] + 1, 'code': "[]{listdcl-2['code']}"}
+
+
+'''
+listdcl : &
+'''
+
+listdcl = {'dim': 0, 'code': ''}
+
+'''
+statement : INT IDENT statement2
+'''
+
+entry = EntradaTabela(IDENT, INT, statement2['dim'], statement2['sizes'], IDENT.lineno)
+scope = scope_stack[-1]
+scope.new_entry(entry)
+
+statement = {'code': [*statement2['code'], "int {IDENT}{statement2['aux_code']}"]}
+
+
+'''
+statement : FLOAT IDENT statement2
+'''
+
+entry = EntradaTabela(IDENT, FLOAT, statement2['dim'], statement2['sizes'], IDENT.lineno)
+scope = scope_stack[-1]
+scope.new_entry(entry)
+
+statement = {'code': [*statement2['code'], "float {IDENT}{statement2['aux_code']}"]}
+
+'''
+statement : STRING IDENT statement2
+'''
+
+entry = EntradaTabela(IDENT, STRING, statement2['dim'], statement2['sizes'], IDENT.lineno)
+scope = scope_stack[-1]
+scope.new_entry(entry)
+
+statement = {'code': [*statement2['code'], "string {IDENT}{statement2['aux_code']}"]}
+
+'''
+statement : IDENT statement1
+'''
+
+var = search_var(IDENT, IDENT.lineno, statement1['type'] == 'function')
+if statement1['type'] == 'function':
+    statement = { 'code': [*statement1['code'], "call {IDENT}{statement1['aux_code']}"]}
+else:
+    statement = { 'code': [*statement1['code'], "{IDENT}{statement1['aux_code']}"]}
+
+'''
+statement : printstat SEMICOLON
+'''
+
+statement = { 'code' : printstat['code'] }
+ 
+
+'''
+statement : readstat SEMICOLON
+'''
+
+statement = { 'code' : readstat['code'] }
+
+
+'''
+statement : returnstat SEMICOLON
+'''
+statement = { 'code' : returnstat['code'] }
+
+
+'''
+statement : ifstat
+'''
+statement = { 'code' : ifstat['code'] }
+
+'''
+statement : forstat
+'''
+statement = { 'code' : forstat['code'] }
+
+'''
+statement : whilestat
+'''
+statement = { 'code' : whilestat['code'] }
+
+'''
+statement : new_scope LBRACE statelist RBRACE
+'''
+scope_stack.pop()
+
+statement = { 'code' : statelist['code'] }
+
+'''
+statement : BREAK SEMICOLON
+'''
+
+statement = { 'code': [f'goto {NEXT_LOOP_LABEL}'] }
+
+'''
+statement : SEMICOLON
+'''
+statement = { 'code': [] }
+
+'''
+statement1 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 SEMICOLON
+'''
+
+statement1 = {
+    'type': 'attribution',
+    'left_var_dim': lvalue1['dim'] + 1,
+    'right_var': atribstat1,
+    'code': [*numexpression['code'], *lvalue1['code'], *atribstat1['code']],
+    'aux_code': "[{numexpression['label']}]{lvalue1['aux_code']} = {atribstat1['label']}"
+}
+
+
+'''
+statement1 : ASSIGN atribstat1 SEMICOLON
+'''
+
+statement1 = {
+    'type': 'attribution',
+    'left_var_dim': 0,
+    'right_var': atribstat1,
+    'code': atribstat1['code'],
+    'aux_code': " = {atribstat1['label']}"
+}
+
+
+'''
+statement1 : LPAREN paramlistcall RPAREN SEMICOLON
+'''
+
+statement1 = { 'type': 'function', 'params': paramlistcall['params'], 'code': paramlistcall['code'], 'aux_code': ", {len(paramlistcall['params'])}" }
+
+
+'''
+statement2 : LBRACKET numexpression RBRACKET lvalue1 SEMICOLON
+'''
+
+statement2 = { 
+    'dim': lvalue1['dim'] + 1,
+    'sizes': [numexpression['node'], *lvalue1['sizes']],
+    'code': [*numexpression['code'], *lvalue1['code']],
+    'aux_code': "[{numexpression['label']}]{lvalue1['aux_code']}"
+}
+
+
+'''
+statement2 : SEMICOLON
+'''
+
+statement2 = { 'dim': 0, 'sizes': [], 'code': [], 'aux_code': '' }
+
+
+'''
+atribstat1 : expression
+'''
+atribstat1 = { 'atrib_type' : 'expr', 'node': expression['node'], 'code': expression['code'], 'label': expression['label'] }
+
+
+'''
+atribstat1 : allocexpression
+'''
+atribstat1 = { 'atrib_type' : 'alloc', 'alloc': allocexpression, 'code': allocexpression['code'], 'label': allocexpression['label'] }
+
+
+'''
+atribstat1 : funccall
+'''
+atribstat1 = { 'atrib_type' : 'funccall', 'function': funccall, 'code': funccall['code'], 'label': funccall['label'] }
+
+
+'''
+funccall : IDENT LPAREN paramlistcall RPAREN
+'''
+
+funccall = { 'code': [*paramlistcall['code'], "{tvar} = call {IDENT}, {len(paramlistcall['params'])}"], 'label': tvar }
+
+
+'''
+paramlistcall : factor paramlistcall2
+'''
+
+paramlistcall = { 'params': [var, *paramlistcall2['params']], 'code': [f"param {factor['label']}{paramlistcall2['aux_code']}", *paramlistcall2['code']] }
+
+
+'''
+paramlistcall : &
+'''
+paramlistcall = { 'params': [], 'code': [] }
+
+
+'''
+paramlistcall1 : COMMA paramlistcall
+'''
+paramlistcall = { 'params': paramlistcall['params'], 'code': paramlistcall['code'] }
+
+
+'''
+paramlistcall1 : &
+'''
+paramlistcall = { 'params': [], 'code': [] }
+
+
+'''
+paramlistcall2 : LBRACKET numexpression RBRACKET lvalue1 paramlistcall1
+'''
+
+paramlistcall2 = {
+    'array': True,
+    'dim': lvalue1['dim'] + 1,
+    'sizes': [numexpression['node'], *lvalue1['sizes']],
+    'params': paramlistcall1['params'],
+    'code': [*numexpression['code'], *lvalue1['code'], *paramlistcall1['code']],
+    'aux_code': "[{numexpression['label']}]{lvalue1['aux_code']}"
+}
+
+
+'''
+paramlistcall2 : paramlistcall1
+'''
+
+paramlistcall2 = {
+    'array': False,
+    'code': paramlistcall1['code'],
+    'params': paramlistcall1['params'],
+    'aux_code': ''
+}
+
+
+'''
+printstat : PRINT expression
+'''
+
+printstat = { 'code': [*expression['code'], "print {expression['label']}"] }
+
+
+'''
+readstat : READ expression
+'''
+
+readstat = { 'code': [*expression['code'], "read {expression['label']}"] }
+
+
+'''
+returnstat : RETURN returnstat1
+'''
+
+returnstat = { 'code': [*returnstat1['code'], "return {returnstat1['label']}"] }
+
+
+'''
+returnstat1 : expression
+'''
+
+returnstat1 = expression
+
+
+'''
+returnstat1 : &
+'''
+
+returnstat1 = { 'code': [], 'label': '' }
+
+
+'''
+ifstat : IF LPAREN expression RPAREN statement ifstat1
+'''
+
+end_if_label = generate_label()
+if 'label' in ifstat1:
+    next = ifstat1['label']
+
+    ifstat = {
+        'code': [
+            *expression['code'],
+            "if False {expression['label']} goto {next}",
+            *statement['code'],
+            "goto {end_if_label}",
+            *ifstat1['code'],
+            '{end_if_label}:'
+        ]
+    }
+else:
+    ifstat = {
+        'code': [
+            *expression['code'],
+            "if False {expression['label']} goto {end_if_label}",
+            *statement['code'],
+            '{end_if_label}:'
+        ]
+    }
+
+
+'''
+ifstat1 : ELSE statement
+'''
+
+label = generate_label()
+ifstat1 = {
+    'code': [f'{label}:', *statement['code']],
+    'label': label
+}
+
+
+'''
+ifstat1 : &
+'''
+
+ifstat1 = { 'code': [] }
+
+
+'''
+forstat : new_loop_label FOR LPAREN forstat1-1 SEMICOLON forstat2 SEMICOLON forstat1-2 RPAREN new_scope_loop LBRACE statelist RBRACE
+'''
+
+scope_stack.pop()
+
+start = generate_label()
+next_label = NEXT_LOOP_LABEL
+
+forstat = {
+    'code': [
+        *forstat1-1['code'],
+        '{start}:',
+        *forstat2['code'],
+        *([f"if False {forstat2['label']} goto {next_label}"] if forstat2['label'] else []),
+        *statelist['code'],
+        *forstat1-2['code'],
+        'goto {start}',
+        '{next_label}:',
+    ]
+}
+
+
+'''
+forstat1 : IDENT forstat3
+'''
+
+search_var(IDENT, IDENT.lineno)
+forstat1 = { 'code': [*forstat3['code'], "{IDENT} {forstat3['aux_code']}"] }
+
+
+'''
+forstat1 : &
+'''
+
+forstat1 = { 'code': [] }
+
+
+'''
+forstat2 : expression
+'''
+
+forstat2 = { 'code': expression['code'], 'label': expression['label'] }
+
+
+'''
+forstat2 : &
+'''
+forstat2 = { 'code': [], 'label': None }
+
+
+'''
+forstat3 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1
+'''
+forstat3 = { 
+    'code': [*numexpression['code'], *lvalue1['code']], 
+    'aux_code': "[{numexpression['label']}]{lvalue1['aux_code']} = {atribstat1['label']}" 
+}
+
+
+'''
+forstat3 : ASSIGN atribstat1
+'''
+forstat3 = { 'code': atribstat1['code'], 'aux_code': "= {atribstat1['label']}" }
+
+
+'''
+whilestat : new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist RBRACE
+'''
+
+scope_stack.pop()
+
+start = generate_label()
+next = NEXT_LOOP_LABEL
+
+whilestat = {
+    'code': [
+        '{start}:',
+        *expression['code'],
+        "if False {expression['label']} goto {next}",
+        *statement['code'],
+        'goto {start}',
+        '{next}:',
+    ]
+}
+
+
+'''
+statelist : statement statelist1
+'''
+
+statelist = { 'code': [*statement['code'], *statelist1['code']] }
+
+'''
+statelist1 : statelist
+'''
+
+statelist1 = { 'code': statelist['code'] }
+
+
+'''
+statelist1 : &
+'''
+
+statelist1 = { 'code': [] }
+
+
+'''
+allocexpression : NEW types LBRACKET numexpression RBRACKET lvalue1
+'''
+
+num_expressions.append((numexpression['node'], numexpression.lineno))
+
+var = get_var()
+
+allocexpression = {
+    'type': convert_type(types['type']),
+    'dim': lvalue1['dim'] + 1,
+    'label': var,
+    'code': [*numexpression['code'], *lvalue1['code'], "{var} = new {types['code']}[{numexpression['label']}]{lvalue1['aux_code']}"], 
+}
+
+'''
+expression : numexpression expression1
+'''
+
+if expression1['code']:
+    rvar = get_var()
+    expression = {
+        'node': Node(expression1['operator'], numexpression['node'], expression1['node'], 'bool'),
+        'label': rvar,
+        'code': [
+            *numexpression['code'],
+            *expression1['code'],
+            "{rvar} = {numexpression['label']}" + (f" {expression1['operator']} {expression1['label']}" if len(expression1['code']) > 0 else "")
+        ]
+    }
+else:
+    expression = numexpression
+
+num_expressions.append((expression['node'], numexpression.lineno))
+
+'''
+expression1 : compoperator numexpression
+'''
+expression1 = { 
+    'operator': compoperator,
+    'node': numexpression['node'],
+    'label': numexpression['label'],
+    'code': numexpression['code']
+}
+
+
+'''
+expression1 : &
+'''
+expression1 = { 'code': '' }
+
+'''
+compoperator : GT
+'''
+
+compoperator = '>'
+
+'''
+compoperator : LT
+'''
+
+compoperator = '<'
+
+'''
+compoperator : GE
+'''
+compoperator = '>='
+
+'''
+compoperator : LE
+'''
+compoperator = '<='
+
+'''
+compoperator : EQ
+'''
+
+compoperator = '=='
+
+'''
+compoperator : NEQ
+'''
+
+compoperator = '!='
+
+'''
+numexpression : term numexpression1
+'''
+
+if numexpression1['code']:
+    rtype = check_type(term['node'], numexpression1['node'], numexpression1['operator'], term.lineno)
+
+    var = get_var()
+    numexpression = { 
+        'node': Node(numexpression1['operator'], term['node'], numexpression1['node'], rtype),
+        'code': [*term['code'], *numexpression1['code'], "{var} = {term['label']} {numexpression1['operator']} {numexpression1['label']}"],
+        'label': var
+    }
+else:
+    numexpression = term
+
+'''
+numexpression1 : addsub term
+'''
+
+numexpression1 = { 'node': term['node'], 'operator': addsub, 'code': term['code'], 'label': term['label'] }
+
+
+'''
+numexpression1 : &
+'''
+
+numexpression1 = { 'code': [] }
+
+'''
+addsub : PLUS
+'''
+
+addsub = '+'
+
+
+'''
+addsub : MINUS
+'''
+
+addsub = '-'
+
+
+'''
+term : unaryexpr term1
+'''
+
+if term1['code']:
+    rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+    var = get_var()
+
+
+    term = {
+        'node': Node(term1['operator'], unaryexpr['node'], term1['node'], rtype),
+        'code': [*unaryexpr['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+        'label': var
+    } 
+else:
+    term = unaryexpr
+
+
+'''
+term1 : multdiv unaryexpr term1
+'''
+
+if term1['code']:
+    rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+    var = get_var()
+
+    term1 = { 
+        'node': Node(term1['operator'], unaryexpr['node'], term1['node'], rtype), 
+        'operator': multdiv,
+        'code': [*unaryexpr['code'], *term1['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+        'label': var
+    }
+else:
+    term1 = { 'node': unaryexpr['node'], 'operator': multdiv, 'code': unaryexpr['code'], 'label': unaryexpr['label'] }
+
+'''
+term1 : &
+'''
+
+term1 = { 'code': [] }
+
+'''
+multdiv : MULTIPLY
+'''
+
+multdiv = '*'
+
+'''
+multdiv : DIVIDE
+'''
+
+multdiv = '/'
+
+'''
+multdiv : REM
+'''
+
+multdiv = '%'
+
+'''
+unaryexpr : addsub factor
+'''
+if (addsub == '-'):
+    factor['node'].value *= -1
+
+var = get_var()
+
+unaryexpr = { 'node': factor['node'], 'code': [*factor['code'], *([f"{var} = {addsub}{factor['label']}"] if addsub == '-' else [])], 'label': var }
+
+
+'''
+unaryexpr : factor
+'''
+
+unaryexpr = factor
+
+
+'''
+factor : int_constant
+'''
+var = get_var()
+
+factor = { 'node': Node(int_constant, None, None, 'int'), 'code': [f'{var} = {int_constant}'], 'label': var }
+
+
+'''
+factor : float_constant
+'''
+
+var = get_var()
+
+factor = { 'node': Node(float_constant, None, None, 'float'), 'code': [f'{var} = {float_constant}'], 'label': var  }
+
+
+'''
+factor : string_constant
+'''
+
+var = get_var()
+
+factor = { 'node': Node(string_constant, None, None, 'string'), 'code': [f'{var} = {string_constant}'], 'label': var  }
+
+
+'''
+factor : null_constant
+'''
+
+var = get_var()
+
+factor = { 'node': Node('null', None, None, 'null'), 'code': ['{var} = null'], 'label': var }
+
+'''
+factor : IDENT lvalue1
+'''
+
+var = search_var(IDENT, IDENT.lineno)
+nvar = get_var()
+
+factor = {
+    'node': Node(IDENT + lvalue1['expression'], None, None, type2str(var.type, var.dimension, lvalue1['dim'])),
+    'code': [f"{nvar} = {IDENT}{lvalue1['aux_code']}"],
+    'label': nvar,
+    'vartype': 'ident'
+}
+
+'''
+factor : LPAREN numexpression RPAREN
+'''
+factor = numexpression
+
+num_expressions.append((numexpression['node'], numexpression.lineno))
+
+'''
+lvalue1 : LBRACKET numexpression RBRACKET lvalue1
+'''
+lvalue1 = {
+    'dim': lvalue1['dim'] + 1,
+    'sizes': [numexpression['node'], *lvalue1['sizes']],
+    'expression': '[{numexpression}]{lvalue1}',
+    'code': [*numexpression['code'], *lvalue1['code']],
+    'aux_code': "[{numexpression['label']}]{lvalue1['aux_code']}"
+}
+
+num_expressions.append((numexpression['node'], numexpression.lineno))
+
+'''
+lvalue1 : &
+'''
+lvalue1 = {
+    'dim': 0,
+    'sizes': [],
+    'expression': '',
+    'code': [],
+    'aux_code': ''
+}
+
+\end{lstlisting}
+
+\chapter{SDT de ConvCC-2021-1}
+
+\begin{lstlisting}
+scope_stack = []
+num_expressions = []
+
+search_var(ident, lineno, lazy)
+num_expressions_as_json()
+new_scope(loop)
+check_type(left, right, operation, lineno)
+
+new_loop_label : & { NEXT_LOOP_LABEL = generate_label() }
+
+new_scope : & { add_scope(False) }
+
+new_scope_loop : & { add_scope(True) }
+
+program : new_scope statement {
+    global_scope = scope_stack.pop()
+
+    program.scopes = global_scope.as_json(),
+    program.num_expressions = num_expressions_as_json(),
+    program.code = statement['code']
+}
+
+program : new_scope funclist {
+    global_scope = scope_stack.pop()
+
+    program.scopes = global_scope.as_json(),
+    program.num_expressions = num_expressions_as_json(),
+    program.code = statement['code']
+}
+
+program : &
+
+funclist : funcdef funclist1 { funclist.code = [*funcdef['code'], *funclist1['code']] }
+
+funclist1 : funclist { funclist1.code = funclist['code'] }
+
+funclist1 : & { funclist1.code = [] }
+
+funcdef : DEF IDENT new_scope LPAREN paramlist RPAREN LBRACE statelist RBRACE {
+    scope_stack.pop()
+
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, 'function', paramlist['dim'], [], IDENT.lineno)
+
+    scope.new_entry(entry)
+
+    lazy_check()
+
+    next = generate_label()
+    funcdef.code = ['goto {next}', '{IDENT}:', *paramlist['code'], *statelist['code'], '{next}:']
+}
+
+
+types : INT { 
+    types.type= INT 
+    types.code = INT 
+}
+
+
+types : FLOAT {
+    types.type = FLOAT 
+    types.code = FLOAT
+}
+
+
+types : STRING {
+    types.type = STRING
+    types.code = STRING
+}
+
+
+paramlist : STRING listdcl IDENT paramlist1 {
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, STRING, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+    scope.new_entry(entry)
+
+    paramlist.dim = paramlist1['dim'] + 1
+    paramlist.code = ['from_params {IDENT}', *paramlist1['code']]
+}
+
+
+paramlist : FLOAT listdcl IDENT paramlist1  {
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, FLOAT, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+    scope.new_entry(entry)
+
+    paralist.dim = paramlist1['dim'] + 1
+    paramlist.code = ['from_params {IDENT}', *paramlist1['code']]
+    
+}
+
+paramlist : INT listdcl IDENT paramlist1 {
+    scope = scope_stack[-1]
+    entry = EntradaTabela(IDENT, INT, listdcl['dim'], [-1] * listdcl['dim'], IDENT.lineno)
+    scope.new_entry(entry)
+
+    paralist.dim = paramlist1['dim'] + 1
+    paramlist.code = ['from_params {IDENT}', *paramlist1['code']]
+}
+ 
+paramlist: & { 
+    paramlist.dim = 0
+    paramlist.code = [] 
+}
+
+paramlist1 : COMMA paramlist {
+    paramlist1.dim = paramlist['dim']
+    paramlist1.code = paramlist['code']
+}
+
+paramlist1 : & {
+    paramlist1.dim = 0
+    paramlist1.code = []
+}
+
+listdcl-1 : LBRACKET RBRACKET listdcl-2 {
+    listdcl-1.dim = listdcl['dim'] + 1
+    listdcl-1.code = "[]{listdcl['code']}"
+}
+
+listdcl : & {
+    listdcl.dim = 0
+    listdcl.code = ''
+}
+
+statement : INT IDENT statement2 {
+    entry = EntradaTabela(IDENT, INT, statement2['dim'], statement2['sizes'], IDENT.lineno)
+    scope = scope_stack[-1]
+    scope.new_entry(entry)
+
+    statement.code = [*statement2['code'], "int {IDENT}{statement2['aux_code']}"]
+}
+
+statement : FLOAT IDENT statement2 {
+    entry = EntradaTabela(IDENT, FLOAT, statement2['dim'], statement2['sizes'], IDENT.lineno)
+    scope = scope_stack[-1]
+    scope.new_entry(entry)
+
+    statement.code = [*statement2['code'], "int {IDENT}{statement2['aux_code']}"]
+}
+
+statement : STRING IDENT statement2 {
+    entry = EntradaTabela(IDENT, STRING, statement2['dim'], statement2['sizes'], IDENT.lineno)
+    scope = scope_stack[-1]
+    scope.new_entry(entry)
+
+    statement.code = [*statement2['code'], "int {IDENT}{statement2['aux_code']}"]
+}
+
+statement : IDENT statement1 {
+    var = search_var(IDENT, IDENT.lineno, statement1['type'] == 'function')
+    if statement1['type'] == 'function':
+        statement.code = [*statement1['code'], "call {IDENT}{statement1['aux_code']}"]
+    else:
+        statement.code = [*statement1['code'], "{IDENT}{statement1['aux_code']}"]
+}
+
+statement : printstat { statement.code = printstat['code'] } SEMICOLON
+
+statement : readstat { statement.code = readstat['code'] } SEMICOLON
+
+statement : returnstat { statement.code = returnstat['code'] } SEMICOLON
+
+statement : ifstat { statement.code = ifstat['code'] }
+
+statement : forstat { statement.code = forstat['code'] }
+
+statement : whilestat { statement.code = whilestat['code'] }
+
+statement : new_scope LBRACE statelist {
+    scope_stack.pop()
+
+    statement.code = statelist['code']
+} RBRACE
+
+statement : BREAK { statement.code = ['goto {NEXT_LOOP_LABEL}'] } SEMICOLON
+
+statement : SEMICOLON { statement.code = [] }
+
+statement1 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 { 
+    statement1.type = 'attribution'
+    statement1.left_var_dim = lvalue1['dim'] + 1
+    statement1.right_var = atribstat1
+    statement1.code = [*numexpression['code'], *lvalue1['code'], *atribstat1['code']]
+    statement1.aux_code = "[{numexpression['label']}]{lvalue1['aux_code']} = {atribstat1['label']}"
+} SEMICOLON
+
+statement1 : ASSIGN atribstat1 {
+    statement1.type = 'attribution'
+    statement1.left_var_dim = 0
+    statement1.right_var = atribstat1
+    statement1.code = atribstat1['code']
+    statement1.aux_code = " = {atribstat1['label']}"
+} SEMICOLON
+
+statement1 : LPAREN paramlistcall {
+    statement1.type = 'function'
+    statement1.params = paramlistcall['params']
+    statement1.code = paramlistcall['code']
+    statement1.aux_code = ", {len(paramlistcall['params'])}"
+} RPAREN SEMICOLON
+
+statement2 : LBRACKET numexpression RBRACKET lvalue1 {
+    statement2.dim = lvalue1['dim'] + 1
+    statement2.sizes = [str(numexpression['node']), *lvalue1['sizes']]
+    statement2.code = [*numexpression['code'], *lvalue1['code']]
+    statement2.aux_code = "[{numexpression['label']}]{lvalue1['aux_code']}"
+} SEMICOLON
+
+statement2 : SEMICOLON {
+    statement2.dim = 0
+    statement2.sizes = [] 
+    statement2.code = []
+    statement2.aux_code = ''
+}
+
+atribstat1 : expression {
+    atribstat1.atrib_type = 'expr'
+    atribstat1.node = expression['node']
+    atribstat1.code = expression['code']
+    atribstat1.label = expression['label']
+}
+
+atribstat1 : allocexpression {
+    atribstat1.'atrib_type' : 'alloc'
+    atribstat1.alloc = allocexpression
+    atribstat1.code = allocexpression['code']
+    atribstat1.label = allocexpression['label']
+}
+
+atribstat1 : funccall { 
+    atribstat1.atrib_type = 'funccall'
+    atribstat1.function = funccall
+    atribstat1.code = funccall['code']
+    atribstat1.label = funccall['label'] 
+}
+
+funccall : IDENT LPAREN paramlistcall {
+    funccall.code = [*paramlistcall['code'], "{tvar} = call {IDENT}, {len(paramlistcall['params'])}"]
+    funccall.label = tvar
+} RPAREN
+
+paramlistcall : factor paramlistcall2 {
+    paramlistcall.params = [var, *paramlistcall2['params']]
+    paramlistcall.code = ["param {factor['label']}{paramlistcall2['aux_code']}", *paramlistcall2['code']]
+}
+
+paramlistcall : & { 
+    paramlistcall.params = []
+    paramlistcall.code = [] 
+}
+
+
+
+paramlistcall1 : COMMA paramlistcall { 
+    paramlistcall1.params = paramlistcall['params']
+    paramlistcall1.code = paramlistcall['code'] 
+}
+
+
+
+paramlistcall1 : & {
+    paramlistcall1.params = []
+    paramlistcall1.code = []
+}
+
+paramlistcall2 : LBRACKET numexpression RBRACKET lvalue1 paramlistcall1 {
+    paramlistcall2.array = True
+    paramlistcall2.dim = lvalue1['dim'] + 1
+    paramlistcall2.sizes = [numexpression['node'], *lvalue1['sizes']]
+    paramlistcall2.params = paramlistcall1['params']
+    paramlistcall2.code = [*numexpression['code'], *lvalue1['code'], *paramlistcall1['code']]
+    paramlistcall2.aux_code = "[{numexpression['label']}]{lvalue1['aux_code']}"
+}
+
+paramlistcall2 : paramlistcall1 {
+    paramlistcall2.array = False
+    paramlistcall2.code = paramlistcall1['code']
+    paramlistcall2.params = paramlistcall1['params']
+    paramlistcall2.aux_code = ''
+}
+
+printstat : PRINT expression { printstat.code = [*expression['code'], "print {expression['label']}"] }
+
+readstat : READ expression { readstat.code = [*expression['code'], "read {expression['label']}"] }
+
+returnstat : RETURN returnstat1 { returnstat.code = [*returnstat1['code'], "return {returnstat1['label']}"] }
+
+returnstat1 : expression { returnstat1 = expression}
+
+returnstat1 : & {
+    returnstat1.code = [],
+    returnstat1.label = ''
+}
+
+ifstat : IF LPAREN expression RPAREN statement ifstat1 {
+    end_if_label = generate_label()
+    if 'label' in ifstat1:
+        next = ifstat1['label']
+
+        ifstat.code = [
+                *expression['code'],
+                "if False {expression['label']} goto {next}",
+                *statement['code'],
+                "goto {end_if_label}",
+                *ifstat1['code'],
+                '{end_if_label}:'
+        ]
+    else:
+        ifstat.code = [
+                *expression['code'],
+                "if False {expression['label']} goto {end_if_label}",
+                *statement['code'],
+                '{end_if_label}:'
+        ]
+}
+
+ifstat1 : ELSE statement {
+    label = generate_label()
+    ifstat1.code = ['{label}:', *statement['code']]
+    ifstat1.label = label
+}
+
+ifstat1 : & { ifstat1.code = [] }
+
+forstat : new_loop_label FOR LPAREN forstat1-1 SEMICOLON forstat2 SEMICOLON forstat1-2 RPAREN new_scope_loop LBRACE statelist {
+    scope_stack.pop()
+
+    start = generate_label()
+    next_label = NEXT_LOOP_LABEL
+
+    forstat.code = [
+        *forstat1-1['code'],
+        '{start}:',
+        *forstat2['code'],
+        *(["if False {forstat2['label']} goto {next_label}"] if forstat2['label'] else []),
+        *statelist['code'],
+        *forstat1-2['code'],
+        'goto {start}',
+        '{next_label}:',
+    ]
+} RBRACE
+
+forstat1 : IDENT forstat3 {
+    search_var(IDENT, IDENT.lineno)
+    forstat1.code = [*forstat3['code'], "{IDENT} {forstat3['aux_code']}"] }
+}
+
+forstat1 : & { forstat1.code = [] }
+
+forstat2 : expression {
+    forstat2.code = expression['code']
+    forstat2.label = expression['label']
+}
+
+forstat2 : & {
+    forstat2.code = []
+    forstat2.label = None
+}
+
+forstat3 : LBRACKET numexpression RBRACKET lvalue1 ASSIGN atribstat1 {
+    forstat3.code = [*numexpression['code'], *lvalue1['code']]
+    forstat3.aux_code = "[{numexpression['label']}]{lvalue1['aux_code']} = {atribstat1['label']}" 
+}
+
+forstat3 : ASSIGN atribstat1 {
+    forstat3.code = atribstat1['code']
+    forstat3.aux_code = "= {atribstat1['label']}"
+}
+
+whilestat : new_loop_label WHILE LPAREN expression RPAREN new_scope_loop LBRACE statelist {
+    scope_stack.pop()
+
+    start = generate_label()
+    next = NEXT_LOOP_LABEL
+
+    whilestat.code = [
+        '{start}:',
+        *expression['code'],
+        "if False {expression['label']} goto {next}",
+        *statement['code'],
+        'goto {start}',
+        '{next}:',
+    ]
+} RBRACE
+
+statelist : statement statelist1 { statelist.code = [*statement['code'], *statelist1['code']] }
+
+statelist1 : statelist { statelist1.code = statelist['code'] }
+
+statelist1 : & { statelist1.code = [] }
+
+allocexpression : NEW types LBRACKET numexpression {
+    num_expressions.append((numexpression['node'], numexpression.lineno))
+} RBRACKET lvalue1 {
+    var = get_var()
+
+    allocexpression.label = var
+    allocexpression.type = convert_type(types['type'])
+    allocexpression.dim = lvalue1['dim'] + 1
+    allocexpression.code = [*numexpression['code'], *lvalue1['code'], "{var} = new {types['code']}[{numexpression['label']}]{lvalue1['aux_code']}"], 
+}
+
+expression : numexpression expression1 {
+    if expression1['code']:
+        rvar = get_var()
+        expression.node = Node(expression1['operator'], numexpression['node'], expression1['node'], 'bool')
+        expression.label = rvar
+        expression.code = [
+                *numexpression['code'],
+                *expression1['code'],
+                "{rvar} = {numexpression['label']}" + (" {expression1['operator']} {expression1['label']}" if len(expression1['code']) > 0 else "")
+        ]
+    else:
+        expression = numexpression
+
+    num_expressions.append((expression['node'], numexpression.lineno))
+}
+
+expression1 : compoperator { expression1.operator = compoperator } numexpression {
+    expression1.node = numexpression['node']
+    expression1.label = numexpression['label']
+    expression1.'code = numexpression['code']
+}
+
+expression1 : & { expression1.code = '' }
+
+compoperator : GT { compoperator = '>' }
+
+compoperator : LT { compoperator = '<' }
+
+compoperator : GE { compoperator = '>=' }
+
+compoperator : LE { compoperator = '<=' }
+
+compoperator : EQ { compoperator = '==' }
+
+compoperator : NEQ { compoperator = '!=' }
+
+numexpression : term numexpression1 {
+    if numexpression1['code']:
+        rtype = check_type(term['node'], numexpression1['node'], numexpression1['operator'], term.lineno)
+
+        var = get_var()
+        numexpression.node = Node(numexpression1['operator'], term['node'], numexpression1['node'], rtype)
+        numexpression.label = var
+        numexpression.code = [
+            *term['code'], 
+            *numexpression1['code'], 
+            "{var} = {term['label']} {numexpression1['operator']} {numexpression1['label']}"
+        ]
+    else:
+        numexpression = term
+}
+
+numexpression1 : addsub { numexpression1.operator = addsub } term {
+    numexpression1.node = term['node']
+    numexpression1.code = term['code']
+    numexpression1.label = term['label']
+}
+
+numexpression1 : & { numexpression1.code = [] }
+
+addsub : PLUS { addsub = '+' }
+
+addsub : MINUS { addsub = '-' }
+
+term : unaryexpr term1 {
+    if term1['code']:
+        rtype = check_type(unaryexpr['node'], term1['node'], term1['operator'], unaryexpr.lineno)
+
+        var = get_var()
+
+        term.node = Node(term1['operator'], unaryexpr['node'], term1['node'], rtype),
+        term.label = var
+        term.code = [*unaryexpr['code'], "{var} = {unaryexpr['label']} {term1['operator']} {term1['label']}"],
+    else:
+        term = unaryexpr
+}
+
+term1-1 : multdiv { term1-1.operator = multdiv } unaryexpr term1-2 {
+    if term1['code']:
+        rtype = check_type(unaryexpr['node'], term1-2['node'], term1-2['operator'], unaryexpr.lineno)
+
+        var = get_var()
+
+        term1-1.node = Node(term1-2['operator'], unaryexpr['node'], term1-2['node'], rtype)
+        term1-1.label = var
+        term1-1.code = [*unaryexpr['code'], *term1-2['code'], "{var} = {unaryexpr['label']} {term1-2['operator']} {term1-2['label']}"]
+    else:
+        term1-1.node = unaryexpr['node']
+        term1-1.label = unaryexpr['label']
+        term1-1.code = unaryexpr['code']
+}
+
+term1 : & { term1.code = [] }
+
+multdiv : MULTIPLY { multdiv = '*' }
+
+multdiv : DIVIDE { multdiv = '/' }
+
+multdiv : REM { multdiv = '%' }
+
+unaryexpr : addsub factor {
+    if (addsub == '-'):
+        factor['node'].value *= -1
+
+    var = get_var()
+
+    unaryexpr.node = factor['node']
+    unaryexpr.code = [*factor['code'], *(["{var} = {addsub}{factor['label']}"] if addsub == '-' else [])]
+    unaryexpr.label = var
+}
+
+unaryexpr : factor { unaryexpr = factor }
+
+factor : int_constant {
+    var = get_var()
+
+    factor.node = Node(int_constant, None, None, 'int')
+    factor.code = ['{var} = {int_constant}'], 'label = var
+}
+
+factor : float_constant {
+    var = get_var()
+
+    factor.node = Node(float_constant, None, None, 'float')
+    factor.code = ['{var} = {float_constant}']
+    factor.label = var
+}
+
+factor : string_constant {
+    var = get_var()
+
+    factor.node = Node(string_constant, None, None, 'string')
+    factor.code = ['{var} = {string_constant}']
+    factor.label = var
+}
+
+factor : null_constant {
+    var =  get_var() 
+
+    factor.node = Node('null', None, None, 'null')
+    factor.code = code = ['{var} = null']
+    factor.label = var
+}
+
+factor : IDENT lvalue1 {
+    var = search_var(IDENT, IDENT.lineno)
+    nvar = get_var()
+
+    factor.node = Node(IDENT + lvalue1['expression'], None, None, type2str(var.type, var.dimension, lvalue1['dim']))
+    factor.code = ["{nvar} = {IDENT}{lvalue1['aux_code']}"]
+    factor.label = nvar
+    factor.vartype = 'ident'
+}
+
+factor : LPAREN numexpression RPAREN {
+    factor = numexpression
+
+    num_expressions.append((numexpression['node'], numexpression.lineno))
+}
+
+lvalue1 : LBRACKET numexpression RBRACKET lvalue1 {
+    lvalue1.dim = lvalue1['dim'] + 1
+    lvalue1.sizes = [str(numexpression['node']), *lvalue1['sizes']]
+    lvalue1.expression =  '[{str(numexpression)}]{lvalue1}'
+    lvalue1.code = [*numexpression['code'], *lvalue1['code']]
+    lvalue1.aux_code = "[{numexpression['label']}]{lvalue1['aux_code']}"
+
+
+    num_expressions.append((numexpression['node'], numexpression.lineno))
+}
+
+lvalue1 : & {
+    lvalue1.dim =  0
+    lvalue1.sizes = []
+    lvalue1.expression = ''
+    lvalue1.code = []
+    lvalue1.aux_code = ''
+}
+\end{lstlisting}
+\end{apendicesenv}
 % ----------------------------------------------------------
 
+% ----------------------------------------------------------
 % ----------------------------------------------------------
 % Referências bibliográficas
 % ----------------------------------------------------------
